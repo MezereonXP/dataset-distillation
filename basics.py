@@ -138,7 +138,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
                 correct_list = pred == target
                 f=open("Debug.txt","a+")
-                f.write("{0} {1}\n".format(output.size(), label.size()))
+                f.write("{0} {1}\n".format(output.size(), target.size()))
                 f.close()
                 losses[k] += task_loss(state, output, target, reduction='sum').item()  # sum up batch loss
                 if attack_mode:
