@@ -98,9 +98,9 @@ class Trainer(object):
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
                 output = model.forward_with_param(data, w)
-                print ("SIZES")
-                print (output.size())
-                print (label.size()) 
+                print ("DEBUG")
+                print (output)
+                print (label) 
                 loss = task_loss(state, output, label)
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
 
