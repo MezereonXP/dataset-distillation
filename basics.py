@@ -42,6 +42,12 @@ def task_loss(state, output, label, **kwargs):
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
     else:
         return F.kl_div(output, label, **kwargs)
+def task_loss_eval(state, output, label, **kwargs):
+    if state.num_classes == 2:
+        label = label.to(output, non_blocking=True).view_as(output)
+        return F.binary_cross_entropy_with_logits(output, label, **kwargs)
+    else:
+        return F.cross_entropy(output, label, **kwargs)
 
 
 def final_objective_loss(state, output, label):
@@ -137,10 +143,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
                     pred = output.argmax(1)  # get the index of the max log-probability
 
                 correct_list = pred == target
-                f=open("Debug.txt","a+")
-                f.write("{0} {1}\n".format(output.size(), target.size()))
-                f.close()
-                losses[k] += task_loss(state, output, target, reduction='sum').item()  # sum up batch loss
+                losses[k] += task_loss_eval(state, output, target, reduction='sum').item()  # sum up batch loss
                 if attack_mode:
                     for c in range(num_classes):
                         class_mask = target == c
