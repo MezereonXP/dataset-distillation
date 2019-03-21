@@ -121,7 +121,8 @@ class Trainer(object):
         gdatas = []
         lrs = []
         glrs = []
-
+        labels=[]
+        glabels=[]
         dw, = torch.autograd.grad(l, (params[-1],))
 
         # backward
@@ -152,6 +153,7 @@ class Trainer(object):
             hvp_in = [w]
             hvp_in.append(data)
             hvp_in.append(lr)
+            hvp_in.append(label)
             dgw = dw.neg()  # gw is already weighted by lr, so simple negation
             hvp_grad = torch.autograd.grad(
                 outputs=(gw,),
@@ -165,21 +167,25 @@ class Trainer(object):
                 gdatas.append(hvp_grad[1])
                 lrs.append(lr)
                 glrs.append(hvp_grad[2])
+                labels.append(label)
+                glabels.append(hvp_grad[3])
 
                 # Update for next iteration, i.e., previous step
                 # Update dw
                 # dw becomes the gradients w.r.t. the updated w for previous step
                 dw.add_(hvp_grad[0])
 
-        return datas, gdatas, lrs, glrs
+        return datas, gdatas, lrs, glrs, labels, glabels
 
     def accumulate_grad(self, grad_infos):
         bwd_out = []
         bwd_grad = []
-        for datas, gdatas, lrs, glrs in grad_infos:
+        for datas, gdatas, lrs, glrs, labels, glabels in grad_infos:
             bwd_out += list(lrs)
             bwd_grad += list(glrs)
             for d, g in zip(datas, gdatas):
+                d.grad.add_(g)
+            for d, g in zip(labels, glabels):
                 d.grad.add_(g)
         if len(bwd_out) > 0:
             torch.autograd.backward(bwd_out, bwd_grad)
