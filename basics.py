@@ -34,7 +34,7 @@ def load_train_models(state):
         raise ValueError("train_nets_type: {}".format(state.train_nets_type))
 
 def cross_entropy(pred, soft_targets, **kwargs):
-    logsoftmax = nn.LogSoftmax()
+    logsoftmax = torch.nn.LogSoftmax()
     return torch.mean(torch.sum(- soft_targets * logsoftmax(pred), 1))
 def task_loss(state, output, label, **kwargs):
     if state.num_classes == 2:
