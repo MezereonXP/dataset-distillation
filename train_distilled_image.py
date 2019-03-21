@@ -252,9 +252,6 @@ class Trainer(object):
             for model in tmodels:
                 if state.train_nets_type == 'unknown_init':
                     model.reset(state)
-                f=open("Debug.txt","a+")
-                f.write("{0}\n".format(steps[0][1].size()))
-                f.close()
                 l, saved = self.forward(model, rdata, rlabel, steps)
                 losses.append(l)
                 grad_infos.append(self.backward(model, rdata, rlabel, steps, saved))
