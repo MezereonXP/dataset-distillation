@@ -33,13 +33,15 @@ def load_train_models(state):
     else:
         raise ValueError("train_nets_type: {}".format(state.train_nets_type))
 
-
+def cross_entropy(pred, soft_targets):
+    logsoftmax = nn.LogSoftmax()
+    return torch.mean(torch.sum(- soft_targets * logsoftmax(pred), 1))
 def task_loss(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
     else:
-        return F.cross_entropy(output, label, **kwargs)
+        return cross_entropy(output, label, **kwargs)
 
 
 def final_objective_loss(state, output, label):
