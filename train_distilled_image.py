@@ -83,6 +83,9 @@ class Trainer(object):
 
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
+            f=open("Debug.txt","a+")
+            f.write("{0}".format(label.size()))
+            f.close()
             steps.append((data, label, lr))
 
         return steps

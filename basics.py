@@ -37,9 +37,6 @@ def cross_entropy(pred, soft_targets, **kwargs):
     logsoftmax = torch.nn.LogSoftmax()
     return torch.mean(torch.sum(- soft_targets * logsoftmax(pred), 1))
 def task_loss(state, output, label, **kwargs):
-    f=open("Debug.txt","w")
-    f.write("{0} {1}".format(output.size(), label.size()))
-    f.close()
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
