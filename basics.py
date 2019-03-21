@@ -52,10 +52,7 @@ def task_loss_eval(state, output, label, **kwargs):
 
 def final_objective_loss(state, output, label):
     if state.mode in {'distill_basic', 'distill_adapt'}:
-        f=open("Debug.txt","a+")
-        f.write("{0} {1}\n".format(output.size(), label.size()))
-        f.close()
-        return task_loss(state, output, label)
+        return task_loss_eval(state, output, label)
     elif state.mode == 'distill_attack':
         label = label.clone()
         label[label == state.attack_class] = state.target_class
