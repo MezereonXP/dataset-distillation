@@ -40,7 +40,7 @@ class Trainer(object):
 
         # labels
         self.labels = []
-        distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device) \
+        distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device, requires_grad=True) \
                              .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
         for _ in range(self.num_data_steps):
