@@ -45,7 +45,7 @@ class Trainer(object):
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
         for _ in range(self.num_data_steps):
             self.labels.append(distill_label)
-            self.params.append(self.labels)
+            self.params.append(distill_label)
         self.all_labels = torch.cat(self.labels)
 
         # data
@@ -99,9 +99,6 @@ class Trainer(object):
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
                 output = model.forward_with_param(data, w)
-                print ("DEBUG")
-                print (output)
-                print (label) 
                 loss = task_loss(state, output, label)
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
 
