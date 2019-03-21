@@ -41,7 +41,7 @@ def task_loss(state, output, label, **kwargs):
         label = label.to(output, non_blocking=True).view_as(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
     else:
-        label = label.to(output, non_blocking=True).repeat(1024)
+        label = label.repeat(1024,1)
         return F.kl_div(output.float(), label.float(), **kwargs)
 
 
