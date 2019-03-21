@@ -83,9 +83,6 @@ class Trainer(object):
 
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
-            f=open("Debug.txt","a+")
-            f.write("{0}".format(label.size()))
-            f.close()
             steps.append((data, label, lr))
 
         return steps
@@ -101,6 +98,9 @@ class Trainer(object):
 
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
+                f=open("Debug.txt","a+")
+                f.write("{0}\n".format(label.size()))
+                f.close()
                 output = model.forward_with_param(data, w)
                 loss = task_loss(state, output, label)
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
