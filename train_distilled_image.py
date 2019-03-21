@@ -80,7 +80,6 @@ class Trainer(object):
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
-
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
             steps.append((data, label, lr))
@@ -253,7 +252,9 @@ class Trainer(object):
             for model in tmodels:
                 if state.train_nets_type == 'unknown_init':
                     model.reset(state)
-
+                f=open("Debug.txt","a+")
+                f.write("{0}\n".format(steps[0][1].size()))
+                f.close()
                 l, saved = self.forward(model, rdata, rlabel, steps)
                 losses.append(l)
                 grad_infos.append(self.backward(model, rdata, rlabel, steps, saved))
