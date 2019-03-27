@@ -85,7 +85,7 @@ class Trainer(object):
                                                    gamma=state.decay_factor)
         for p in self.params:
             p.grad = torch.zeros_like(p)
-    def one_hot_embedding(self, labels, C):
+    def one_hot_embedding(self, labels, num_classes):
         """Embedding labels to one-hot form.
     
         Args:
