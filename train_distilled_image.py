@@ -85,7 +85,7 @@ class Trainer(object):
                                                    gamma=state.decay_factor)
         for p in self.params:
             p.grad = torch.zeros_like(p)
-    def one_hot_embedding(self, labels, num_classes):
+    def one_hot_embedding(self, labels, C):
         """Embedding labels to one-hot form.
     
         Args:
@@ -96,8 +96,12 @@ class Trainer(object):
           (tensor) encoded labels, sized [N, #classes].
         """
         req_lbl_grad = not self.state.static_labels
-        y = torch.eye(num_classes, dtype=torch.float, device=self.state.device, requires_grad=req_lbl_grad) 
-        return y[labels]
+        one_hot = torch.cuda.FloatTensor(labels.size(0), C, labels.size(2), labels.size(3)).zero_()
+        target = one_hot.scatter_(1, labels.data, 1)
+    
+        target = torch.Variable(target, requires_grad=req_lbl_grad, device=self.state.device)
+            
+        return target
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
