@@ -37,22 +37,23 @@ class Trainer(object):
         self.params = []
         state = self.state
         optim_lr = state.lr
-
+        req_lbl_grad = not state.static_labels
         # labels
         self.labels = []
         if state.random_init_labels:
-            distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=True)
+            distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
-            distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device) \
+            distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device, requires_grad=req_lbl_grad) \
                              .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
             distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...] 
             distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
-        for _ in range(self.num_data_steps):
-            self.labels.append(distill_label)
-            self.params.append(distill_label)
+        if not state.static_labels:
+            for _ in range(self.num_data_steps):
+                self.labels.append(distill_label)
+                self.params.append(distill_label)
         self.all_labels = torch.cat(self.labels)
 
         # data
@@ -93,7 +94,8 @@ class Trainer(object):
         Returns:
           (tensor) encoded labels, sized [N, #classes].
         """
-        y = torch.eye(num_classes, device=self.state.device) 
+        req_lbl_grad = not self.state.static_labels
+        y = torch.eye(num_classes, device=self.state.device, requires_grad=req_lbl_grad) 
         return y[labels]
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
@@ -170,7 +172,8 @@ class Trainer(object):
             hvp_in = [w]
             hvp_in.append(data)
             hvp_in.append(lr)
-            hvp_in.append(label)
+            if not state.static_labels:
+                hvp_in.append(label)
             dgw = dw.neg()  # gw is already weighted by lr, so simple negation
             hvp_grad = torch.autograd.grad(
                 outputs=(gw,),
@@ -184,8 +187,9 @@ class Trainer(object):
                 gdatas.append(hvp_grad[1])
                 lrs.append(lr)
                 glrs.append(hvp_grad[2])
-                labels.append(label)
-                glabels.append(hvp_grad[3])
+                if not state.static_labels:
+                    labels.append(label)
+                    glabels.append(hvp_grad[3])
 
                 # Update for next iteration, i.e., previous step
                 # Update dw
@@ -202,8 +206,9 @@ class Trainer(object):
             bwd_grad += list(glrs)
             for d, g in zip(datas, gdatas):
                 d.grad.add_(g)
-            for d, g in zip(labels, glabels):
-                d.grad.add_(g)
+            if not state.static_labels:
+                for d, g in zip(labels, glabels):
+                    d.grad.add_(g)
         if len(bwd_out) > 0:
             torch.autograd.backward(bwd_out, bwd_grad)
 
