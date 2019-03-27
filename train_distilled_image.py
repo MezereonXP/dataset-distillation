@@ -96,7 +96,7 @@ class Trainer(object):
           (tensor) encoded labels, sized [N, #classes].
         """
         req_lbl_grad = not self.state.static_labels
-        k  = labels.size()
+        k  = labels.size()[0]
         labels_one_hot = torch.FloatTensor(k, num_classes).zero_()
         target = labels_one_hot.scatter_(2, labels, 1, requires_grad=req_lbl_grad, device=self.state.device)
     
