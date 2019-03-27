@@ -41,13 +41,13 @@ class Trainer(object):
         # labels
         self.labels = []
         if state.random_init_labels:
-            distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=True)\
+            distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=True).to(state.device)
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
             distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device) \
                              .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
             distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...] 
-            distill_label = self.one_hot_embedding(distill_label, state.num_classes)
+            distill_label = self.one_hot_embedding(distill_label, state.num_classes).float()
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
         for _ in range(self.num_data_steps):
@@ -59,7 +59,7 @@ class Trainer(object):
         self.data = []
         for _ in range(self.num_data_steps):
             distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
-                                       device=state.device, requires_grad=True)
+                                       device=state.device, requires_grad=True).to(state.device)
             self.data.append(distill_data)
             self.params.append(distill_data)
 
