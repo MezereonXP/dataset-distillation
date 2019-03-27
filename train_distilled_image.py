@@ -93,7 +93,7 @@ class Trainer(object):
         Returns:
           (tensor) encoded labels, sized [N, #classes].
         """
-        y = torch.eye(num_classes, device=state.device) 
+        y = torch.eye(num_classes, device=self.state.device) 
         return y[labels]
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
