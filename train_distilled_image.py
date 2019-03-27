@@ -60,7 +60,7 @@ class Trainer(object):
         # data
         self.data = []
         for _ in range(self.num_data_steps):
-            distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
+            distill_data = torch.randn(self.num_per_step, state.nc,
                                        device=state.device, requires_grad=True)
             self.data.append(distill_data)
             self.params.append(distill_data)
@@ -96,10 +96,9 @@ class Trainer(object):
           (tensor) encoded labels, sized [N, #classes].
         """
         req_lbl_grad = not self.state.static_labels
-        k  = labels.size()[0]
-        print(k)
+        k  = self.num_per_step
         labels_one_hot = torch.cuda.FloatTensor(k, num_classes).zero_()
-        target = labels_one_hot.scatter_(1, labels,0)
+        target = labels_one_hot.scatter_(1, labels,1)
     
             
         return target
