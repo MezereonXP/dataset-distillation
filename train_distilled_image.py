@@ -50,9 +50,10 @@ class Trainer(object):
             distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
-        if not state.static_labels:
-            for _ in range(self.num_data_steps):
-                self.labels.append(distill_label)
+        
+        for _ in range(self.num_data_steps):
+            self.labels.append(distill_label)
+            if not state.static_labels:
                 self.params.append(distill_label)
         self.all_labels = torch.cat(self.labels)
 
