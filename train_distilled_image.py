@@ -97,6 +97,7 @@ class Trainer(object):
         """
         req_lbl_grad = not self.state.static_labels
         k  = labels.size()[0]
+        print(k)
         labels_one_hot = torch.cuda.FloatTensor(k, num_classes).zero_()
         target = labels_one_hot.scatter_(1, labels,0)
     
