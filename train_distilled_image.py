@@ -40,8 +40,15 @@ class Trainer(object):
 
         # labels
         self.labels = []
-        distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=True)\
+        if state.random_init_labels:
+            distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=True)\
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
+        else:
+            distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device) \
+                             .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
+            distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...] 
+            distill_label = self.one_hot_embedding(distill_label, state.num_classes)
+                             
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
         for _ in range(self.num_data_steps):
             self.labels.append(distill_label)
@@ -76,7 +83,18 @@ class Trainer(object):
                                                    gamma=state.decay_factor)
         for p in self.params:
             p.grad = torch.zeros_like(p)
-
+    def one_hot_embedding(self, labels, num_classes):
+        """Embedding labels to one-hot form.
+    
+        Args:
+          labels: (LongTensor) class labels, sized [N,].
+          num_classes: (int) number of classes.
+    
+        Returns:
+          (tensor) encoded labels, sized [N, #classes].
+        """
+        y = torch.eye(num_classes) 
+        return y[labels]
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()

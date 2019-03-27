@@ -313,6 +313,8 @@ class BaseOptions(object):
                                  'be either MASTER_PORT & MASTER_ADDR, or INIT_FILE. '
                                  'Then it stores the values in state as "distributed_master_addr", '
                                  '"distributed_master_port", etc. Only rank 0 process writes checkpoints. ')
+        parser.add_argument('--static_labels', type=int, default=0, help='0 for fixed labels during training, 1 for them to be learned as well.')
+        parser.add_argument('--random_init_labels', type=int, default=0, help='0 for one-hot labels init, 1 for random init.')
 
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
