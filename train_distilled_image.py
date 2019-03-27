@@ -60,7 +60,7 @@ class Trainer(object):
         # data
         self.data = []
         for _ in range(self.num_data_steps):
-            distill_data = torch.randn(self.num_per_step, state.nc,
+            distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
                                        device=state.device, requires_grad=True)
             self.data.append(distill_data)
             self.params.append(distill_data)
