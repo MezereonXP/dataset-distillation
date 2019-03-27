@@ -44,7 +44,7 @@ class Trainer(object):
             distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
-            distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device, requires_grad=req_lbl_grad) \
+            distill_label = torch.arange(state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad) \
                              .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
             distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...] 
             distill_label = self.one_hot_embedding(distill_label, state.num_classes)
