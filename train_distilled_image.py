@@ -96,10 +96,10 @@ class Trainer(object):
           (tensor) encoded labels, sized [N, #classes].
         """
         req_lbl_grad = not self.state.static_labels
-        one_hot = torch.cuda.FloatTensor(labels.size(0), C, labels.size(2), labels.size(3)).zero_()
-        target = one_hot.scatter_(1, labels.data, 1)
+        batch_size, k, _ = labels.size()
+        labels_one_hot = torch.FloatTensor(batch_size, k, num_classes).zero_()
+        target = labels_one_hot.scatter_(2, labels, 1, requires_grad=req_lbl_grad, device=self.state.device)
     
-        target = torch.Variable(target, requires_grad=req_lbl_grad, device=self.state.device)
             
         return target
     def get_steps(self):
