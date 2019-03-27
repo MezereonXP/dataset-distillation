@@ -207,7 +207,7 @@ class Trainer(object):
             bwd_grad += list(glrs)
             for d, g in zip(datas, gdatas):
                 d.grad.add_(g)
-            if not state.static_labels:
+            if not self.state.static_labels:
                 for d, g in zip(labels, glabels):
                     d.grad.add_(g)
         if len(bwd_out) > 0:
