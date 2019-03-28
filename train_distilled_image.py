@@ -46,7 +46,9 @@ class Trainer(object):
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
             dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
-            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device).clamp(0,1)
+            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device)
+            with torch.enable_grad():
+                distill_label=distill_label.clamp(0,1)
             #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
@@ -119,7 +121,6 @@ class Trainer(object):
         w = model.get_param()
         params = [w]
         gws = []
-
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
                 output = model.forward_with_param(data, w)
