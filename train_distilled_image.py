@@ -53,7 +53,8 @@ class Trainer(object):
         #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
             if not state.static_labels:
-                self.labels.append(F.softmax(distill_label,dim=-1))
+                distill_label = F.softmax(distill_label,dim=-1)
+                self.labels.append(distill_label)
                 self.params.append(distill_label)
             else:
                 self.labels.append(distill_label)
