@@ -44,10 +44,9 @@ class Trainer(object):
             distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
-            distill_label = torch.arange(state.num_classes, dtype=torch.long, device=state.device, requires_grad=False) \
-                             .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
-            distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...] 
-            distill_label = self.one_hot_embedding(distill_label, state.num_classes)
+            dl_array = [[i==j for i in range(state.num_classes)]for j in range(state.num_classes)]*state.distilled_images_per_class_per_step
+            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device)
+            #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
         
@@ -96,8 +95,11 @@ class Trainer(object):
           (tensor) encoded labels, sized [N, #classes].
         """
         req_lbl_grad = not self.state.static_labels
-        ones = torch.sparse.torch.eye(num_classes)
-        return ones.index_select(0,labels)
+        emb = torch.nn.Embedding(num_classes, num_classes)
+        emb.weight.data = torch.eye(num_classes)
+        emb.weight.requires_grad=True
+        emb=emb.to(self.state.device)
+        return emb(labels)
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
