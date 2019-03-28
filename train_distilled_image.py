@@ -46,7 +46,7 @@ class Trainer(object):
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
             dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
-            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device).clamp()
+            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device).clamp(0,1)
             #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
