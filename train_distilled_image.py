@@ -96,9 +96,8 @@ class Trainer(object):
           (tensor) encoded labels, sized [N, #classes].
         """
         req_lbl_grad = not self.state.static_labels
-        emb = torch.nn.Embedding(num_classes, num_classes)
-        emb.weight.data = torch.eye(num_classes)
-        return emb(labels)
+        ones = torch.sparse.torch.eye(depth)
+        return ones.index_select(0,labels)
     def get_steps(self):
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
