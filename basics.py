@@ -32,7 +32,11 @@ def load_train_models(state):
         return models
     else:
         raise ValueError("train_nets_type: {}".format(state.train_nets_type))
-
+def xentropy_cost(x_target, x_pred):
+    assert x_target.size() == x_pred.size(), "size fail ! "+str(x_target.size()) + " " + str(x_pred.size())
+    logged_x_pred = torch.log(x_pred)
+    cost_value = -torch.sum(x_target * logged_x_pred)
+    return cost_value
 def cross_entropy(pred, soft_targets, **kwargs):
     logsoftmax = torch.nn.LogSoftmax()
     return torch.mean(torch.sum(- soft_targets * logsoftmax(pred), 1))
@@ -41,7 +45,8 @@ def task_loss(state, output, label, **kwargs):
         label = label.to(output, non_blocking=True).view_as(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
     else:
-        return F.kl_div(output, label.float(), **kwargs)
+        return xentropy_cost(label, output)
+        #return F.kl_div(output, label.float(), **kwargs)
 def task_loss_eval(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
