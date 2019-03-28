@@ -104,11 +104,10 @@ class Trainer(object):
         emb=emb.to(self.state.device)
         return emb(labels)
     def get_steps(self):
-        data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
+        data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, F.softmax(self.labels, dim=-1).unbind()))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
-            label=F.softmax(label).unbind()
             steps.append((data,label, lr))
         return steps
 
