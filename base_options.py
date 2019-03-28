@@ -316,7 +316,7 @@ class BaseOptions(object):
         parser.add_argument('--static_labels', type=int, default=0, help='0 for fixed labels during training, 1 for them to be learned as well.')
         parser.add_argument('--random_init_labels', type=int, default=0, help='0 for one-hot labels init, 1 for random init.')
         parser.add_argument('--num_distill_classes', type=int, default=10, help='Number of distill samples per step (can be less than number of classes.')
-        parser.add_argument('--init_labels', type=list, default=[0,1,2,3,4,5,6,7,8,9], help='If not random_init_labels, use this to set initial values of distill labels.')
+        parser.add_argument('--init_labels', type=int, nargs="*", default=[0,1,2,3,4,5,6,7,8,9], help='If not random_init_labels, use this to set initial values of distill labels.')
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
             # Use default Namespace (not UniqueNamespace) because dummy state may
