@@ -49,6 +49,7 @@ class Trainer(object):
             distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device)
             with torch.enable_grad():
                 distill_label=distill_label.clamp(0,1)
+                
             #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
