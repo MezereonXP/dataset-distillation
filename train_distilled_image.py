@@ -108,7 +108,8 @@ class Trainer(object):
         lrs = F.softplus(self.raw_distill_lrs).unbind()
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
-            steps.append((data, F.softmax(label), lr))
+            label=F.softmax(label).unbind()
+            steps.append((data,label, lr))
         return steps
 
     def forward(self, model, rdata, rlabel, steps):
