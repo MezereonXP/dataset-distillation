@@ -29,8 +29,9 @@ class Trainer(object):
         self.models = models
         self.num_data_steps = state.distill_steps  # how much data we have
         self.T = state.distill_steps * state.distill_epochs  # how many sc steps we run
-        self.num_per_step = state.num_classes * state.distilled_images_per_class_per_step
+        self.num_per_step = state.num_distill_classes * state.distilled_images_per_class_per_step
         assert state.distill_lr >= 0, 'distill_lr must >= 0'
+        assert len(state.init_labels)==state.num_distill_classes, 'len(init_labels) must == num_distill_classes'
         self.init_data_optim()
 
     def init_data_optim(self):
@@ -44,7 +45,7 @@ class Trainer(object):
             distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
-            dl_array = [[i==j for i in range(state.num_classes)]for j in range(state.num_classes)]*state.distilled_images_per_class_per_step
+            dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
             distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device)
             #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
