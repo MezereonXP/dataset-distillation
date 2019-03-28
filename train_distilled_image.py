@@ -46,7 +46,7 @@ class Trainer(object):
         #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
         else:
             dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
-            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device)
+            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device).clamp()
             #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
@@ -104,7 +104,7 @@ class Trainer(object):
         emb=emb.to(self.state.device)
         return emb(labels)
     def get_steps(self):
-        data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, F.softmax(self.labels, dim=-1).unbind()))
+        data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
