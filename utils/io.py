@@ -18,6 +18,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
     if vis_dir is None:
         logging.warning('Not saving because vis_dir is not given')
     else:
+        lbls_name_fmt=vis_name_fmt+".txt"
         vis_name_fmt += '.png'
         utils.mkdir(vis_dir)
 
@@ -61,11 +62,14 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
             if lr is not None:
                 lr = lr.sum().item()
             plt.suptitle(supertitle_fmt.format(step=i, lr=lr), fontsize=fontsize)
-            if first_run:
-                plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0, rect=[0, 0, 1, 0.95])
+            #if first_run:
+            #    plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0, rect=[0, 0, 1, 0.95])
         fig.canvas.draw()
         if vis_dir is not None:
             plt.savefig(os.path.join(vis_dir, vis_name_fmt.format(step=i)), dpi=dpi)
+            f=open(vis_dir+"/"+lbls_name_fmt.format(step=i),'a+')
+            f.write("".join([", ".join([ '%.2f' % elem for elem in label ]) + "\n" for label in labels]))
+            f.close()
         if reuse_axes:
             first_run = False
         else:
