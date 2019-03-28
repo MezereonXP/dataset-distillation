@@ -50,11 +50,13 @@ class Trainer(object):
             #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
                              
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
-        distill_label = torch.nn.Softmax(distill_label, dim=1)
+        #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
-            self.labels.append(distill_label)
             if not state.static_labels:
+                self.labels.append(distill_label)
                 self.params.append(distill_label)
+            else:
+                self.labels.append(F.softmax(distill_label,dim=-1))
         self.all_labels = torch.cat(self.labels)
 
         # data
