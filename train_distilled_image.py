@@ -53,8 +53,7 @@ class Trainer(object):
         #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
             if not state.static_labels:
-                soft_distill_label = F.softmax(distill_label,dim=-1)
-                self.labels.append(soft_distill_label)
+                self.labels.append(distill_label)
                 self.params.append(distill_label)
             else:
                 self.labels.append(distill_label)
@@ -109,7 +108,7 @@ class Trainer(object):
         lrs = F.softplus(self.raw_distill_lrs).unbind()
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
-            steps.append((data, label, lr))
+            steps.append((data, F.softmax(label), lr))
         return steps
 
     def forward(self, model, rdata, rlabel, steps):
@@ -214,8 +213,8 @@ class Trainer(object):
             for d, g in zip(datas, gdatas):
                 d.grad.add_(g)
             if not self.state.static_labels:
-                for d, g in zip(labels, glabels):
-                    d.grad.add_(g)
+                for l, g in zip(labels, glabels):
+                    l.grad.add_(g)
         if len(bwd_out) > 0:
             torch.autograd.backward(bwd_out, bwd_grad)
 
