@@ -57,7 +57,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
             if first_run:
                 axis.axis('off')
                 if subtitle:     
-                    axis.set_title('Label {}'.format(str(label)), fontsize=fontsize)
+                    axis.set_title('Label {}'.format(", ".join([ '%.2f' % elem for elem in label ])), fontsize=fontsize)
         if supertitle:
             if lr is not None:
                 lr = lr.sum().item()
