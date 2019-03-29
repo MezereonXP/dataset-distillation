@@ -56,8 +56,13 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
                 plt_images[n].set_data(img)
             if first_run:
                 axis.axis('off')
-                if subtitle:     
-                    axis.set_title('Label {}'.format(", ".join([ '%.2f' % elem for elem in label ])), fontsize=fontsize)
+                if subtitle:
+                    sorted_indices = np.argsort(label)[::-1]
+                    first = "{0}:{1}".format(label_names[sorted_indices[0]], '%.2f'%label[sorted_indices[0]])
+                    second = "{0}:{1}".format(label_names[sorted_indices[1]], '%.2f'%label[sorted_indices[1]])
+                    third = "{0}:{1}".format(label_names[sorted_indices[2]], '%.2f'%label[sorted_indices[2]])
+                    axis_title = "{0}, {1}, {2}".format(first, second, third)
+                    axis.set_title(axis_title, fontsize=fontsize)
         if supertitle:
             if lr is not None:
                 lr = lr.sum().item()
