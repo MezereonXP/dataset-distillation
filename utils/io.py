@@ -58,9 +58,9 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
                 axis.axis('off')
                 if subtitle:
                     sorted_indices = np.argsort(label)[::-1]
-                    first = "{0}:{1}".format(label_names[sorted_indices[0]], '%.2f'%label[sorted_indices[0]])
-                    second = "{0}:{1}".format(label_names[sorted_indices[1]], '%.2f'%label[sorted_indices[1]])
-                    third = "{0}:{1}".format(label_names[sorted_indices[2]], '%.2f'%label[sorted_indices[2]])
+                    first = "{0}:{1}".format(label_names[sorted_indices[0]], '%.1f'%label[sorted_indices[0]])
+                    second = "{0}:{1}".format(label_names[sorted_indices[1]], '%.1f'%label[sorted_indices[1]])
+                    third = "{0}:{1}".format(label_names[sorted_indices[2]], '%.1f'%label[sorted_indices[2]])
                     axis_title = "{0}, {1}, {2}".format(first, second, third)
                     axis.set_title(axis_title, fontsize=fontsize)
         if supertitle:
