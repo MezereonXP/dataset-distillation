@@ -44,6 +44,8 @@ def init_weights(net, state):
                     init.kaiming_normal_(m.weight, a=init_param, mode='fan_out')
                 elif init_type == 'orthogonal':
                     init.orthogonal_(m.weight, gain=init_param)
+                elif init_type == 'zero':
+                    init.zeros_(m.weight)
                 elif init_type == 'default':
                     if hasattr(m, 'reset_parameters'):
                         m.reset_parameters()
