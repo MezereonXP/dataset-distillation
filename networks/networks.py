@@ -156,6 +156,7 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 class Transformer(utils.ReparamModule):
+    supported_dims = {28, 32}
     """Container module with an encoder, a recurrent or transformer module, and a decoder."""
 
     def __init__(self, ntoken, ninp, nhead, nhid, nlayers, dropout=0.5):
