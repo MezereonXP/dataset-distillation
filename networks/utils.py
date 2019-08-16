@@ -46,6 +46,10 @@ def init_weights(net, state):
                     init.orthogonal_(m.weight, gain=init_param)
                 elif init_type == 'zero':
                     init.zeros_(m.weight)
+                elif init_type == 'one':
+                    init.ones(m.weight)
+                elif init_type == 'constant':
+                    init.constant_(m.weight, init_param)
                 elif init_type == 'default':
                     if hasattr(m, 'reset_parameters'):
                         m.reset_parameters()
