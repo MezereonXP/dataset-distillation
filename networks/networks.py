@@ -111,7 +111,6 @@ class AlexNet(utils.ReparamModule):
         x = self.classifier(x)
         return x
     
-# Temporarily leave PositionalEncoding module here. Will be moved somewhere else.
 class PositionalEncoding(nn.Module):
     r"""Inject some information about the relative or absolute position of the tokens
         in the sequence. The positional encodings have the same dimension as
@@ -155,8 +154,7 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0), :]
         return self.dropout(x)
 
-class Transformer(utils.ReparamModule):
-    supported_dims = {28, 32}
+class TransformerModel(nn.Module):
     """Container module with an encoder, a recurrent or transformer module, and a decoder."""
 
     def __init__(self, ntoken, ninp, nhead, nhid, nlayers, dropout=0.5):
@@ -200,7 +198,7 @@ class Transformer(utils.ReparamModule):
         src = self.pos_encoder(src)
         output = self.transformer_encoder(src, self.src_mask)
         output = self.decoder(output)
-        return F.log_softmax(output, dim=-1)    
+        return F.log_softmax(output, dim=-1)  
 '''
 class Transformer(utils.ReparamModule):
     suported_dims={44} #CHECK
