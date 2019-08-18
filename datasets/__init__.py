@@ -1,4 +1,5 @@
 from torchvision import datasets, transforms
+from torchtext import datasets as textdata
 from PIL import Image
 from .usps import USPS
 from . import caltech_ucsd_birds
@@ -18,6 +19,7 @@ default_dataset_roots = dict(
     Cifar10='./data/cifar10',
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
+    text='./data/text',
 )
 
 
@@ -185,6 +187,8 @@ def get_dataset(state, phase):
         if phase == 'train':
             phase = 'trainval'
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
+    elif name == 'text':
+        return datasets.IMDB.iters(root)
 
     else:
         raise ValueError('Unsupported dataset: %s' % state.dataset)
