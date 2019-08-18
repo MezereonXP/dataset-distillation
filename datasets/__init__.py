@@ -1,5 +1,6 @@
 from torchvision import datasets, transforms
 from torchtext import datasets as textdata
+from torchtext import data
 from PIL import Image
 from .usps import USPS
 from . import caltech_ucsd_birds
@@ -10,6 +11,17 @@ import numpy as np
 import torch
 from collections import namedtuple
 
+
+# set up fields
+TEXT = data.Field(lower=True, include_lengths=True, batch_first=True)
+LABEL = data.Field(sequential=False)
+
+# make splits for data
+train, test = datasets.IMDB.splits(TEXT, LABEL)
+
+# build the vocabulary
+TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=300))
+LABEL.build_vocab(train)
 
 default_dataset_roots = dict(
     MNIST='./data/mnist',
@@ -45,6 +57,7 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
+    text=LABEL
 )
 
 # (nc, real_size, num_classes)
