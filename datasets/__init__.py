@@ -17,10 +17,10 @@ TEXT = data.Field(lower=True, include_lengths=True, batch_first=True)
 LABEL = data.Field(sequential=False)
 
 # make splits for data
-train, test = datasets.IMDB.splits(TEXT, LABEL)
+train, test = textdata.IMDB.splits(TEXT, LABEL)
 
 # build the vocabulary
-TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=300))
+#TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=300))
 LABEL.build_vocab(train)
 
 default_dataset_roots = dict(
