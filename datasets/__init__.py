@@ -203,7 +203,7 @@ def get_dataset(state, phase):
             phase = 'trainval'
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
     elif name == 'text':
-        return textdata.IMDB.iters(root)
+        return textdata.IMDB(root)
 
     else:
         raise ValueError('Unsupported dataset: %s' % state.dataset)
