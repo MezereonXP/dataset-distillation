@@ -41,18 +41,19 @@ class Trainer(object):
         req_lbl_grad = not state.static_labels
         # labels
         self.labels = []
-        if state.random_init_labels:
-            distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
-        #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
-        else:
-            dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
-            distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=True, device=state.device)
-                
-            #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
-                             
+        
         #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
         #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
+            if state.random_init_labels:
+                distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
+            #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
+            else:
+                dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+                distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=state.device)
+                    
+                #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
+                             
             if not state.static_labels:
                 self.labels.append(distill_label)
                 self.params.append(distill_label)
@@ -216,7 +217,7 @@ class Trainer(object):
                 for l, g in zip(labels, glabels):
                     l.grad.add_(g)
         if len(bwd_out) > 0:
-            torch.autograd.backward(bwd_out, bwd_grad)
+            torch.autograd.backward(bwd_out, bwd_grad)#MULTISTEP PROBLEM?
 
     def save_results(self, steps=None, visualize=True, subfolder=''):
         with torch.no_grad():
