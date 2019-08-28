@@ -202,6 +202,7 @@ def get_dataset(state, phase):
             phase = 'trainval'
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
     elif name == 'imdb':
+        transform_list = []
         # set up fields
         TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=400)
         LABEL = data.Field(sequential=False)
@@ -225,7 +226,8 @@ def get_dataset(state, phase):
             
         src = data.Iterator.splits(
         src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
-        
+        transform_list += [
+            transforms.ToTensor()]
         return src
 
     else:
