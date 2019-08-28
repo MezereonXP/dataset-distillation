@@ -111,7 +111,7 @@ class AlexNet(utils.ReparamModule):
         x = self.classifier(x)
         return x
     
-class PositionalEncoding(nn.Module):
+class PositionalEncoding(utils.ReparamModule):
     r"""Inject some information about the relative or absolute position of the tokens
         in the sequence. The positional encodings have the same dimension as
         the embeddings, so that the two can be summed. Here, we use sine and cosine
@@ -153,7 +153,7 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0), :]
         return self.dropout(x)
 
-class TransformerModel(nn.Module):
+class TransformerModel(utils.ReparamModule):
     """Container module with an encoder, a recurrent or transformer module, and a decoder."""
     supported_dims = {28, 32}
     def __init__(self, state, ntoken=32, ninp=400, nhead=4, nhid=2, nlayers=2, dropout=0.5):
