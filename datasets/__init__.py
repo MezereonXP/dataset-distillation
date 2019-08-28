@@ -211,9 +211,6 @@ def get_dataset(state, phase):
         # build the vocabulary
         TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
         LABEL.build_vocab(train)
-
-        #train_iter, test_iter = data.BucketIterator.splits(
-        #(train, test), batch_size=1, device="cuda:0")
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
@@ -223,7 +220,9 @@ def get_dataset(state, phase):
         else:
             src=test
             #src = encoder(test_iter) * math.sqrt(ninp)
-        return src
+        t_iter = data.BucketIterator.splits(
+        src, batch_size=state.batch_size, device="cuda:0")
+        return t_iter
 
     else:
         raise ValueError('Unsupported dataset: %s' % state.dataset)
