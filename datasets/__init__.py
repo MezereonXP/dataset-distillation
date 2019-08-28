@@ -216,7 +216,7 @@ def get_dataset(state, phase):
         #encoder = nn.Embedding(ntoken, ninp)
         #train_iter, test_iter = data.Iterator.splits(
         #(train, test), batch_size=state.batch_size, device="cuda:0")
-        train_iter, test_iter = datasets.IMDB.iters(batch_size=4, fix_length=state.ninp)
+        train_iter, test_iter = textdata.IMDB.iters(batch_size=state.batch_size, fix_length=state.ninp)
         if phase=="train":
             src=train_iter
             #src = encoder(train_iter) * math.sqrt(ninp)
