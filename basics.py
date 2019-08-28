@@ -130,7 +130,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
         model.eval()
 
     with torch.no_grad():
-        for i, (data, target) in enumerate(test_loader_iter):
+        for i, (data, target) in enumerate(tuple(test_loader_iter)):
             data, target = data.to(device, non_blocking=True), target.to(device, non_blocking=True)
             if attack_mode:
                 for n in range(num_classes):
