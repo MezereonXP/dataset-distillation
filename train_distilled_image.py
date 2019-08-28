@@ -237,7 +237,10 @@ class Trainer(object):
         device = state.device
         train_iter = iter(state.train_loader)
         for epoch in range(state.epochs):
-            niter = len(state.train_loader)
+            if state.textdata:
+                niter = len(tuple(train_iter))
+            else:
+                niter = len(train_iter)
             prefetch_it = max(0, niter - 2)
             for it, val in enumerate(train_iter):
                 # Prefetch (start workers) at the end of epoch BEFORE yielding
