@@ -321,6 +321,7 @@ class BaseOptions(object):
         parser.add_argument('--textdata', type=bool, default=False, help='Is the dataset text-based')
         parser.add_argument('--ntoken', type=int, default=32, help='ntoken for text data')
         parser.add_argument('--ninp', type=int, default=400, help='ninp for text data')
+        parser.add_argument('--visualize', type=bool, default=True, help='Visualize distilled data')
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
             # Use default Namespace (not UniqueNamespace) because dummy state may

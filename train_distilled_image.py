@@ -272,7 +272,7 @@ class Trainer(object):
             if it == 0 and ((ckpt_int >= 0 and epoch % ckpt_int == 0) or epoch == 0):
                 with torch.no_grad():
                     steps = self.get_steps()
-                self.save_results(steps=steps, subfolder='checkpoints/epoch{:04d}'.format(epoch))
+                self.save_results(steps=steps, visualize=state.visualize, subfolder='checkpoints/epoch{:04d}'.format(epoch))
                 evaluate_steps(state, steps, 'Begin of epoch {}'.format(epoch))
 
             do_log_this_iter = it == 0 or (state.log_interval >= 0 and it % state.log_interval == 0)
@@ -335,7 +335,7 @@ class Trainer(object):
 
         with torch.no_grad():
             steps = self.get_steps()
-        self.save_results(steps)
+        self.save_results(steps, visualize=state.visualize)
         return steps
 
 
