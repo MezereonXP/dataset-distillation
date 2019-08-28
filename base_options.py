@@ -14,6 +14,7 @@ import atexit
 import logging
 import torch.distributed as dist
 from contextlib import contextmanager
+from torchtext import data
 
 
 class State(object):
@@ -531,8 +532,10 @@ class BaseOptions(object):
             test_dataset = datasets.get_dataset(state, 'test')
 
         if state.opt.textdata:
-            state.opt.train_loader = train_dataset
-            state.opt.test_loader = test_dataset
+            state.opt.train_loader = data.Iterator.splits(
+        train_dataset, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
+            state.opt.test_loader = data.Iterator.splits(
+        test_dataset, batch_size=state.test_batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
         else:
             state.opt.train_loader = torch.utils.data.DataLoader(
                 train_dataset, batch_size=state.batch_size,

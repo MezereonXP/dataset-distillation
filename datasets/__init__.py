@@ -224,10 +224,9 @@ def get_dataset(state, phase):
             src=test
             #src = encoder(test_iter) * math.sqrt(ninp)
             
-        src = data.Iterator.splits(
-        src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
-        transform_list += [
-            transforms.ToTensor()]
+        #src = data.Iterator.splits(
+        #src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
+        
         return src
 
     else:
