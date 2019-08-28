@@ -259,8 +259,8 @@ class Trainer(object):
             data_t = time.time() - data_t0
             
             if self.state.textdata:
-                ninp=400 #Maybe 32
-                state.ntoken
+                ninp=state.ninp #Maybe 32
+                ntoken=state.ntoken
                 encoder = nn.Embedding(ntoken, ninp)
                 rdata = encoder(rdata) * math.sqrt(ninp)
             if it == 0:

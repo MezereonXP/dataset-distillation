@@ -158,6 +158,7 @@ class TransformerModel(nn.Module):
     supported_dims = {28, 32}
     def __init__(self, state, ntoken=32, ninp=400, nhead=4, nhid=2, nlayers=2, dropout=0.5):
         ntoken=state.ntoken
+        ninp=state.ninp
         super(TransformerModel, self).__init__()
         try:
             from torch.nn import TransformerEncoder, TransformerEncoderLayer

@@ -19,15 +19,6 @@ import torch.nn as nn
 
 
 
-# set up fields
-TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=400)
-LABEL = data.Field(sequential=False)
-
-# make splits for data
-train, test = textdata.IMDB.splits(TEXT, LABEL)
-# build the vocabulary
-TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
-LABEL.build_vocab(train)
 
 default_dataset_roots = dict(
     MNIST='./data/mnist',
@@ -64,7 +55,7 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
-    imdb=LABEL.vocab.stoi
+    imdb={0,1,2}
 )
 
 # (nc, real_size, num_classes)
@@ -78,7 +69,7 @@ dataset_stats = dict(
     Cifar10=DatasetStats(3, 32, 10),
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
-    imdb = DatasetStats(1, 400, 3)
+    imdb = DatasetStats(1, None, 3)
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -104,6 +95,7 @@ def suppress_stdout():
 
 
 def get_dataset(state, phase):
+    dataset_stats['imdb'].real_size=state.ninp
     assert phase in ('train', 'test'), 'Unsupported phase: %s' % phase
     name, root, nc, input_size, num_classes, normalization, _ = get_info(state)
     real_size = dataset_stats[name].real_size
@@ -209,6 +201,16 @@ def get_dataset(state, phase):
             phase = 'trainval'
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
     elif name == 'imdb':
+        # set up fields
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=400)
+        LABEL = data.Field(sequential=False)
+        
+        # make splits for data
+        train, test = textdata.IMDB.splits(TEXT, LABEL)
+        # build the vocabulary
+        TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
+        LABEL.build_vocab(train)
+
         #train_iter, test_iter = data.BucketIterator.splits(
         #(train, test), batch_size=1, device="cuda:0")
         #ninp=32 #Maybe 400
