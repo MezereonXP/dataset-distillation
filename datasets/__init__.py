@@ -221,7 +221,7 @@ def get_dataset(state, phase):
             src=test
             #src = encoder(test_iter) * math.sqrt(ninp)
         t_iter = data.BucketIterator.splits(
-        src, batch_size=state.batch_size, device="cuda:0")
+        (src), batch_size=state.batch_size, device="cuda:0")
         return t_iter
 
     else:
