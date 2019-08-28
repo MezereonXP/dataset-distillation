@@ -42,7 +42,7 @@ dataset_normalization = dict(
     CUB200=((0.47850531339645386, 0.4992702007293701, 0.4022205173969269),
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    imdb=None
+    imdb=0
 )
 
 
@@ -69,7 +69,7 @@ dataset_stats = dict(
     Cifar10=DatasetStats(3, 32, 10),
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
-    imdb = DatasetStats(1, None, 3)
+    imdb = DatasetStats(1, 0, 3)
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
