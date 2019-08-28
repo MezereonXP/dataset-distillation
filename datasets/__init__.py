@@ -203,19 +203,20 @@ def get_dataset(state, phase):
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
     elif name == 'imdb':
         # set up fields
-        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=400)
-        LABEL = data.Field(sequential=False)
+        #TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=400)
+        #LABEL = data.Field(sequential=False)
         
         # make splits for data
-        train, test = textdata.IMDB.splits(TEXT, LABEL)
+        #train, test = textdata.IMDB.splits(TEXT, LABEL)
         # build the vocabulary
-        TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
-        LABEL.build_vocab(train)
+        #TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
+        #LABEL.build_vocab(train)
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
-        train_iter, test_iter = data.Iterator.splits(
-        (train, test), batch_size=state.batch_size, device="cuda:0")
+        #train_iter, test_iter = data.Iterator.splits(
+        #(train, test), batch_size=state.batch_size, device="cuda:0")
+        train_iter, test_iter = datasets.IMDB.iters(batch_size=4, fix_length=state.ninp)
         if phase=="train":
             src=train_iter
             #src = encoder(train_iter) * math.sqrt(ninp)
