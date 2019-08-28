@@ -214,15 +214,16 @@ def get_dataset(state, phase):
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
+        train_iter, test_iter = data.BucketIterator.splits(
+        (train, test), batch_size=state.batch_size, device="cuda:0")
         if phase=="train":
-            src=train
+            src=train_iter
             #src = encoder(train_iter) * math.sqrt(ninp)
         else:
-            src=test
+            src=test_iter
             #src = encoder(test_iter) * math.sqrt(ninp)
-        t_iter = data.BucketIterator.splits(
-        (src), batch_size=state.batch_size, device="cuda:0")
-        return t_iter
+        
+        return src
 
     else:
         raise ValueError('Unsupported dataset: %s' % state.dataset)
