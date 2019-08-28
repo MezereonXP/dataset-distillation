@@ -240,8 +240,7 @@ class Trainer(object):
             niter = len(train_iter)
             prefetch_it = max(0, niter - 2)
             if not state.textdata:
-                train_iter=enumerate(train_iter)
-            for it, val in train_iter:
+            for it, val in enumerate(train_iter):
                 # Prefetch (start workers) at the end of epoch BEFORE yielding
                 if it == prefetch_it and epoch < state.epochs - 1:
                     train_iter = iter(state.train_loader)
