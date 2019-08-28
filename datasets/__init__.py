@@ -1,6 +1,7 @@
 from torchvision import datasets, transforms
 from torchtext import datasets as textdata
 from torchtext import data
+from torchtext.vocab import GloVe
 from PIL import Image
 from .usps import USPS
 from . import caltech_ucsd_birds
@@ -10,17 +11,22 @@ import contextlib
 import numpy as np
 import torch
 from collections import namedtuple
+import math
+import torch.nn as nn
+
+
+
+
 
 
 # set up fields
-TEXT = data.Field(lower=True, include_lengths=True, batch_first=True)
+TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=400)
 LABEL = data.Field(sequential=False)
 
 # make splits for data
 train, test = textdata.IMDB.splits(TEXT, LABEL)
-
 # build the vocabulary
-#TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=300))
+TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
 LABEL.build_vocab(train)
 
 default_dataset_roots = dict(
@@ -31,7 +37,7 @@ default_dataset_roots = dict(
     Cifar10='./data/cifar10',
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
-    text='./data/text',
+    imdb='./data/text',
 )
 
 
@@ -45,7 +51,7 @@ dataset_normalization = dict(
     CUB200=((0.47850531339645386, 0.4992702007293701, 0.4022205173969269),
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    text=None
+    imdb=None
 )
 
 
@@ -58,7 +64,7 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
-    text=LABEL.vocab.stoi
+    imdb=LABEL.vocab.stoi
 )
 
 # (nc, real_size, num_classes)
@@ -72,7 +78,7 @@ dataset_stats = dict(
     Cifar10=DatasetStats(3, 32, 10),
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
-    text = DatasetStats(1, 28, 3)
+    imdb = DatasetStats(1, 400, 3)
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -202,8 +208,19 @@ def get_dataset(state, phase):
         if phase == 'train':
             phase = 'trainval'
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
-    elif name == 'text':
-        return textdata.IMDB.iters(root)
+    elif name == 'imdb':
+        #train_iter, test_iter = data.BucketIterator.splits(
+        #(train, test), batch_size=1, device="cuda:0")
+        #ninp=32 #Maybe 400
+        #ntoken=32
+        #encoder = nn.Embedding(ntoken, ninp)
+        if phase=="train":
+            src=train
+            #src = encoder(train_iter) * math.sqrt(ninp)
+        else:
+            src=test
+            #src = encoder(test_iter) * math.sqrt(ninp)
+        return src
 
     else:
         raise ValueError('Unsupported dataset: %s' % state.dataset)

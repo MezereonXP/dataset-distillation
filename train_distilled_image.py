@@ -6,6 +6,7 @@ import math
 import torch
 import torch.optim as optim
 import torch.distributed as dist
+import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import utils
@@ -64,7 +65,11 @@ class Trainer(object):
         # data
         self.data = []
         for _ in range(self.num_data_steps):
-            distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
+            if state.textdata:
+                distill_data = torch.randn(self.num_per_step, state.input_size, state.ntoken,
+                                       device=state.device, requires_grad=True)
+            else:
+                distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
                                        device=state.device, requires_grad=True)
             self.data.append(distill_data)
             self.params.append(distill_data)
@@ -252,7 +257,12 @@ class Trainer(object):
 
         for epoch, it, (rdata, rlabel) in self.prefetch_train_loader_iter():
             data_t = time.time() - data_t0
-
+            
+            if self.state.textdata:
+                ninp=400 #Maybe 32
+                state.ntoken
+                encoder = nn.Embedding(ntoken, ninp)
+                rdata = encoder(rdata) * math.sqrt(ninp)
             if it == 0:
                 self.scheduler.step()
 

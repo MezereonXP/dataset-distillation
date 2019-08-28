@@ -121,7 +121,6 @@ class PositionalEncoding(nn.Module):
         \text{PosEncoder}(pos, 2i+1) = cos(pos/10000^(2i/d_model))
         \text{where pos is the word position and i is the embed idx)
     Args:
-        d_model: the embed dim (required).
         dropout: the dropout value (default=0.1).
         max_len: the max. length of the incoming sequence (default=5000).
     Examples:
@@ -157,7 +156,8 @@ class PositionalEncoding(nn.Module):
 class TransformerModel(nn.Module):
     """Container module with an encoder, a recurrent or transformer module, and a decoder."""
     supported_dims = {28, 32}
-    def __init__(self, ntoken=32, ninp=1, nhead=4, nhid=2, nlayers=2, dropout=0.5):
+    def __init__(self, state, ntoken=32, ninp=400, nhead=4, nhid=2, nlayers=2, dropout=0.5):
+        ntoken=state.ntoken
         super(TransformerModel, self).__init__()
         try:
             from torch.nn import TransformerEncoder, TransformerEncoderLayer
@@ -168,7 +168,7 @@ class TransformerModel(nn.Module):
         self.pos_encoder = PositionalEncoding(ninp, dropout)
         encoder_layers = TransformerEncoderLayer(ninp, nhead, nhid, dropout)
         self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
-        self.encoder = nn.Embedding(ntoken, ninp)
+        #self.encoder = nn.Embedding(ntoken, ninp) #Move to data preprocessing
         self.ninp = ninp
         self.decoder = nn.Linear(ninp, ntoken)
 
@@ -181,7 +181,7 @@ class TransformerModel(nn.Module):
 
     def init_weights(self):
         initrange = 0.1
-        self.encoder.weight.data.uniform_(-initrange, initrange)
+        #self.encoder.weight.data.uniform_(-initrange, initrange)
         self.decoder.bias.data.zero_()
         self.decoder.weight.data.uniform_(-initrange, initrange)
 
@@ -194,24 +194,8 @@ class TransformerModel(nn.Module):
         else:
             self.src_mask = None
 
-        src = self.encoder(src) * math.sqrt(self.ninp)
+        #src = self.encoder(src) * math.sqrt(self.ninp)
         src = self.pos_encoder(src)
         output = self.transformer_encoder(src, self.src_mask)
         output = self.decoder(output)
         return F.log_softmax(output, dim=-1)  
-'''
-class Transformer(utils.ReparamModule):
-    suported_dims={44} #CHECK
-    def __init__(self, state):
-        self.transformer = nn.Transformer(d_model=512, 
-                                          nhead=8, 
-                                          num_encoder_layers=6, 
-                                          num_decoder_layers=6, 
-                                          dim_feedforward=2048, 
-                                          dropout=0.1, 
-                                          custom_encoder=None, 
-                                          custom_decoder=None)
-    def forward(self, x):
-        
-        
-'''
