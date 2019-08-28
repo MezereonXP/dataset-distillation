@@ -214,7 +214,7 @@ def get_dataset(state, phase):
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
-        train_iter, test_iter = data.BucketIterator.splits(
+        train_iter, test_iter = data.Iterator.splits(
         (train, test), batch_size=state.batch_size, device="cuda:0")
         if phase=="train":
             src=train_iter
