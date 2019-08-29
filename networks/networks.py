@@ -50,8 +50,8 @@ class TextConvNet(utils.ReparamModule):
     def __init__(self, state):
         self.state=state
         if state.dropout:
-            raise ValueError("LeNet doesn't support dropout")
-        super(LeNet, self).__init__()
+            raise ValueError("TextConvNet doesn't support dropout")
+        super(TextConvNet, self).__init__()
         if state.textdata:
                 ninp=state.ninp #Maybe 32
                 ntoken=state.ntoken
