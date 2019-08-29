@@ -96,7 +96,7 @@ def suppress_stdout():
 
 
 def get_dataset(state, phase):
-    dataset_stats['imdb']=DatasetStats(1,state.ninp,3)
+    dataset_stats['imdb']=DatasetStats(1,state.maxlen,3)
     assert phase in ('train', 'test'), 'Unsupported phase: %s' % phase
     name, root, nc, input_size, num_classes, normalization, _ = get_info(state)
     real_size = dataset_stats[name].real_size
