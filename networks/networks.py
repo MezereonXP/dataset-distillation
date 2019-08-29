@@ -16,10 +16,6 @@ class LeNet(utils.ReparamModule):
         if state.dropout:
             raise ValueError("LeNet doesn't support dropout")
         super(LeNet, self).__init__()
-        if state.textdata:
-                ninp=state.ninp #Maybe 32
-                ntoken=state.ntoken
-                self.encoder = nn.Embedding(ntoken, ninp)
         self.conv1 = nn.Conv2d(state.nc, 6, 5, padding=2 if state.input_size == 28 else 0)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.fc1 = nn.Linear(16 * 5 * 5, 120)
@@ -27,15 +23,7 @@ class LeNet(utils.ReparamModule):
         self.fc3 = nn.Linear(84, 1 if state.num_classes <= 2 else state.num_classes)
 
     def forward(self, x):
-        if self.state.textdata:
-                ninp=self.state.ninp #Maybe 32
-                out = self.encoder(x) * math.sqrt(ninp)
-                print(out.size())
-                out.unsqueeze_(1)
-                print(out.size())
-                out = F.relu(self.conv1(out), inplace=True)
-        else:
-                out = F.relu(self.conv1(x), inplace=True)
+        out = F.relu(self.conv1(x), inplace=True)
         out = F.max_pool2d(out, 2)
         out = F.relu(self.conv2(out), inplace=True)
         out = F.max_pool2d(out, 2)
@@ -66,9 +54,9 @@ class TextConvNet(utils.ReparamModule):
         if self.state.textdata:
                 ninp=self.state.ninp #Maybe 32
                 out = self.encoder(x) * math.sqrt(ninp)
-                print(out.size())
+                #print(out.size())
                 out.unsqueeze_(1)
-                print(out.size())
+                #print(out.size())
                 out = F.relu(self.conv1(out), inplace=True)
         else:
                 out = F.relu(self.conv1(x), inplace=True)
