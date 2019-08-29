@@ -131,10 +131,12 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
     with torch.no_grad():
         for i, example in enumerate(test_loader_iter):
-            data=example.text
-            #print(len(data))
-            data=data[0]
-            target=example.label
+            if state.textdata:
+                data = example.text[0]
+                target = example.label
+            else:
+                data = example[0]
+                target = example[1]
             #print(data)
             #print(target)
             #if not state.textdata: 

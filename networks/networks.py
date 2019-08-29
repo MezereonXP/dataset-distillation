@@ -40,10 +40,10 @@ class TextConvNet(utils.ReparamModule):
         if state.dropout:
             raise ValueError("TextConvNet doesn't support dropout")
         super(TextConvNet, self).__init__()
-        if state.textdata:
-                ninp=state.ninp #Maybe 32
-                ntoken=state.ntoken
-                self.encoder = nn.Embedding(ntoken*2, ninp)
+        #if state.textdata:
+        #        ninp=state.ninp #Maybe 32
+        #        ntoken=state.ntoken
+        #        self.encoder = nn.Embedding(ntoken*2, ninp)
         self.conv1 = nn.Conv2d(state.nc, 6, 5, padding=2 if state.input_size == 28 else 0)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.fc1 = nn.Linear(7760, 120)
