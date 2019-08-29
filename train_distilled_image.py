@@ -66,7 +66,7 @@ class Trainer(object):
         self.data = []
         for _ in range(self.num_data_steps):
             if state.textdata:
-                distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.ntoken,
+                distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.ninp,
                                        device=state.device, requires_grad=True)
             else:
                 distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,

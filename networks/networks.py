@@ -52,8 +52,9 @@ class TextConvNet(utils.ReparamModule):
 
     def forward(self, x):
         if self.state.textdata:
-                ninp=self.state.ninp #Maybe 32
-                out = self.encoder(x) * math.sqrt(ninp)
+                #ninp=self.state.ninp #Maybe 32
+                #out = self.encoder(x) * math.sqrt(ninp)
+                out=x
                 #print(out.size())
                 out.unsqueeze_(1)
                 #print(out.size())
