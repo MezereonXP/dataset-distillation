@@ -320,7 +320,9 @@ class BaseOptions(object):
         parser.add_argument('--init_labels', type=int, nargs="*", default=[0,1,2,3,4,5,6,7,8,9], help='If not random_init_labels, use this to set initial values of distill labels.')
         parser.add_argument('--textdata', type=bool, default=False, help='Is the dataset text-based')
         parser.add_argument('--ntoken', type=int, default=32, help='ntoken for text data')
-        parser.add_argument('--ninp', type=int, default=400, help='ninp for text data')
+        parser.add_argument('--ninp', type=int, default=5000, help='ninp for text data')
+        parser.add_argument('--maxlen', type=int, default=400, help='maxlen for text data')
+        
         parser.add_argument('--visualize', type=bool, default=True, help='Visualize distilled data')
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
