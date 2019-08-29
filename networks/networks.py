@@ -30,6 +30,9 @@ class LeNet(utils.ReparamModule):
         if self.state.textdata:
                 ninp=self.state.ninp #Maybe 32
                 out = self.encoder(x) * math.sqrt(ninp)
+                print(out.size())
+                out.unsqueeze_(1)
+                print(out.size())
                 out = F.relu(self.conv1(out), inplace=True)
         else:
                 out = F.relu(self.conv1(x), inplace=True)
