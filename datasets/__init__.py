@@ -204,13 +204,13 @@ def get_dataset(state, phase):
     elif name == 'imdb':
         transform_list = []
         # set up fields
-        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen, max_size=state.ntoken)
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
         LABEL = data.Field(sequential=False)
         
         # make splits for data
         train, test = textdata.IMDB.splits(TEXT, LABEL)
         # build the vocabulary
-        TEXT.build_vocab(train)#, vectors=GloVe(name='6B', dim=300))
+        TEXT.build_vocab(train, max_size=state.ntoken)#, vectors=GloVe(name='6B', dim=300))
         LABEL.build_vocab(train)
         #ninp=32 #Maybe 400
         #ntoken=32
