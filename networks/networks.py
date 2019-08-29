@@ -28,7 +28,7 @@ class LeNet(utils.ReparamModule):
 
     def forward(self, x):
         if self.state.textdata:
-                ninp=state.ninp #Maybe 32
+                ninp=self.state.ninp #Maybe 32
                 out = self.encoder(x) * math.sqrt(ninp)
                 out = F.relu(self.conv1(out), inplace=True)
         else:
