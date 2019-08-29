@@ -212,7 +212,7 @@ def get_dataset(state, phase):
         # build the vocabulary
         TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken)) #max_size=state.ntoken,
         LABEL.build_vocab(train)
-
+        state.pretrained_vec=train.vocab.vectors
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)

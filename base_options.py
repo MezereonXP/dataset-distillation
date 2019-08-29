@@ -324,6 +324,7 @@ class BaseOptions(object):
         parser.add_argument('--maxlen', type=int, default=400, help='maxlen for text data')
         
         parser.add_argument('--visualize', type=bool, default=True, help='Visualize distilled data')
+        
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
             # Use default Namespace (not UniqueNamespace) because dummy state may

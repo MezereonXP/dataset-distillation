@@ -43,7 +43,9 @@ class TextConvNet(utils.ReparamModule):
         #if state.textdata:
         ninp=state.ninp #Maybe 32
         ntoken=state.ntoken
-        self.encoder = nn.Embedding(ntoken*2, ninp)
+        self.encoder = nn.Embedding(ntoken*2, ninp, )
+        self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.encoder.weight.requires_grad = False 
         self.conv1 = nn.Conv2d(state.nc, 6, 5, padding=2 if state.input_size == 28 else 0)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.fc1 = nn.Linear(7760, 120)
@@ -52,9 +54,9 @@ class TextConvNet(utils.ReparamModule):
 
     def forward(self, x):
         if self.state.textdata:
-                #ninp=self.state.ninp #Maybe 32
-                #out = self.encoder(x) * math.sqrt(ninp)
-                out=x
+                ninp=self.state.ninp #Maybe 32
+                out = self.encoder(x) * math.sqrt(ninp)
+                #out=x
                 #print(out.size())
                 out.unsqueeze_(1)
                 #print(out.size())
