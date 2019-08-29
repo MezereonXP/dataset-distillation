@@ -131,10 +131,12 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
     with torch.no_grad():
         for i, example in enumerate(test_loader_iter):
-            print(example.fields)
-            #print(target)
+            data=example.text
+            target=example.label
+            print(data)
+            print(target)
             #if not state.textdata: 
-            #    data, target = data.to(device, non_blocking=True), target.to(device, non_blocking=True)
+            data, target = data.to(device, non_blocking=True), target.to(device, non_blocking=True)
             if attack_mode:
                 for n in range(num_classes):
                     class_total[n] += (target == n).sum().item()
