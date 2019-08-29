@@ -48,7 +48,7 @@ class TextConvNet(utils.ReparamModule):
         self.encoder.weight.requires_grad = False 
         self.conv1 = nn.Conv2d(state.nc, 6, 5, padding=2 if state.input_size == 28 else 0)
         self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(7760, 120)
+        self.fc1 = nn.Linear(13968, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 1 if state.num_classes <= 2 else state.num_classes)
 
