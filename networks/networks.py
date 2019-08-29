@@ -46,7 +46,7 @@ class LeNet(utils.ReparamModule):
         return out
 
 class TextConvNet(utils.ReparamModule):
-    supported_dims = set(range(1,5000))
+    supported_dims = set(range(1,10000))
     def __init__(self, state):
         self.state=state
         if state.dropout:
