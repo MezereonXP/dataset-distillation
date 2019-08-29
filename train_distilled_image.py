@@ -261,11 +261,7 @@ class Trainer(object):
         for epoch, it, (rdata, rlabel) in self.prefetch_train_loader_iter():
             data_t = time.time() - data_t0
             
-            if self.state.textdata:
-                ninp=state.ninp #Maybe 32
-                ntoken=state.ntoken
-                encoder = nn.Embedding(ntoken, ninp)
-                rdata = encoder(rdata) * math.sqrt(ninp)
+            
             if it == 0:
                 self.scheduler.step()
 
