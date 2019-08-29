@@ -137,7 +137,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
             else:
                 data = example[0]
                 target = example[1]
-            #print(data)
+            print(example.fields)
             #print(target)
             #if not state.textdata: 
             data, target = data.to(device, non_blocking=True), target.to(device, non_blocking=True)

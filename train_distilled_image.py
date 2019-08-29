@@ -244,7 +244,7 @@ class Trainer(object):
             prefetch_it = max(0, niter - 2)
             for it, example in enumerate(train_iter):
                 if state.textdata:
-                    print(example.fields)
+                    #print(example.fields)
                     data = example.text[0]
                     target = example.label
                 else:
