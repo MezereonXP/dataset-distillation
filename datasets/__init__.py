@@ -204,7 +204,7 @@ def get_dataset(state, phase):
     elif name == 'imdb':
         transform_list = []
         # set up fields
-        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen, max_size=state.ntoken)
         LABEL = data.Field(sequential=False)
         
         # make splits for data
