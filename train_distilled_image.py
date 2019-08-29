@@ -243,7 +243,13 @@ class Trainer(object):
                 niter = len(train_iter)
             prefetch_it = max(0, niter - 2)
             for it, example in enumerate(train_iter):
-                val = (example.text[0], example.label)
+                if state.textdata:
+                    data = example.text[0]
+                    target = example.label
+                else:
+                    data = example[0]
+                    target = example[1]
+                val=(data,target)
                 # Prefetch (start workers) at the end of epoch BEFORE yielding
                 if it == prefetch_it and epoch < state.epochs - 1:
                     train_iter = iter(state.train_loader)

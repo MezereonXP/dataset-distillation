@@ -21,7 +21,13 @@ import train_distilled_image
 
 def train(state, model, epoch, optimizer):
     model.train()
-    for it, (data, target) in enumerate(state.train_loader):
+    for it, example in enumerate(state.train_loader):
+        if state.textdata:
+            data = example.text[0]
+            target = example.label
+        else:
+            data = example[0]
+            target = example[1]
         data, target = data.to(state.device, non_blocking=True), target.to(state.device, non_blocking=True)
         optimizer.zero_grad()
         output = model(data)
