@@ -131,10 +131,8 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
     with torch.no_grad():
         for i, example in enumerate(test_loader_iter):
-            data=example[0]
-            target=example[2]
-            print(data)
-            print(target)
+            print(example.fields)
+            #print(target)
             #if not state.textdata: 
             #    data, target = data.to(device, non_blocking=True), target.to(device, non_blocking=True)
             if attack_mode:
