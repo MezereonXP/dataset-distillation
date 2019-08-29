@@ -43,7 +43,7 @@ class TextConvNet(utils.ReparamModule):
         #if state.textdata:
         ninp=state.ninp #Maybe 32
         ntoken=state.ntoken
-        self.encoder = nn.Embedding(ntoken*2, ninp, )
+        self.encoder = nn.Embedding(ntoken, ninp)
         self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.encoder.weight.requires_grad = False 
         self.conv1 = nn.Conv2d(state.nc, 6, 5, padding=2 if state.input_size == 28 else 0)
