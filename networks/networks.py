@@ -12,7 +12,6 @@ class LeNet(utils.ReparamModule):
     supported_dims = {28, 32}
 
     def __init__(self, state):
-        self.state=state
         if state.dropout:
             raise ValueError("LeNet doesn't support dropout")
         super(LeNet, self).__init__()
