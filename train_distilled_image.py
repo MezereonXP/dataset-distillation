@@ -128,7 +128,7 @@ class Trainer(object):
         gws = []
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
-                model.distill_flag=True
+                model.distilling_flag=True
                 output = model.forward_with_param(data, w)
                 loss = task_loss(state, output, label)
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
@@ -141,7 +141,7 @@ class Trainer(object):
 
         # final L
         model.eval()
-        model.distill_flag=False
+        model.distilling_flag=False
         output = model.forward_with_param(rdata, params[-1])
         ll = final_objective_loss(state, output, rlabel)
         return ll, (ll, params, gws)
