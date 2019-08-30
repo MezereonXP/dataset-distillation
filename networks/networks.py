@@ -51,9 +51,9 @@ class TextConvNet(utils.ReparamModule):
         self.fc1 = nn.Linear(13968, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 1 if state.num_classes <= 2 else state.num_classes)
-
+        self.distilling_flag=False
     def forward(self, x):
-        if self.state.textdata:
+        if self.state.textdata and not self.distilling_flag:
                 ninp=self.state.ninp #Maybe 32
                 out = self.encoder(x) * math.sqrt(ninp)
                 #out=x
