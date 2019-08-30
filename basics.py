@@ -83,6 +83,7 @@ def train_steps_inplace(state, models, steps, params=None, callback=None):
 
         for model, w in zip(models, params):
             model.train()  # callback may change model.training so we set here
+            model.distill_label=True
             output = model.forward_with_param(data, w)
             loss = task_loss(state, output, label)
             loss.backward(lr)
@@ -147,6 +148,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
                     class_total[n] += (target == n).sum().item()
 
             for k, model in enumerate(models):
+                model.distill_label=False
                 if param_list is None or param_list[k] is None:
                     output = model(data)
                 else:
