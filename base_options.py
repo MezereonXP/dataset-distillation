@@ -472,7 +472,7 @@ class BaseOptions(object):
         if state.device_id < 0:
             state.opt.device = torch.device("cpu")
         else:
-            torch.cuda.set_device(-1)#(state.device_id)
+            torch.cuda.set_device(state.device_id)
             state.opt.device = torch.device("cuda:{}".format(state.device_id))
 
         if not dummy:
