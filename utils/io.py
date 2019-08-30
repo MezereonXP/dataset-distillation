@@ -107,10 +107,10 @@ def to_np(steps):
         return steps
     np_steps = []
     for data, label, lr in steps:
-        try:
-            np_data = data.detach().permute(0, 2, 3, 1).to('cpu').numpy()
-        except:
-            np_data = data.detach().permute(0, 1, 2).to('cpu').numpy()
+        #try:
+        np_data = data.detach().permute(0, 2, 3, 1).to('cpu').numpy()
+        #except:
+        #    np_data = data.detach().permute(0, 1, 2).to('cpu').numpy()
         np_label = label.detach().to('cpu').numpy()
         if lr is not None:
             lr = lr.detach().cpu().numpy()
