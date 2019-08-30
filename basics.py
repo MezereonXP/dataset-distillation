@@ -136,8 +136,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
                 data = example.text[0]
                 target = example.label
             else:
-                data = example[0]
-                target = example[1]
+                (data, target) = example
             #print(data)
             #print(data.size())
             #print(target)
