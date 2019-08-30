@@ -249,10 +249,10 @@ class Trainer(object):
                     #print(example.fields)
                     data = example.text[0]
                     target = example.label
+                    val=(data,target)
                 else:
-                    data = example[0]
-                    target = example[1]
-                val=(data,target)
+                    val=example
+                
                 # Prefetch (start workers) at the end of epoch BEFORE yielding
                 if it == prefetch_it and epoch < state.epochs - 1:
                     train_iter = iter(state.train_loader)

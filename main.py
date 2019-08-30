@@ -26,8 +26,7 @@ def train(state, model, epoch, optimizer):
             data = example.text[0]
             target = example.label
         else:
-            data = example[0]
-            target = example[1]
+            (data, target) = example
         data, target = data.to(state.device, non_blocking=True), target.to(state.device, non_blocking=True)
         optimizer.zero_grad()
         output = model(data)
