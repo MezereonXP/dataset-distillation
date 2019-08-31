@@ -241,7 +241,7 @@ class Trainer(object):
             train_iter = iter(state.train_loader)
             print("Training Epoch: {}".format(epoch))
             if state.textdata:
-                niter = len(tuple(train_iter))
+                niter = 25
                 print(niter)
             else:
                 niter = len(train_iter)
