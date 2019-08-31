@@ -239,7 +239,7 @@ class Trainer(object):
         device = state.device
         train_iter = iter(state.train_loader)
         for epoch in range(state.epochs):
-            print ("NEW TRAINING EPOCH")
+            print("Training Epoch: {}".format(epoch))
             if state.textdata:
                 niter = len(tuple(train_iter))
             else:
@@ -251,6 +251,7 @@ class Trainer(object):
                     data = example.text[0]
                     target = example.label
                     val=(data,target)
+                    print(target)
                 else:
                     val=example
                 
