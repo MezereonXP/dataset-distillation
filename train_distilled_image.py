@@ -241,6 +241,8 @@ class Trainer(object):
         for epoch in range(state.epochs):
             if state.textdata:
                 niter = len(tuple(train_iter))
+                print(niter)
+                print (len(train_iter))
             else:
                 niter = len(train_iter)
             prefetch_it = max(0, niter - 2)
