@@ -239,6 +239,7 @@ class Trainer(object):
         device = state.device
         train_iter = iter(state.train_loader)
         for epoch in range(state.epochs):
+            print ("NEW TRAINING EPOCH")
             if state.textdata:
                 niter = len(tuple(train_iter))
             else:
