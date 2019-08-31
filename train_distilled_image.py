@@ -246,7 +246,8 @@ class Trainer(object):
             else:
                 niter = len(train_iter)
             prefetch_it = max(0, niter - 2)
-            for it, example in enumerate(train_iter):
+            it = 0
+            for example in train_iter:
                 if state.textdata:
                     #print(example.fields)
                     data = example.text[0]
@@ -259,6 +260,7 @@ class Trainer(object):
                 # Prefetch (start workers) at the end of epoch BEFORE yielding
                 if it == prefetch_it and epoch < state.epochs - 1:
                     train_iter = iter(state.train_loader)
+                it += 1
                 yield epoch, it, val
 
     def train(self):
