@@ -237,8 +237,8 @@ class Trainer(object):
     def prefetch_train_loader_iter(self):
         state = self.state
         device = state.device
-        train_iter = iter(state.train_loader)
         for epoch in range(state.epochs):
+            train_iter = iter(state.train_loader)
             print("Training Epoch: {}".format(epoch))
             if state.textdata:
                 niter = len(tuple(train_iter))
