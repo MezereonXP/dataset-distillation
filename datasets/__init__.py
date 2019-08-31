@@ -55,7 +55,7 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
-    imdb={0,1,2}
+    imdb={1,2}
 )
 
 # (nc, real_size, num_classes)
@@ -69,7 +69,7 @@ dataset_stats = dict(
     Cifar10=DatasetStats(3, 32, 10),
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
-    imdb = DatasetStats(1, 0, 3)
+    imdb = DatasetStats(1, 0, 2)
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
