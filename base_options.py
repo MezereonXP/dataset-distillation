@@ -537,9 +537,9 @@ class BaseOptions(object):
 
         if state.opt.textdata:
             state.opt.train_loader = data.Iterator(
-                    train_dataset, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.train_dataset))
+                    train_dataset, batch_size=state.batch_size, device=state.device, repeat=True, sort_key=lambda x: len(x.train_dataset))
             state.opt.test_loader = data.Iterator(
-                    test_dataset, batch_size=state.test_batch_size, device=state.device, repeat=True, sort_key=lambda x: len(x.test_dataset))
+                    test_dataset, batch_size=state.test_batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.test_dataset))
         else:
             state.opt.train_loader = torch.utils.data.DataLoader(
                 train_dataset, batch_size=state.batch_size,
