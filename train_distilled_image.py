@@ -247,6 +247,7 @@ class Trainer(object):
                 niter = len(train_iter)
             prefetch_it = max(0, niter - 2)
             for it in range(niter):
+                print(it)
                 example = next(train_iter)
                 if state.textdata:
                     #print(example.fields)
