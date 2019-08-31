@@ -45,8 +45,8 @@ def task_loss(state, output, label, **kwargs):
         label = label.to(output, non_blocking=True).view_as(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
     else:
-        return xentropy_cost(label, output)
-        #return F.kl_div(output, label.float(), **kwargs)
+        #return xentropy_cost(label, output)
+        return F.kl_div(output, label.float(), **kwargs)
 def task_loss_eval(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
