@@ -77,7 +77,7 @@ assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
 
 
 def get_info(state):
-    dataset_stats['imdb']=DatasetStats(1,state.maxlen,3)
+    dataset_stats['imdb']=DatasetStats(1,state.maxlen,2)
     name = state.dataset  # argparse dataset fmt ensures that this is lowercase and doesn't contrain hyphen
     assert name in dataset_stats, 'Unsupported dataset: {}'.format(state.dataset)
     nc, input_size, num_classes = dataset_stats[name]
@@ -96,7 +96,7 @@ def suppress_stdout():
 
 
 def get_dataset(state, phase):
-    dataset_stats['imdb']=DatasetStats(1,state.maxlen,3)
+    dataset_stats['imdb']=DatasetStats(1,state.maxlen,2)
     assert phase in ('train', 'test'), 'Unsupported phase: %s' % phase
     name, root, nc, input_size, num_classes, normalization, _ = get_info(state)
     real_size = dataset_stats[name].real_size
