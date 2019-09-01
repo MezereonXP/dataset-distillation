@@ -102,7 +102,7 @@ class TextConvNet2(utils.ReparamModule):
         out = F.max_pool1d(out, 3)
         out = F.relu(self.fc1(out), inplace=True)
         out = out.view(out.size(0), -1)
-        out = F.Sigmoid(self.fc2(out))
+        out = nn.Sigmoid(self.fc2(out))
         return out    
 class AlexCifarNet(utils.ReparamModule):
     supported_dims = {32}
