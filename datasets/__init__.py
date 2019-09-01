@@ -210,7 +210,7 @@ def get_dataset(state, phase):
         # make splits for data
         train, test = textdata.IMDB.splits(TEXT, LABEL)
         # build the vocabulary
-        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken) #max_size=state.ntoken,
+        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
         LABEL.build_vocab(train)
         state.pretrained_vec=TEXT.vocab.vectors
         #ninp=32 #Maybe 400
