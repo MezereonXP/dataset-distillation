@@ -70,6 +70,40 @@ class TextConvNet(utils.ReparamModule):
         out = F.relu(self.fc2(out), inplace=True)
         out = self.fc3(out)
         return out
+    
+class TextConvNet2(utils.ReparamModule):
+    supported_dims = set(range(1,20000))
+    def __init__(self, state):
+        self.state=state
+        if state.dropout:
+            raise ValueError("TextConvNet2 doesn't support dropout")
+        super(TextConvNet2, self).__init__()
+        #if state.textdata:
+        ninp=state.ninp #Maybe 32
+        ntoken=state.ntoken
+        self.encoder = nn.Embedding(ntoken, ninp)
+        self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.encoder.weight.requires_grad = False 
+        self.conv1 = nn.Conv1d(state.nc, 250, 3)
+        self.fc1 = nn.Linear(250, 250)
+        self.fc2 = nn.Linear(250, 1 if state.num_classes <= 2 else state.num_classes)
+        self.distilling_flag=False
+    def forward(self, x):
+        if self.state.textdata and not self.distilling_flag:
+                ninp=self.state.ninp #Maybe 32
+                out = self.encoder(x) * math.sqrt(ninp)
+                #out=x
+                #print(out.size())
+                out.unsqueeze_(1)
+                #print(out.size())
+                out = F.relu(self.conv1(out), inplace=True)
+        else:
+                out = F.relu(self.conv1(x), inplace=True)
+        out = F.max_pool1d(out, 3)
+        out = F.relu(self.fc1(out), inplace=True)
+        out = out.view(out.size(0), -1)
+        out = F.Sigmoid(self.fc2(out))
+        return out    
 class AlexCifarNet(utils.ReparamModule):
     supported_dims = {32}
 
