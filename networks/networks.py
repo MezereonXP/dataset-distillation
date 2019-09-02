@@ -87,6 +87,7 @@ class TextConvNet2(utils.ReparamModule):
         self.conv1 = nn.Conv1d(state.maxlen, 250, 3)
         self.fc1 = nn.Linear(16, 250)
         self.fc2 = nn.Linear(250, 1 if state.num_classes <= 2 else state.num_classes)
+        self.sigm=nn.Sigmoid()
         self.distilling_flag=False
     def forward(self, x):
         if self.state.textdata and not self.distilling_flag:
@@ -102,7 +103,7 @@ class TextConvNet2(utils.ReparamModule):
         out = F.max_pool1d(out, 3)
         out = F.relu(self.fc1(out), inplace=True)
         #out = out.view(out.size(0), -1)
-        out = nn.Sigmoid(self.fc2(out))
+        out = self.sigm(self.fc2(out))
         return out    
 class AlexCifarNet(utils.ReparamModule):
     supported_dims = {32}
