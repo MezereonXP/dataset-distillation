@@ -47,10 +47,18 @@ class Trainer(object):
         #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
             if state.random_init_labels:
-                distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
+                if state.num_classes == 2:
+                    distill_label = torch.randn(self.num_per_step, 1, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
+                else:
+                    distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
             #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
             else:
-                dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+                if state.num_classes==2:
+                    dl_array = [[i==j for i in range(1)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+                else:
+                    dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+                
+                
                 distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=state.device)
                     
                 #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
