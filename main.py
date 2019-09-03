@@ -22,11 +22,7 @@ import train_distilled_image
 def train(state, model, epoch, optimizer):
     model.train()
     
-    batch_list=[i for i in state.train_loader]
-    print(batch_list[24])
-    print(len(batch_list))
-    it=0
-    for example in batch_list:
+    for it, example in enumerate(batch_list):
         print(it)
         if state.textdata:
             data = example.text[0]
@@ -37,7 +33,7 @@ def train(state, model, epoch, optimizer):
         optimizer.zero_grad()
         output = model(data)
         if state.num_classes == 2:
-            return F.binary_cross_entropy_with_logits(torch.squeeze(output), target.float())
+            loss = F.binary_cross_entropy_with_logits(torch.squeeze(output), target.float())
         else:
             loss = F.cross_entropy(output, target)
         loss.backward()
@@ -50,7 +46,6 @@ def train(state, model, epoch, optimizer):
                 log_str += '\tTest Acc: {: >5.2f}%\tTest Loss: {: >7.4f}'.format(acc.item() * 100, loss.item())
                 model.train()
             logging.info(log_str)
-        it+=1
 
 def main(state):
     logging.info('mode: {}, phase: {}'.format(state.mode, state.phase))
