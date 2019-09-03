@@ -147,7 +147,7 @@ class TextConvNet3(utils.ReparamModule):
                 out = self.encoder(x) #* math.sqrt(ninp)
                 out.unsqueeze_(1)
                 #out=x
-                print(out.size())
+                #print(out.size())
                 #print(out.size())
         else:
                 out=x
