@@ -23,7 +23,6 @@ def train(state, model, epoch, optimizer):
     model.train()
     
     for it, example in enumerate(state.train_loader):
-        print(it)
         if state.textdata:
             data = example.text[0]
             target = example.label
