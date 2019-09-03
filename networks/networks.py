@@ -83,7 +83,7 @@ class TextConvNet2(utils.ReparamModule):
         ntoken=state.ntoken
         self.encoder = nn.Embedding(ntoken, ninp)
         self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
-        self.encoder.weight.requires_grad = False 
+        self.encoder.weight.requires_grad = state.learnable_embedding 
         self.drop=nn.Dropout(0.2)
         self.conv1 = nn.Conv1d(state.maxlen, 250, 3)
         self.fc1 = nn.Linear(250, 250)
@@ -127,7 +127,7 @@ class TextConvNet3(utils.ReparamModule):
         output_dim=1
         self.encoder = nn.Embedding(ntoken, embedding_dim)
         self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
-        self.encoder.weight.requires_grad = False 
+        self.encoder.weight.requires_grad = state.learnable_embedding 
         
         self.convs = nn.ModuleList([
                                     nn.Conv2d(in_channels = 1, 
@@ -155,7 +155,7 @@ class TextConvNet3(utils.ReparamModule):
         pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
         cat = self.dropout(torch.cat(pooled, dim = 1))
         
-        return cat     
+        return self.fc(cat)     
 class CNN(nn.Module):
     
     def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, 
