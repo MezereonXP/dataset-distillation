@@ -205,7 +205,7 @@ def get_dataset(state, phase):
         transform_list = []
         # set up fields
         TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
-        LABEL = data.LabelField(dtype=torch.float)
+        LABEL = data.LabelField(dtype=torch.long)
         
         # make splits for data
         train, test = textdata.IMDB.splits(TEXT, LABEL)
