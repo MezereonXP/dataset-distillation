@@ -85,7 +85,7 @@ class TextConvNet2(utils.ReparamModule):
         self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.encoder.weight.requires_grad = False 
         self.conv1 = nn.Conv1d(state.maxlen, 250, 3)
-        self.fc1 = nn.Linear(16, 250)
+        self.fc1 = nn.Linear(250, 250)
         self.fc2 = nn.Linear(250, 1 if state.num_classes <= 2 else state.num_classes)
         self.sigm=nn.Sigmoid()
         self.distilling_flag=False
