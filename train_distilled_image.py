@@ -232,7 +232,7 @@ class Trainer(object):
                 for l, g in zip(labels, glabels):
                     l.grad.add_(g)
         if len(bwd_out) > 0:
-            torch.autograd.backward(bwd_out, bwd_grad)#MULTISTEP PROBLEM?
+            torch.autograd.backward(bwd_out, bwd_grad, retain_graph=True)#MULTISTEP PROBLEM?
 
     def save_results(self, steps=None, visualize=True, subfolder=''):
         with torch.no_grad():
