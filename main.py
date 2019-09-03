@@ -23,8 +23,9 @@ def train(state, model, epoch, optimizer):
     model.train()
     
     train_iter=iter(state.train_loader)
-    
-    for it, example in enumerate(train_iter):
+    it=0
+    for example in train_iter:
+        print(it)
         if state.textdata:
             data = example.text[0]
             target = example.label
@@ -47,7 +48,7 @@ def train(state, model, epoch, optimizer):
                 log_str += '\tTest Acc: {: >5.2f}%\tTest Loss: {: >7.4f}'.format(acc.item() * 100, loss.item())
                 model.train()
             logging.info(log_str)
-
+        it+=1
 
 def main(state):
     logging.info('mode: {}, phase: {}'.format(state.mode, state.phase))
