@@ -23,6 +23,7 @@ def train(state, model, epoch, optimizer):
     model.train()
     
     batch_list=[i for i in state.train_loader]
+    print(batch_list[0])
     it=0
     for example in batch_list:
         print(it)
