@@ -22,7 +22,7 @@ import train_distilled_image
 def train(state, model, epoch, optimizer):
     model.train()
     
-    for it, example in enumerate(batch_list):
+    for it, example in enumerate(state.train_loader):
         print(it)
         if state.textdata:
             data = example.text[0]
@@ -40,7 +40,7 @@ def train(state, model, epoch, optimizer):
         optimizer.step()
         if state.log_interval > 0 and it % state.log_interval == 0:
             log_str = 'Epoch: {:4d} ({:2.0f}%)\tTrain Loss: {: >7.4f}'.format(
-                epoch, 100. * it / niters, loss.item())
+                epoch, 100. * it / len(state.train_loader), loss.item())
             if it == 0 or (state.log_interval > 0 and it % state.log_interval == 0):
                 acc, loss = evaluate_models(state, [model])
                 log_str += '\tTest Acc: {: >5.2f}%\tTest Loss: {: >7.4f}'.format(acc.item() * 100, loss.item())
