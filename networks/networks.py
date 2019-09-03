@@ -92,10 +92,11 @@ class TextConvNet2(utils.ReparamModule):
     def forward(self, x):
         if self.state.textdata and not self.distilling_flag:
                 ninp=self.state.ninp #Maybe 32
+                #print(x.size())
                 out = self.encoder(x) #* math.sqrt(ninp)
                 #out=x
-                print(out.size())
-                #out.unsqueeze_(1)
+                #print(out.size())
+                out.squeeze_(1)
                 #print(out.size())
                 out = F.relu(self.conv1(out), inplace=True)
         else:
