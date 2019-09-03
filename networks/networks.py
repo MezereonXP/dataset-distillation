@@ -84,6 +84,7 @@ class TextConvNet2(utils.ReparamModule):
         self.encoder = nn.Embedding(ntoken, ninp)
         self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.encoder.weight.requires_grad = False 
+        self.drop=nn.Dropout(0.2)
         self.conv1 = nn.Conv1d(state.maxlen, 250, 3)
         self.fc1 = nn.Linear(250, 250)
         self.fc2 = nn.Linear(250, 1 if state.num_classes <= 2 else state.num_classes)
@@ -97,15 +98,114 @@ class TextConvNet2(utils.ReparamModule):
                 #out=x
                 #print(out.size())
                 #print(out.size())
+                out = self.drop(out)
                 out = F.relu(self.conv1(out), inplace=True)
         else:
                 out=torch.squeeze(x, dim=1)
+                out=self.drop(out)
                 out = F.relu(self.conv1(out), inplace=True)
         out_maxed = torch.max(out, -1).values
         #out = out.view(out.size(0), -1)
         out_maxed = F.relu(self.fc1(out_maxed), inplace=True)
-        out_maxed = self.sigm(self.fc2(out_maxed))
+        out_maxed = self.fc2(out_maxed)
+        #out_maxed = self.sigm(out_maxed)
         return out_maxed    
+    
+class TextConvNet3(utils.ReparamModule):
+    supported_dims = set(range(1,20000))
+    def __init__(self, state):
+        self.state=state
+        if state.dropout:
+            raise ValueError("TextConvNet3 doesn't support dropout")
+        super(TextConvNet3, self).__init__()
+        #if state.textdata:
+        embedding_dim=state.ninp #Maybe 32
+        ntoken=state.ntoken
+        n_filters = 100
+        filter_sizes = [3,4,5]
+        dropout=0.5
+        output_dim=1
+        self.encoder = nn.Embedding(ntoken, embedding_dim)
+        self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.encoder.weight.requires_grad = False 
+        
+        self.convs = nn.ModuleList([
+                                    nn.Conv2d(in_channels = 1, 
+                                              out_channels = n_filters, 
+                                              kernel_size = (fs, embedding_dim)) 
+                                    for fs in filter_sizes
+                                    ])
+        
+        self.fc = nn.Linear(len(filter_sizes) * n_filters, output_dim)
+        
+        self.dropout = nn.Dropout(dropout)
+        
+        
+        self.distilling_flag=False
+    def forward(self, x):
+        if self.state.textdata and not self.distilling_flag:
+                out = self.encoder(x) #* math.sqrt(ninp)
+                out.unsqueeze_(1)
+                #out=x
+                print(out.size())
+                #print(out.size())
+        else:
+                out=torch.squeeze(x, dim=1)
+        conved = [F.relu(conv(out)).squeeze(3) for conv in self.convs]
+        pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
+        cat = self.dropout(torch.cat(pooled, dim = 1))
+        
+        return cat     
+class CNN(nn.Module):
+    
+    def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, 
+                 dropout, pad_idx):
+        
+        super().__init__()
+                
+        self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx = pad_idx)
+        
+        self.convs = nn.ModuleList([
+                                    nn.Conv2d(in_channels = 1, 
+                                              out_channels = n_filters, 
+                                              kernel_size = (fs, embedding_dim)) 
+                                    for fs in filter_sizes
+                                    ])
+        
+        self.fc = nn.Linear(len(filter_sizes) * n_filters, output_dim)
+        
+        self.dropout = nn.Dropout(dropout)
+        
+    def forward(self, text):
+        
+        #text = [sent len, batch size]
+        
+        text = text.permute(1, 0)
+                
+        #text = [batch size, sent len]
+        
+        embedded = self.embedding(text)
+                
+        #embedded = [batch size, sent len, emb dim]
+        
+        embedded = embedded.unsqueeze(1)
+        
+        #embedded = [batch size, 1, sent len, emb dim]
+        
+        conved = [F.relu(conv(embedded)).squeeze(3) for conv in self.convs]
+            
+        #conved_n = [batch size, n_filters, sent len - filter_sizes[n] + 1]
+                
+        pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
+        
+        #pooled_n = [batch size, n_filters]
+        
+        cat = self.dropout(torch.cat(pooled, dim = 1))
+
+        #cat = [batch size, n_filters * len(filter_sizes)]
+            
+        return self.fc(cat)    
+    
 class AlexCifarNet(utils.ReparamModule):
     supported_dims = {32}
 
