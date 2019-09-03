@@ -30,7 +30,10 @@ def train(state, model, epoch, optimizer):
         data, target = data.to(state.device, non_blocking=True), target.to(state.device, non_blocking=True)
         optimizer.zero_grad()
         output = model(data)
-        loss = F.cross_entropy(output, target)
+        if state.num_classes == 2:
+            return F.binary_cross_entropy_with_logits(output, target)
+        else:
+            loss = F.cross_entropy(output, target)
         loss.backward()
         optimizer.step()
         if state.log_interval > 0 and it % state.log_interval == 0:
