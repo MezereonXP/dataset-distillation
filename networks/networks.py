@@ -100,8 +100,8 @@ class TextConvNet2(utils.ReparamModule):
                 out = F.relu(self.conv1(out), inplace=True)
         else:
                 out = F.relu(self.conv1(x), inplace=True)
-        out = F.max_pool1d(out, 3)
-        out = out.view(out.size(0), -1)
+        out = torch.max(out, dim=-1)
+        #out = out.view(out.size(0), -1)
         out = F.relu(self.fc1(out), inplace=True)
         out = self.sigm(self.fc2(out))
         return out    
