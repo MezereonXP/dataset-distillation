@@ -22,9 +22,9 @@ import train_distilled_image
 def train(state, model, epoch, optimizer):
     model.train()
     
-    train_iter=iter(state.train_loader)
+    
     it=0
-    for example in train_iter:
+    for example in state.train_loader:
         print(it)
         if state.textdata:
             data = example.text[0]
