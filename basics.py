@@ -160,6 +160,9 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
                 if num_classes == 2:
                     pred = (output > 0.5).to(target.dtype).view(-1)
+                    print("DEBUG")
+                    print (output) 
+                    print(pred)
                 else:
                     pred = output.argmax(1)  # get the index of the max log-probability
 
