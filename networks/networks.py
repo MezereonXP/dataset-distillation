@@ -100,7 +100,7 @@ class TextConvNet2(utils.ReparamModule):
                 out = F.relu(self.conv1(out), inplace=True)
         else:
                 out = F.relu(self.conv1(x), inplace=True)
-        out = torch.max(out, dim=-1)
+        out = torch.max(out, -1).values
         #out = out.view(out.size(0), -1)
         out = F.relu(self.fc1(out), inplace=True)
         out = self.sigm(self.fc2(out))
