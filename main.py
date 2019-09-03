@@ -22,11 +22,11 @@ import train_distilled_image
 def train(state, model, epoch, optimizer):
     model.train()
     
-    
-    print(len(state.train_loader))
-    print(len(state.train_loader))
-    niters=25
     train_iter=state.train_loader
+    print(enumerate(train_iter))
+    print(len(train_iter))
+    niters=25
+    
     for it, example in enumerate(train_iter):
         if state.textdata:
             data = example.text[0]
