@@ -22,7 +22,7 @@ import train_distilled_image
 def train(state, model, epoch, optimizer):
     model.train()
     
-    
+    print([i for i in state.train_loader])
     it=0
     for example in state.train_loader:
         print(it)
