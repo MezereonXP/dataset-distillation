@@ -101,11 +101,11 @@ class TextConvNet2(utils.ReparamModule):
         else:
                 out=torch.squeeze(x, dim=1)
                 out = F.relu(self.conv1(out), inplace=True)
-        out = torch.max(out, -1).values
+        out_maxed = torch.max(out, -1).values
         #out = out.view(out.size(0), -1)
-        out = F.relu(self.fc1(out), inplace=True)
-        out = self.sigm(self.fc2(out))
-        return out    
+        out_maxed = F.relu(self.fc1(out_maxed), inplace=True)
+        out_maxed = self.sigm(self.fc2(out_maxed))
+        return out_maxed    
 class AlexCifarNet(utils.ReparamModule):
     supported_dims = {32}
 
