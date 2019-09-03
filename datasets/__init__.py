@@ -55,7 +55,7 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
-    imdb={1,2}
+    imdb={0,1}
 )
 
 # (nc, real_size, num_classes)
@@ -205,7 +205,7 @@ def get_dataset(state, phase):
         transform_list = []
         # set up fields
         TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
-        LABEL = data.Field(sequential=False)
+        LABEL = data.LabelField(dtype=torch.float)
         
         # make splits for data
         train, test = textdata.IMDB.splits(TEXT, LABEL)
