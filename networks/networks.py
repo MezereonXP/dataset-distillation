@@ -94,7 +94,7 @@ class TextConvNet2(utils.ReparamModule):
                 ninp=self.state.ninp #Maybe 32
                 out = self.encoder(x) #* math.sqrt(ninp)
                 #out=x
-                #print(out.size())
+                print(out.size())
                 #out.unsqueeze_(1)
                 #print(out.size())
                 out = F.relu(self.conv1(out), inplace=True)
