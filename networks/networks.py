@@ -96,10 +96,10 @@ class TextConvNet2(utils.ReparamModule):
                 out = self.encoder(x) #* math.sqrt(ninp)
                 #out=x
                 #print(out.size())
-                out.squeeze_(1)
                 #print(out.size())
                 out = F.relu(self.conv1(out), inplace=True)
         else:
+                out.squeeze_(1)
                 out = F.relu(self.conv1(x), inplace=True)
         out = torch.max(out, -1).values
         #out = out.view(out.size(0), -1)
