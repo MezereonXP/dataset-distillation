@@ -43,10 +43,10 @@ def cross_entropy(pred, soft_targets, **kwargs):
 def task_loss(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
-        print ("LABEL")
-        print(label)
-        print ("OUTPUT")
-        print(output)
+        #print ("LABEL")
+        #print(label)
+        #print ("OUTPUT")
+        #print(output)
         return F.binary_cross_entropy(output, label, **kwargs) 
         #return F.binary_cross_entropy_with_logits(output, label, **kwargs)
     else:
