@@ -162,11 +162,12 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
                     pred = (output > 0.5).to(target.dtype).view(-1)
                     print("DEBUG")
                     print (output) 
-                    print(pred)
+                    print(target)
                 else:
                     pred = output.argmax(1)  # get the index of the max log-probability
 
                 correct_list = pred == target
+                print(correct_list)
                 losses[k] += task_loss_eval(state, output, target, reduction='sum').item()  # sum up batch loss
                 if attack_mode:
                     for c in range(num_classes):
