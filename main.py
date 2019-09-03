@@ -31,9 +31,9 @@ def train(state, model, epoch, optimizer):
         optimizer.zero_grad()
         output = model(data)
         if state.num_classes == 2:
-            return F.binary_cross_entropy_with_logits(torch.squeeze(output), target)
+            return F.binary_cross_entropy_with_logits(torch.squeeze(output), target.float())
         else:
-            loss = F.cross_entropy(output, target.float())
+            loss = F.cross_entropy(output, target)
         loss.backward()
         optimizer.step()
         if state.log_interval > 0 and it % state.log_interval == 0:
