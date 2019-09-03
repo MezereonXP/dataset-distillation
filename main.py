@@ -23,7 +23,7 @@ def train(state, model, epoch, optimizer):
     model.train()
     
     train_iter=state.train_loader
-    print([i for i in enumerate(train_iter)])
+    print(len(enumerate(train_iter)))
     print(len(train_iter))
     niters=25
     
