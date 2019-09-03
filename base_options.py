@@ -318,10 +318,11 @@ class BaseOptions(object):
         parser.add_argument('--random_init_labels', type=int, default=0, help='0 for one-hot labels init, 1 for random init.')
         parser.add_argument('--num_distill_classes', type=int, default=10, help='Number of distill samples per step (can be less than number of classes.')
         parser.add_argument('--init_labels', type=int, nargs="*", default=[0,1,2,3,4,5,6,7,8,9], help='If not random_init_labels, use this to set initial values of distill labels.')
-        parser.add_argument('--textdata', type=bool, default=False, help='Is the dataset text-based')
+        parser.add_argument('--textdata', type=bool, default=False, help='Is the dataset text-based?')
         parser.add_argument('--ntoken', type=int, default=251639, help='Number of possible unique words for text data')
         parser.add_argument('--ninp', type=int, default=50, help='Embedding size for text data')
         parser.add_argument('--maxlen', type=int, default=400, help='maxlen for text data')
+        parser.add_argument('--learnable_embedding', type=bool, default=False, help='Should text embedding be learnable?')
         
         parser.add_argument('--visualize', type=bool, default=True, help='Visualize distilled data')
         
