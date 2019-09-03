@@ -23,11 +23,10 @@ def train(state, model, epoch, optimizer):
     model.train()
     
     
+    #train_iter=state.train_loader
+    niters=25
     train_iter=state.train_loader
-    niters=len(train_iter)
-    train_iter=state.train_loader
-    it = 0
-    for example in train_iter:
+    for it, example in enumerate(train_iter):
         print(it)
         if state.textdata:
             data = example.text[0]
@@ -51,7 +50,6 @@ def train(state, model, epoch, optimizer):
                 log_str += '\tTest Acc: {: >5.2f}%\tTest Loss: {: >7.4f}'.format(acc.item() * 100, loss.item())
                 model.train()
             logging.info(log_str)
-        it+=1
 
 
 def main(state):
