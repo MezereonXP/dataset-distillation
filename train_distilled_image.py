@@ -164,7 +164,7 @@ class Trainer(object):
         glrs = []
         labels=[]
         glabels=[]
-        dw, = torch.autograd.grad(l, (params[-1],))
+        dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
 
         # backward
         model.train()
@@ -200,7 +200,8 @@ class Trainer(object):
             hvp_grad = torch.autograd.grad(
                 outputs=(gw,),
                 inputs=hvp_in,
-                grad_outputs=(dgw,)
+                grad_outputs=(dgw,),
+                retain_graph=True
             )
             # Update for next iteration, i.e., previous step
             with torch.no_grad():
@@ -232,7 +233,7 @@ class Trainer(object):
                 for l, g in zip(labels, glabels):
                     l.grad.add_(g)
         if len(bwd_out) > 0:
-            torch.autograd.backward(bwd_out, bwd_grad, retain_graph=True)#MULTISTEP PROBLEM?
+            torch.autograd.backward(bwd_out, bwd_grad)#MULTISTEP PROBLEM?
 
     def save_results(self, steps=None, visualize=True, subfolder=''):
         with torch.no_grad():
