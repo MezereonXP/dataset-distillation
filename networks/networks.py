@@ -150,7 +150,7 @@ class TextConvNet3(utils.ReparamModule):
                 print(out.size())
                 #print(out.size())
         else:
-                out=torch.squeeze(x, dim=1)
+                out=x
         conved = [F.relu(conv(out)).squeeze(3) for conv in self.convs]
         pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
         cat = self.dropout(torch.cat(pooled, dim = 1))
