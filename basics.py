@@ -47,7 +47,8 @@ def task_loss(state, output, label, **kwargs):
         #print(label)
         #print ("OUTPUT")
         #print(output)
-        return F.binary_cross_entropy_with_logits(output, label, **kwargs) 
+        return F.cross_entropy(output, label, **kwargs)
+        #return F.binary_cross_entropy_with_logits(output, label, **kwargs) 
         
     else:
         #return xentropy_cost(label, output)
