@@ -54,9 +54,7 @@ def task_loss(state, output, label, **kwargs):
         if state.textdata:
             return F.kl_div(output, label.float(), reduction='batchmean', **kwargs)
         else:
-            print (label.long())
-            print(label.long().argmax(-1))
-            return F.cross_entropy(output, label.long().argmax(-1)[1], **kwargs)
+            return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
             #return F.kl_div(output, label.float(), reduction='mean', **kwargs)
 def task_loss_eval(state, output, label, **kwargs):
     if state.num_classes == 2:
