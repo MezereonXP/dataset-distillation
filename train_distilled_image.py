@@ -252,7 +252,8 @@ class Trainer(object):
         else:
                 niter = len(train_iter)
         for epoch in range(state.epochs):
-            train_iter = iter(state.train_loader)
+            if state.textdata:
+                train_iter = iter(state.train_loader)
             print("Training Epoch: {}".format(epoch))
             prefetch_it = max(0, niter - 2)
             for it, example in enumerate(train_iter):
