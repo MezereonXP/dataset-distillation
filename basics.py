@@ -48,14 +48,15 @@ def task_loss(state, output, label, **kwargs):
         #print ("OUTPUT")
         #print(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs) 
-        
+    elif state.reproduction_test:
+        return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
     else:
         #return xentropy_cost(label, output)
         if state.textdata:
             return F.kl_div(output, label.float(), reduction='batchmean', **kwargs)
         else:
-            return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
-            #return F.kl_div(output, label.float(), reduction='mean', **kwargs)
+            #return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
+            return F.kl_div(output, label.float(), reduction='mean', **kwargs)
 def task_loss_eval(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)

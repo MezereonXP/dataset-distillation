@@ -323,6 +323,7 @@ class BaseOptions(object):
         parser.add_argument('--ninp', type=int, default=50, help='Embedding size for text data')
         parser.add_argument('--maxlen', type=int, default=400, help='maxlen for text data')
         parser.add_argument('--learnable_embedding', type=bool, default=False, help='Should text embedding be learnable?')
+        parser.add_argument('--reproduction_test', type=bool, default=False, help='Should text embedding be learnable?')
         
         parser.add_argument('--visualize', type=bool, default=True, help='Visualize distilled data')
         
