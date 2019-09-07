@@ -242,7 +242,7 @@ def get_dataset(state, phase):
         LABEL = data.LabelField(dtype=torch.long)
         
         # make splits for data
-        train, test = textdata.SST(fine_grained=True).splits(TEXT, LABEL)
+        train, valid, test = textdata.SST.splits(TEXT, LABEL, fine_grained=True)
         # build the vocabulary
         TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
         LABEL.build_vocab(train)
