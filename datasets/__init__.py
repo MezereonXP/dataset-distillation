@@ -32,6 +32,8 @@ default_dataset_roots = dict(
     sst5='./data/text/sst',
     trec6='./data/text/trec',
     trec50='./data/text/trec',
+    snli='./data/text/snli',
+    multinli='./data/text/multinli',
 )
 
 
@@ -49,6 +51,8 @@ dataset_normalization = dict(
     sst5=((0,),(0,)),
     trec6=((0,),(0,)),
     trec50=((0,),(0,)),
+    snli=((0,),(0,)),
+    multinli=((0,),(0,)),
 )
 
 
@@ -65,6 +69,8 @@ dataset_labels = dict(
     sst5=list(range(5)),
     trec6=list(range(6)),
     trec50=list(range(50)),
+    snli=list(range(3)),
+    multinli=list(range(3)),
 )
 
 # (nc, real_size, num_classes)
@@ -82,6 +88,8 @@ dataset_stats = dict(
     sst5 = DatasetStats(1, 0, 5),
     trec6 = DatasetStats(1, 0, 6),
     trec50 = DatasetStats(1, 0, 50),
+    snli = DatasetStats(1, 0, 3),
+    multinli = DatasetStats(1, 0, 3),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -93,6 +101,8 @@ def get_info(state):
     dataset_stats['sst5']=DatasetStats(1,state.maxlen,5)
     dataset_stats['trec6']=DatasetStats(1,state.maxlen,6)
     dataset_stats['trec50']=DatasetStats(1,state.maxlen,50)
+    dataset_stats['snli']=DatasetStats(1,state.maxlen,3)
+    dataset_stats['multinli']=DatasetStats(1,state.maxlen,3)
     name = state.dataset  # argparse dataset fmt ensures that this is lowercase and doesn't contrain hyphen
     assert name in dataset_stats, 'Unsupported dataset: {}'.format(state.dataset)
     nc, input_size, num_classes = dataset_stats[name]
@@ -115,6 +125,8 @@ def get_dataset(state, phase):
     dataset_stats['sst5']=DatasetStats(1,state.maxlen,5)
     dataset_stats['trec6']=DatasetStats(1,state.maxlen,6)
     dataset_stats['trec50']=DatasetStats(1,state.maxlen,50)
+    dataset_stats['snli']=DatasetStats(1,state.maxlen,3)
+    dataset_stats['multinli']=DatasetStats(1,state.maxlen,3)
     assert phase in ('train', 'test'), 'Unsupported phase: %s' % phase
     name, root, nc, input_size, num_classes, normalization, _ = get_info(state)
     real_size = dataset_stats[name].real_size
@@ -315,6 +327,66 @@ def get_dataset(state, phase):
         
         # make splits for data
         train, test = textdata.TREC.splits(TEXT, LABEL, fine_grained=True)
+        # build the vocabulary
+        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
+        LABEL.build_vocab(train)
+        #print(len(TEXT.vocab))
+        #print(len(LABEL.vocab))
+        state.pretrained_vec=TEXT.vocab.vectors
+        #ninp=32 #Maybe 400
+        #ntoken=32
+        #encoder = nn.Embedding(ntoken, ninp)
+        
+        #train_iter, test_iter = textdata.IMDB.iters(batch_size=state.batch_size, fix_length=state.ninp)
+        if phase=="train":
+            src=train
+            #src = encoder(train_iter) * math.sqrt(ninp)
+        else:
+            src=test
+            #src = encoder(test_iter) * math.sqrt(ninp)
+            
+        #src = data.Iterator.splits(
+        #src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
+        
+        return src
+    elif name == 'snli':
+        transform_list = []
+        # set up fields
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
+        LABEL = data.LabelField(dtype=torch.long)
+        
+        # make splits for data
+        train, valid, test = textdata.SNLI.splits(TEXT, LABEL)
+        # build the vocabulary
+        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
+        LABEL.build_vocab(train)
+        #print(len(TEXT.vocab))
+        #print(len(LABEL.vocab))
+        state.pretrained_vec=TEXT.vocab.vectors
+        #ninp=32 #Maybe 400
+        #ntoken=32
+        #encoder = nn.Embedding(ntoken, ninp)
+        
+        #train_iter, test_iter = textdata.IMDB.iters(batch_size=state.batch_size, fix_length=state.ninp)
+        if phase=="train":
+            src=train
+            #src = encoder(train_iter) * math.sqrt(ninp)
+        else:
+            src=test
+            #src = encoder(test_iter) * math.sqrt(ninp)
+            
+        #src = data.Iterator.splits(
+        #src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
+        
+        return src
+    elif name == 'multinli':
+        transform_list = []
+        # set up fields
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
+        LABEL = data.LabelField(dtype=torch.long)
+        
+        # make splits for data
+        train, valid, test = textdata.MultiNLI.splits(TEXT, LABEL)
         # build the vocabulary
         TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
         LABEL.build_vocab(train)
