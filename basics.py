@@ -110,7 +110,7 @@ def task_loss(state, output, label, **kwargs):
             return F.kl_div(output, label.float(), reduction='batchmean', **kwargs)
         else:
             #return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
-            return F.cross_entropy_with_probs(output, label, reduction='mean', **kwargs)
+            return cross_entropy_with_probs(output, label, reduction='mean', **kwargs)
 def task_loss_eval(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
