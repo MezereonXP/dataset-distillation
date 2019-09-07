@@ -29,7 +29,9 @@ default_dataset_roots = dict(
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
     imdb='./data/text/imdb',
-    sst5='./data/text/sst'
+    sst5='./data/text/sst',
+    trec6='./data/text/trec',
+    trec50='./data/text/trec',
 )
 
 
@@ -44,7 +46,9 @@ dataset_normalization = dict(
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
     imdb=((0,),(0,)),
-    sst5=((0,),(0,))
+    sst5=((0,),(0,)),
+    trec6=((0,),(0,)),
+    trec50=((0,),(0,)),
 )
 
 
@@ -58,7 +62,9 @@ dataset_labels = dict(
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
     imdb={0,1},
-    sst5=list(range(5))
+    sst5=list(range(5)),
+    trec6=list(range(6)),
+    trec50=list(range(50)),
 )
 
 # (nc, real_size, num_classes)
@@ -73,7 +79,9 @@ dataset_stats = dict(
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
     imdb = DatasetStats(1, 0, 2),
-    sst5 = DatasetStats(1, 0, 5)
+    sst5 = DatasetStats(1, 0, 5),
+    trec6 = DatasetStats(1, 0, 6),
+    trec50 = DatasetStats(1, 0, 50),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -83,6 +91,8 @@ assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
 def get_info(state):
     dataset_stats['imdb']=DatasetStats(1,state.maxlen,2)
     dataset_stats['sst5']=DatasetStats(1,state.maxlen,5)
+    dataset_stats['trec6']=DatasetStats(1,state.maxlen,6)
+    dataset_stats['trec50']=DatasetStats(1,state.maxlen,50)
     name = state.dataset  # argparse dataset fmt ensures that this is lowercase and doesn't contrain hyphen
     assert name in dataset_stats, 'Unsupported dataset: {}'.format(state.dataset)
     nc, input_size, num_classes = dataset_stats[name]
@@ -103,6 +113,8 @@ def suppress_stdout():
 def get_dataset(state, phase):
     dataset_stats['imdb']=DatasetStats(1,state.maxlen,2)
     dataset_stats['sst5']=DatasetStats(1,state.maxlen,5)
+    dataset_stats['trec6']=DatasetStats(1,state.maxlen,6)
+    dataset_stats['trec50']=DatasetStats(1,state.maxlen,50)
     assert phase in ('train', 'test'), 'Unsupported phase: %s' % phase
     name, root, nc, input_size, num_classes, normalization, _ = get_info(state)
     real_size = dataset_stats[name].real_size
@@ -243,6 +255,66 @@ def get_dataset(state, phase):
         
         # make splits for data
         train, valid, test = textdata.SST.splits(TEXT, LABEL, fine_grained=True)
+        # build the vocabulary
+        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
+        LABEL.build_vocab(train)
+        #print(len(TEXT.vocab))
+        #print(len(LABEL.vocab))
+        state.pretrained_vec=TEXT.vocab.vectors
+        #ninp=32 #Maybe 400
+        #ntoken=32
+        #encoder = nn.Embedding(ntoken, ninp)
+        
+        #train_iter, test_iter = textdata.IMDB.iters(batch_size=state.batch_size, fix_length=state.ninp)
+        if phase=="train":
+            src=train
+            #src = encoder(train_iter) * math.sqrt(ninp)
+        else:
+            src=test
+            #src = encoder(test_iter) * math.sqrt(ninp)
+            
+        #src = data.Iterator.splits(
+        #src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
+        
+        return src
+    elif name == 'trec6':
+        transform_list = []
+        # set up fields
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
+        LABEL = data.LabelField(dtype=torch.long)
+        
+        # make splits for data
+        train, valid, test = textdata.TREC.splits(TEXT, LABEL, fine_grained=False)
+        # build the vocabulary
+        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
+        LABEL.build_vocab(train)
+        #print(len(TEXT.vocab))
+        #print(len(LABEL.vocab))
+        state.pretrained_vec=TEXT.vocab.vectors
+        #ninp=32 #Maybe 400
+        #ntoken=32
+        #encoder = nn.Embedding(ntoken, ninp)
+        
+        #train_iter, test_iter = textdata.IMDB.iters(batch_size=state.batch_size, fix_length=state.ninp)
+        if phase=="train":
+            src=train
+            #src = encoder(train_iter) * math.sqrt(ninp)
+        else:
+            src=test
+            #src = encoder(test_iter) * math.sqrt(ninp)
+            
+        #src = data.Iterator.splits(
+        #src, batch_size=state.batch_size, device=state.device, repeat=False, sort_key=lambda x: len(x.src))
+        
+        return src
+    elif name == 'trec50':
+        transform_list = []
+        # set up fields
+        TEXT = data.Field(lower=True, include_lengths=True, batch_first=True, fix_length=state.maxlen)
+        LABEL = data.LabelField(dtype=torch.long)
+        
+        # make splits for data
+        train, valid, test = textdata.TREC.splits(TEXT, LABEL, fine_grained=True)
         # build the vocabulary
         TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
         LABEL.build_vocab(train)
