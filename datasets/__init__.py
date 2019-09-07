@@ -246,8 +246,8 @@ def get_dataset(state, phase):
         # build the vocabulary
         TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
         LABEL.build_vocab(train)
-        print(len(TEXT.vocab))
-        print(len(LABEL.vocab))
+        #print(len(TEXT.vocab))
+        #print(len(LABEL.vocab))
         state.pretrained_vec=TEXT.vocab.vectors
         #ninp=32 #Maybe 400
         #ntoken=32
