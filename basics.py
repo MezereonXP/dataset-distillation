@@ -228,10 +228,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
                 correct_list = pred == target
                 #print(correct_list)
-                print(target.shape)
-                print(output.shape)
-                output.squeeze_()
-                losses[k] += task_loss_eval(state, pred, target, reduction='sum').item()  # sum up batch loss
+                losses[k] += task_loss_eval(state, output, target, reduction='sum').item()  # sum up batch loss
                 if attack_mode:
                     for c in range(num_classes):
                         class_mask = target == c
