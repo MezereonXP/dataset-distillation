@@ -244,7 +244,7 @@ def get_dataset(state, phase):
         # make splits for data
         train, valid, test = textdata.SST.splits(TEXT, LABEL, fine_grained=True)
         # build the vocabulary
-        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
+        TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-5) #max_size=state.ntoken,
         LABEL.build_vocab(train)
         state.pretrained_vec=TEXT.vocab.vectors
         #ninp=32 #Maybe 400
