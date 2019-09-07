@@ -316,8 +316,8 @@ class BaseOptions(object):
                                  '"distributed_master_port", etc. Only rank 0 process writes checkpoints. ')
         parser.add_argument('--static_labels', type=int, default=0, help='0 for fixed labels during training, 1 for them to be learned as well.')
         parser.add_argument('--random_init_labels', type=int, default=0, help='0 for one-hot labels init, 1 for random init.')
-        parser.add_argument('--num_distill_classes', type=int, default=10, help='Number of distill samples per step (can be less than number of classes.')
-        parser.add_argument('--init_labels', type=int, nargs="*", default=[0,1,2,3,4,5,6,7,8,9], help='If not random_init_labels, use this to set initial values of distill labels.')
+        parser.add_argument('--num_distill_classes', type=int, default=None, help='Number of distill samples per step (can be less than number of classes.')
+        parser.add_argument('--init_labels', type=int, nargs="*", default=None, help='If not random_init_labels, use this to set initial values of distill labels.')
         parser.add_argument('--textdata', type=bool, default=False, help='Is the dataset text-based?')
         parser.add_argument('--ntoken', type=int, default=251639, help='Number of possible unique words for text data')
         parser.add_argument('--ninp', type=int, default=50, help='Embedding size for text data')
@@ -420,7 +420,11 @@ class BaseOptions(object):
 
         _, state.opt.dataset_root, state.opt.nc, state.opt.input_size, state.opt.num_classes, \
             state.opt.dataset_normalization, state.opt.dataset_labels = datasets.get_info(state)
-
+        if not state.opt.num_distill_classes:
+            state.opt.num_distill_classes = state.opt.num_classes
+        if not state.opt.init_labels:
+            state.opt.init_labels = list(range(state.opt.num_distill_classes))
+            
         # Write yaml
         yaml_str = yaml.dump(state.merge(public_only=True), default_flow_style=False, indent=4)
         logging.info("Options:\n\t" + yaml_str.replace("\n", "\n\t"))
