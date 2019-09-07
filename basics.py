@@ -107,7 +107,8 @@ def task_loss(state, output, label, **kwargs):
     else:
         #return xentropy_cost(label, output)
         if state.textdata:
-            return F.kl_div(output, label.float(), reduction='batchmean', **kwargs)
+            #return F.kl_div(output, label.float(), reduction='batchmean', **kwargs)
+            return cross_entropy_with_probs(output, label, reduction='mean', **kwargs)
         else:
             #return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
             return cross_entropy_with_probs(output, label, reduction='mean', **kwargs)
