@@ -60,6 +60,9 @@ def init_weights(net, state):
                 m.weight.data.fill_(1)
             if getattr(m, 'bias', None) is not None:
                 m.bias.data.zero_()
+        elif classname == 'Embedding':
+            m.weight.data.copy_(state.pretrained_vec)
+            m.weight.requires_grad=False
 
     net.apply(init_func)
     return net
@@ -106,7 +109,7 @@ class PatchModules(type):
                         'be incorrect.').format(m.__class__.__name__, n))
 
         net._weights_module_names = tuple(w_modules_names)
-        print(net._weights_module_names)
+        #print(net._weights_module_names)
         # Put to correct device before we do stuff on parameters
         net = net.to(state.device)
 
