@@ -1,1 +1,7 @@
+For image data:
+python3 main.py --mode distill_basic --dataset Cifar10 --arch AlexCifarNet --distill_steps 10 --static_labels 0 --random_init_labels 0 --distill_lr 0.001  --decay_epochs 35 --epochs 350 --lr 0.01  --results_dir cifar_10by10_repl1 --device_id 0
+
+
+
+For text data:
 python3 main.py --mode distill_basic --dataset sst5 --arch TextConvNet3 --distill_steps 10 --train_nets_type known_init --n_nets 1 --test_nets_type same_as_train --static_labels 1 --random_init_labels 0 --textdata True --visualize '' --distilled_images_per_class_per_step 1 --distill_epochs 5 --distill_lr 0.01 --num_distill_classes 5 --init_labels 0 1 2 3 4 --decay_epochs 10 --epochs 100 --lr 0.01 --ntoken 5000 --ninp 100 --results_dir text_results/sst_test --device_id 0
