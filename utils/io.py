@@ -61,7 +61,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
                 first = "{0}:{1}".format(label_names[sorted_indices[0]], '%.1f'%label[sorted_indices[0]])
                 second = "{0}:{1}".format(label_names[sorted_indices[1]], '%.1f'%label[sorted_indices[1]])
                 third = "{0}:{1}".format(label_names[sorted_indices[2]], '%.1f'%label[sorted_indices[2]])
-                axis_title = "{0}, {1}, {2}".format(first, second, third)
+                axis_title = "{0}\n{1}\n{2}".format(first, second, third)
                 axis.set_title(axis_title, fontsize=fontsize)
         if supertitle:
             if lr is not None:
