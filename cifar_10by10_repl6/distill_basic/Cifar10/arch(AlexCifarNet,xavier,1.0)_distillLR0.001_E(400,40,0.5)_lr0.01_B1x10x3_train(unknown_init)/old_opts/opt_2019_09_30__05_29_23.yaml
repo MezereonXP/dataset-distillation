@@ -1,0 +1,96 @@
+arch: AlexCifarNet
+attack_class: 0
+base_seed: 1
+batch_size: 1024
+checkpoint_interval: 10
+dataset: Cifar10
+dataset_labels: !!python/tuple
+- plane
+- car
+- bird
+- cat
+- deer
+- dog
+- monkey
+- horse
+- ship
+- truck
+dataset_normalization: !!python/tuple
+- !!python/tuple
+    - 0.4914
+    - 0.4822
+    - 0.4465
+- !!python/tuple
+    - 0.247
+    - 0.243
+    - 0.261
+dataset_root: ./data/cifar10
+decay_epochs: 40
+decay_factor: 0.5
+device_id: 0
+distill_epochs: 3
+distill_lr: 0.001
+distill_steps: 10
+distilled_images_per_class_per_step: 1
+distributed: false
+dropout: false
+epochs: 400
+expr_name_format: null
+image_dpi: 80
+init: xavier
+init_labels:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+init_param: 1.0
+input_size: 32
+learnable_embedding: false
+log_file: cifar_10by10_repl6/distill_basic/Cifar10/arch(AlexCifarNet,xavier,1.0)_distillLR0.001_E(400,40,0.5)_lr0.01_B1x10x3_train(unknown_init)/output.log
+log_interval: 100
+log_level: INFO
+lr: 0.01
+maxlen: 400
+mode: distill_basic
+model_dir: ./models/
+model_subdir_format: null
+n_nets: 1
+nc: 3
+ninp: 50
+no_log: false
+ntoken: 251639
+num_classes: 10
+num_distill_classes: 10
+num_workers: 8
+phase: train
+random_init_labels: 0
+reproduction_test: false
+results_dir: cifar_10by10_repl6
+sample_n_nets: 1
+source_dataset: null
+start_time: '2019-09-30 05:29:23'
+static_labels: 0
+target_class: 1
+test_batch_size: 1024
+test_distill_epochs: null
+test_distilled_images: loaded
+test_distilled_lrs:
+- loaded
+test_n_nets: 1
+test_n_runs: 1
+test_name_format: null
+test_nets_type: unknown_init
+test_niter: 1
+test_optimize_n_nets: 20
+test_optimize_n_runs: null
+textdata: false
+train_nets_type: unknown_init
+visualize: true
+world_rank: 0
+world_size: 1
