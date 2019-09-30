@@ -66,7 +66,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
         if supertitle:
             if lr is not None:
                 lr = lr.sum().item()
-            plt.suptitle(supertitle_fmt.format(step=i, lr=lr), fontsize=fontsize)
+            plt.suptitle(supertitle_fmt.format(step=i, lr=lr), fontsize=fontsize, y=1.08)
             #if first_run:
             #    plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0, rect=[0, 0, 1, 0.95])
         fig.canvas.draw()
