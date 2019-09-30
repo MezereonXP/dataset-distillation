@@ -41,7 +41,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
             fmts.append('Step: {{step}}')
         if np_steps[0][-1] is not None:
             fmts.append('LR: {{lr:.4f}}')
-        supertitle_fmt = ', '.join(fmts).format(dataset=dataset, arch=arch)
+        supertitle_fmt = ', '.join(fmts).format(dataset=dataset, arch=arch)+"\n"
 
     plt_images = []
     first_run = True
