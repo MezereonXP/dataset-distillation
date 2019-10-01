@@ -58,7 +58,7 @@ def random_train(state):
 def average_train(state):
     if state.textdata:
         sum_images = torch.zeros(
-        state.num_classes, state.nc, state.ntoken, state.ninp,
+        state.num_classes, state.nc, state.input_size, state.ninp,
         device=state.device, dtype=torch.double)
     else:
         sum_images = torch.zeros(
