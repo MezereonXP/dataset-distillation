@@ -75,7 +75,12 @@ def kmeans_train(state, p=2):
 
     cls_data = [[] for _ in range(state.num_classes)]
 
-    for data, label in state.train_loader:
+    for it, example in enumerate(state.train_loader):
+        if state.textdata:
+            data = example.text[0]
+            label = example.label
+        else:
+            (data, label) = example
         for d, l in zip(data, label):
             cls_data[l.item()].append(d.flatten())
     cls_data = [torch.stack(coll, 0).to(state.device) for coll in cls_data]
