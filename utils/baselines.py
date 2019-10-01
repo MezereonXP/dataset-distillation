@@ -6,7 +6,7 @@ import numpy as np
 def get_baseline_label_for_one_step(state):
     
     dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
-    label=torch.tensor(dl_array,dtype=torch.float, requires_grad=False, device=state.device)
+    label=torch.tensor(dl_array,dtype=torch.long, requires_grad=False, device=state.device)
     if state.mode == 'distill_attack': #THIS MAY BE BROKEN NOW
         label[state.attack_class] = state.target_class
     return label
