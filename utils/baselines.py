@@ -15,7 +15,12 @@ def random_train(state):
     data_list = [[] for _ in range(state.num_classes)]
     needed = state.distill_steps * state.distilled_images_per_class_per_step
     counts = np.zeros((state.num_classes))
-    for datas, labels in state.train_loader:
+    for it, example in enumerate(state.train_loader):
+        if state.textdata:
+            datas = example.text[0]
+            labels = example.label
+        else:
+            (datas, labels) = example
         for data, label in zip(datas, labels):
             label_id = label.item()
             if counts[label_id] < needed:
@@ -37,7 +42,12 @@ def average_train(state):
         state.num_classes, state.nc, state.input_size, state.input_size,
         device=state.device, dtype=torch.double)
     counts = torch.zeros(state.num_classes, dtype=torch.long)
-    for data, label in state.train_loader:
+    for it, example in enumerate(state.train_loader):
+        if state.textdata:
+            data = example.text[0]
+            label = example.label
+        else:
+            (data, label) = example
         for i, (d, l) in enumerate(zip(data, label)):
             sum_images[l].add_(d.to(sum_images))
             counts[l] += 1
