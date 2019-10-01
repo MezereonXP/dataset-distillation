@@ -37,10 +37,10 @@ def random_train(state):
             labels = example.label
         else:
             (datas, labels) = example
+        datas=datas.to(state.device, non_blocking=True)
+        if state.textdata:
+            datas=encode(datas, state)
         for data, label in zip(datas, labels):
-            data=data.to(state.device, non_blocking=True)
-            if state.textdata:
-                data=encode(data, state)
             label_id = label.item()
             if counts[label_id] < needed:
                 counts[label_id] += 1
@@ -66,10 +66,11 @@ def average_train(state):
             label = example.label
         else:
             (data, label) = example
+        data=data.to(state.device, non_blocking=True)
+        if state.textdata:
+            data=encode(data, state)
         for i, (d, l) in enumerate(zip(data, label)):
             d=d.to(sum_images)
-            if state.textdata:
-                d=encode(d, state)
             sum_images[l].add_(d)
             counts[l] += 1
     mean_imgs = sum_images / counts[:, None, None, None].to(state.device, torch.double)
@@ -94,12 +95,12 @@ def kmeans_train(state, p=2):
             label = example.label
         else:
             (data, label) = example
+        data=data.to(state.device, non_blocking=True)
+        if state.textdata:
+            data=encode(data, state)
         for d, l in zip(data, label):
-            d=d.to(state.device, non_blocking=True)
-            if state.textdata:
-                d=encode(d, state)
             cls_data[l.item()].append(d.flatten())
-    cls_data = [torch.stack(coll, 0) for coll in cls_data]
+    cls_data = [torch.stack(coll, 0).to(state.device) for coll in cls_data]
 
     # kmeans++
     cls_centers = []
