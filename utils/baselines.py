@@ -61,7 +61,7 @@ def average_train(state):
         else:
             (data, label) = example
         for i, (d, l) in enumerate(zip(data, label)):
-            sum_images[l].add_(encoder(d))
+            sum_images[l].add_(encoder(d.to(sum_images)))
             counts[l] += 1
     mean_imgs = sum_images / counts[:, None, None, None].to(state.device, torch.double)
     mean_imgs = mean_imgs.to(torch.float)
