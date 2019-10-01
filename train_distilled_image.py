@@ -136,7 +136,7 @@ class Trainer(object):
         gws = []
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
-                model.distilling_flag=state.test_distilled_images=="loaded"#Check that we are distilling but not using baselines
+                model.distilling_flag=True
                 output = model.forward_with_param(data, w)
                 loss = task_loss(state, output, label)
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
