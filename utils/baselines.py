@@ -36,7 +36,7 @@ def random_train(state):
         else:
             (datas, labels) = example
         for data, label in zip(datas, labels):
-            data=data.to(state.device)
+            data=data.to(state.device, non_blocking=True)
             if state.textdata:
                 data=encode(data, state)
             label_id = label.item()
@@ -93,7 +93,7 @@ def kmeans_train(state, p=2):
         else:
             (data, label) = example
         for d, l in zip(data, label):
-            d=d.to(state.device)
+            d=d.to(state.device, non_blocking=True)
             if state.textdata:
                 d=encode(d, state)
             cls_data[l.item()].append(d.flatten())
