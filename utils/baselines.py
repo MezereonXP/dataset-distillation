@@ -8,7 +8,9 @@ def encode(d, state):
     encoder = nn.Embedding(state.ntoken, state.ninp).to(state.device)
     encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
     encoder.weight.requires_grad = False
-    return encoder(d)
+    out=encoder(d)
+    out.unsqueeze_(1)
+    return out
 def get_baseline_label_for_one_step(state):
     
     dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
