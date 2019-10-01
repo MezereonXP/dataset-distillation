@@ -6,7 +6,7 @@ import torch.nn as nn
 
 def encode(d, state):
     encoder = nn.Embedding(state.ntoken, state.ninp)
-    encoder.weight.data.copy_(state.pretrained_vec.to(state.device)) # load pretrained vectors
+    encoder.weight.data.copy_(state.pretrained_vec.to(state.device)).to(state.device) # load pretrained vectors
     encoder.weight.requires_grad = False
     return encoder(d)
 def get_baseline_label_for_one_step(state):
