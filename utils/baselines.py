@@ -56,7 +56,12 @@ def random_train(state):
     return [s for _ in range(state.distill_epochs) for s in steps]
 
 def average_train(state):
-    sum_images = torch.zeros(
+    if state.textdata:
+        sum_images = torch.zeros(
+        state.num_classes, state.nc, state.ntoken, state.ninp,
+        device=state.device, dtype=torch.double)
+    else:
+        sum_images = torch.zeros(
         state.num_classes, state.nc, state.input_size, state.input_size,
         device=state.device, dtype=torch.double)
     counts = torch.zeros(state.num_classes, dtype=torch.long)
