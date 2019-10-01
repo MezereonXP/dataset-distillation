@@ -148,7 +148,7 @@ def train_steps_inplace(state, models, steps, params=None, callback=None):
 
         for model, w in zip(models, params):
             model.train()  # callback may change model.training so we set here
-            model.distilling_flag=True
+            model.distilling_flag=state.test_distilled_images=="loaded"#Check that we are distilling but not using baselines
             output = model.forward_with_param(data, w)
             loss = task_loss(state, output, label)
             loss.backward(lr)
