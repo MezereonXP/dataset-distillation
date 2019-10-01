@@ -6,7 +6,7 @@ import torch.nn as nn
 
 def encode(d, state):
     encoder = nn.Embedding(state.ntoken, state.ninp)
-    encoder.weight.data.copy_(state.pretrained_vec.to(state.device)).to(state.device) # load pretrained vectors
+    encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
     encoder.weight.requires_grad = False
     return encoder(d)
 def get_baseline_label_for_one_step(state):
@@ -38,7 +38,7 @@ def random_train(state):
         for data, label in zip(datas, labels):
             data=data.to(state.device, non_blocking=True)
             if state.textdata:
-                data=encode(data, state)
+                data=encode(data, state).to(state.device)
             label_id = label.item()
             if counts[label_id] < needed:
                 counts[label_id] += 1
