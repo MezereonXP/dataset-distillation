@@ -4,11 +4,19 @@ import numpy as np
 
 
 def get_baseline_label_for_one_step(state):
+    
+    dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+    label=torch.tensor(dl_array,dtype=torch.float, requires_grad=False, device=state.device)
+    if state.mode == 'distill_attack': #THIS MAY BE BROKEN NOW
+        label[state.attack_class] = state.target_class
+    return label
+    '''
     label = torch.tensor(list(range(state.num_classes)), device=state.device)
     if state.mode == 'distill_attack':
         label[state.attack_class] = state.target_class
     label = label.repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...], ...]
-    return label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
+    return label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]'''
+    
 
 
 def random_train(state):
