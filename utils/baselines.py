@@ -1,6 +1,7 @@
 import torch
 import logging
 import numpy as np
+import torch.nn as nn
 
 
 def get_baseline_label_for_one_step(state):
@@ -46,6 +47,9 @@ def random_train(state):
 
 
 def average_train(state):
+    encoder = nn.Embedding(state.ntoken, state.ninp)
+    encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+    encoder.weight.requires_grad = False
     sum_images = torch.zeros(
         state.num_classes, state.nc, state.input_size, state.input_size,
         device=state.device, dtype=torch.double)
@@ -57,7 +61,7 @@ def average_train(state):
         else:
             (data, label) = example
         for i, (d, l) in enumerate(zip(data, label)):
-            sum_images[l].add_(d.to(sum_images))
+            sum_images[l].add_(encoder(d))
             counts[l] += 1
     mean_imgs = sum_images / counts[:, None, None, None].to(state.device, torch.double)
     mean_imgs = mean_imgs.to(torch.float)
