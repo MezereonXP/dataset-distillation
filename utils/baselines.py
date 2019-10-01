@@ -4,6 +4,11 @@ import numpy as np
 import torch.nn as nn
 
 
+def encode(d, state):
+    encoder = nn.Embedding(state.ntoken, state.ninp)
+    encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+    encoder.weight.requires_grad = False
+    return encoder(d)
 def get_baseline_label_for_one_step(state):
     
     dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
@@ -31,6 +36,8 @@ def random_train(state):
         else:
             (datas, labels) = example
         for data, label in zip(datas, labels):
+            if state.textdata:
+                data=encode(data, state)
             label_id = label.item()
             if counts[label_id] < needed:
                 counts[label_id] += 1
@@ -45,11 +52,7 @@ def random_train(state):
         steps.append((data, label))
     return [s for _ in range(state.distill_epochs) for s in steps]
 
-
 def average_train(state):
-    encoder = nn.Embedding(state.ntoken, state.ninp)
-    encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
-    encoder.weight.requires_grad = False
     sum_images = torch.zeros(
         state.num_classes, state.nc, state.input_size, state.input_size,
         device=state.device, dtype=torch.double)
@@ -61,7 +64,9 @@ def average_train(state):
         else:
             (data, label) = example
         for i, (d, l) in enumerate(zip(data, label)):
-            sum_images[l].add_(encoder(d.to(sum_images)))
+            if state.textdata:
+                d=encode(d, state)
+            sum_images[l].add_(d.to(sum_images))
             counts[l] += 1
     mean_imgs = sum_images / counts[:, None, None, None].to(state.device, torch.double)
     mean_imgs = mean_imgs.to(torch.float)
@@ -86,6 +91,8 @@ def kmeans_train(state, p=2):
         else:
             (data, label) = example
         for d, l in zip(data, label):
+            if state.textdata:
+                d=encode(d, state)
             cls_data[l.item()].append(d.flatten())
     cls_data = [torch.stack(coll, 0).to(state.device) for coll in cls_data]
 
