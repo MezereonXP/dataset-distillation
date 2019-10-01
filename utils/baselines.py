@@ -36,12 +36,13 @@ def random_train(state):
         else:
             (datas, labels) = example
         for data, label in zip(datas, labels):
+            data=data.to(state.device)
             if state.textdata:
                 data=encode(data, state)
             label_id = label.item()
             if counts[label_id] < needed:
                 counts[label_id] += 1
-                data_list[label_id].append(data.to(state.device))
+                data_list[label_id].append(data)
                 if np.sum(counts) == needed * state.num_classes:
                     break
     steps = []
@@ -64,9 +65,10 @@ def average_train(state):
         else:
             (data, label) = example
         for i, (d, l) in enumerate(zip(data, label)):
+            d=d.to(sum_images)
             if state.textdata:
                 d=encode(d, state)
-            sum_images[l].add_(d.to(sum_images))
+            sum_images[l].add_(d)
             counts[l] += 1
     mean_imgs = sum_images / counts[:, None, None, None].to(state.device, torch.double)
     mean_imgs = mean_imgs.to(torch.float)
@@ -91,10 +93,11 @@ def kmeans_train(state, p=2):
         else:
             (data, label) = example
         for d, l in zip(data, label):
+            d=d.to(state.device)
             if state.textdata:
                 d=encode(d, state)
             cls_data[l.item()].append(d.flatten())
-    cls_data = [torch.stack(coll, 0).to(state.device) for coll in cls_data]
+    cls_data = [torch.stack(coll, 0) for coll in cls_data]
 
     # kmeans++
     cls_centers = []
