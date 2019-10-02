@@ -253,7 +253,7 @@ def main(state):
                                 labels = ref_label[argmink_dist]
                                 #print(labels.shape)
                                 #print(labels)
-                                counts = [torch.bincount(l, minlength=state.num_classes) for l in labels]
+                                counts = [torch.bincount(l.argmax(1), minlength=state.num_classes) for l in labels]
                                 counts = torch.stack(counts, 0)
                                 #print(counts.shape)
                                 #if state.num_classes == 2:
