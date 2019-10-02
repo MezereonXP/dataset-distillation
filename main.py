@@ -246,19 +246,19 @@ def main(state):
                                 )
                             if k == 1:
                                 argmin_dist = dists.argmin(dim=1)
-                                pred = ref_label[argmin_dist].argmax(1)
+                                if state.num_classes==2:
+                                    pred = (ref_label[argmin_dist] > 0.5).to(target.dtype).view(-1)
+                                else:
+                                    pred = ref_label[argmin_dist].argmax(1)
                                 del argmin_dist
                             else:
                                 _, argmink_dist = torch.topk(dists, k, dim=1, largest=False, sorted=False)
                                 labels = ref_label[argmink_dist]
                                 #print(labels.shape)
                                 #print(labels)
-                                counts = [torch.bincount(l.argmax(1), minlength=state.num_classes) for l in labels]
+                                counts = [torch.bincount(l > 0.5 if state.num_classes ==2 else l.argmax(1), minlength=state.num_classes) for l in labels]
                                 counts = torch.stack(counts, 0)
                                 #print(counts.shape)
-                                #if state.num_classes == 2:
-                                #    pred = (counts > 0.5).to(target.dtype).view(-1)
-                                #else:
                                 pred = counts.argmax(dim=1)
                                 del argmink_dist, labels, counts
                             corrects += (pred == target).sum().item()
