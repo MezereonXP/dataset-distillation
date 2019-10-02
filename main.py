@@ -231,7 +231,7 @@ def main(state):
                             target = target.to(state.device, non_blocking=True)
                             if state.textdata:
                                 dists = torch.norm(
-                                    data[:, None, ...] - ref_flat_data,
+                                    data.flatten(2)[:, None, ...] - ref_flat_data,
                                     dim=2, p=p
                                 )
                             else:
