@@ -12,6 +12,7 @@ from base_options import options
 import utils
 import numpy as np
 from networks.utils import print_network
+from utils.baselines import encode
 from utils.io import vis_results, load_results, save_test_results
 from basics import evaluate_models, evaluate_steps, format_stepwise_results
 from collections import defaultdict
@@ -230,8 +231,9 @@ def main(state):
                                 (data, target) = example
                             data = data.to(state.device, non_blocking=True)
                             target = target.to(state.device, non_blocking=True)
-                            print(data.shape)
+                            #print(data.shape)
                             if state.textdata:
+                                data=encode(data)
                                 dists = torch.norm(
                                     data.flatten(1)[:, None, ...] - ref_flat_data,
                                     dim=2, p=p
