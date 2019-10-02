@@ -213,7 +213,7 @@ def main(state):
                             ref_data_label = tuple(get_data_label(state))
 
                         ref_flat_data = torch.cat([d for d, _ in ref_data_label], 0).flatten(1)
-                        print(ref_flat_data.shape)
+                        #print(ref_flat_data.shape)
                         ref_label = torch.cat([l for _, l in ref_data_label], 0)
 
                         assert k <= ref_label.size(0), (
@@ -230,6 +230,7 @@ def main(state):
                                 (data, target) = example
                             data = data.to(state.device, non_blocking=True)
                             target = target.to(state.device, non_blocking=True)
+                            print(data.shape)
                             if state.textdata:
                                 dists = torch.norm(
                                     data.flatten(1)[:, None, ...] - ref_flat_data,
