@@ -252,7 +252,11 @@ def main(state):
                                 labels = ref_label[argmink_dist]
                                 counts = [torch.bincount(l, minlength=state.num_classes) for l in labels]
                                 counts = torch.stack(counts, 0)
-                                pred = counts.argmax(dim=1)
+                                print(counts.shape)
+                                if state.num_classes == 2:
+                                    pred = (counts > 0.5).to(target.dtype).view(-1)
+                                else:
+                                    pred = counts.argmax(dim=1)
                                 del argmink_dist, labels, counts
                             corrects += (pred == target).sum().item()
                             total += data.size(0)
