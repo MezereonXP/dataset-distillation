@@ -221,7 +221,12 @@ def main(state):
 
                         total = np.array(0, dtype=np.int64)
                         corrects = np.array(0, dtype=np.int64)
-                        for data, target in state.test_loader:
+                        for example in state.test_loader:
+                            if state.textdata:
+                                data = example.text[0]
+                                target = example.label
+                            else:
+                                (data, target) = example
                             data = data.to(state.device, non_blocking=True)
                             target = target.to(state.device, non_blocking=True)
                             dists = torch.norm(
