@@ -19,7 +19,7 @@ def get_baseline_label_for_one_step(state):
     label=torch.tensor(dl_array,dtype=torch.long, requires_grad=False, device=state.device)
     if state.mode == 'distill_attack': #THIS MAY BE BROKEN NOW
         label[state.attack_class] = state.target_class
-    print(label)
+    #print(label)
     return label
     '''
     label = torch.tensor(list(range(state.num_classes)), device=state.device)
