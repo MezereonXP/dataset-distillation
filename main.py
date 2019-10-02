@@ -234,6 +234,7 @@ def main(state):
                             #print(data.shape)
                             if state.textdata:
                                 data=encode(data, state)
+                                data.unsqueeze_(1)
                                 dists = torch.norm(
                                     data.flatten(1)[:, None, ...] - ref_flat_data,
                                     dim=2, p=p
@@ -250,16 +251,16 @@ def main(state):
                             else:
                                 _, argmink_dist = torch.topk(dists, k, dim=1, largest=False, sorted=False)
                                 labels = ref_label[argmink_dist]
-                                print(labels.shape)
+                                #print(labels.shape)
                                 #print(labels)
                                 counts = [torch.bincount(l, minlength=state.num_classes) for l in labels]
                                 counts = torch.stack(counts, 0)
                                 print(counts.shape)
-                                if state.num_classes == 2:
-                                    pred = (counts > 0.5).to(target.dtype).view(-1)
-                                else:
-                                    pred = counts.argmax(dim=1)
-                                del argmink_dist, labels, counts
+                                #if state.num_classes == 2:
+                                #    pred = (counts > 0.5).to(target.dtype).view(-1)
+                                #else:
+                                #    pred = counts.argmax(dim=1)
+                                #del argmink_dist, labels, counts
                             corrects += (pred == target).sum().item()
                             total += data.size(0)
 
