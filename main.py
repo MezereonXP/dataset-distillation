@@ -157,8 +157,13 @@ def main(state):
                 state.test_optimize_n_nets,
                 state.test_n_runs))
             logging.info('')
-
-            loaded_steps = load_results(state, device=state.device)  # loaded
+            
+            # get lrs
+            # allow for passing multiple options
+            lr_meth = state.test_distilled_lrs[0]
+            
+            if state.test_distilled_images=='loaded' or lr_meth=="loaded":
+                loaded_steps = load_results(state, device=state.device)  # loaded
 
             if state.test_distilled_images == 'loaded':
                 unique_data_label = [s[:-1] for s in loaded_steps[:state.distill_steps]]
@@ -182,9 +187,7 @@ def main(state):
             else:
                 raise NotImplementedError('test_distilled_images: {}'.format(state.test_distilled_images))
 
-            # get lrs
-            # allow for passing multiple options
-            lr_meth = state.test_distilled_lrs[0]
+            
 
             if lr_meth == 'nearest_neighbor':
                 assert state.mode == 'distill_basic', 'nearest_neighbor test only supports distill_basic'
