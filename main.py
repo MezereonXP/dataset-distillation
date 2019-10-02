@@ -233,7 +233,7 @@ def main(state):
                             target = target.to(state.device, non_blocking=True)
                             #print(data.shape)
                             if state.textdata:
-                                data=encode(data)
+                                data=encode(data, state)
                                 dists = torch.norm(
                                     data.flatten(1)[:, None, ...] - ref_flat_data,
                                     dim=2, p=p
