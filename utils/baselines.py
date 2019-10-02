@@ -12,8 +12,10 @@ def encode(d, state):
     out.unsqueeze_(1)
     return out
 def get_baseline_label_for_one_step(state):
-    
-    dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+    if state.num_classes==2:
+        dl_array = [[i==j for i in range(1)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+    else:
+        dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
     label=torch.tensor(dl_array,dtype=torch.long, requires_grad=False, device=state.device)
     if state.mode == 'distill_attack': #THIS MAY BE BROKEN NOW
         label[state.attack_class] = state.target_class
