@@ -250,6 +250,8 @@ def main(state):
                             else:
                                 _, argmink_dist = torch.topk(dists, k, dim=1, largest=False, sorted=False)
                                 labels = ref_label[argmink_dist]
+                                print(labels.shape)
+                                print(labels)
                                 counts = [torch.bincount(l, minlength=state.num_classes) for l in labels]
                                 counts = torch.stack(counts, 0)
                                 print(counts.shape)
