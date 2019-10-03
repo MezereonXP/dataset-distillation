@@ -113,7 +113,10 @@ def kmeans_train(state, p=2):
     # kmeans++
     cls_centers = []
     for c in range(state.num_classes):
-        c_center = torch.empty(k, state.nc * state.input_size * state.input_size, device=state.device)
+        if state.textdata:
+            c_center = torch.empty(k, state.nc * state.input_size * state.ninp, device=state.device)
+        else:
+            c_center = torch.empty(k, state.nc * state.input_size * state.input_size, device=state.device)
         c_data = cls_data[c]
         # first is uniform
         c_center[0] = c_data[torch.randint(len(c_data), ()).item()]
