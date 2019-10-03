@@ -55,6 +55,10 @@ def random_train(state):
     for i in range(0, needed, state.distilled_images_per_class_per_step):
         data = sum((cd[i:(i + state.distilled_images_per_class_per_step)] for cd in data_list), [])
         data = torch.stack(data, 0)
+        while 0 in counts:
+            ind=counts.find(0)
+            counts.pop(ind)
+            label.pop(ind)
         steps.append((data, label))
     return [s for _ in range(state.distill_epochs) for s in steps]
 
