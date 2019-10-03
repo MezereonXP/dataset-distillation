@@ -171,9 +171,15 @@ def kmeans_train(state, p=2):
     logging.info('done')
 
     label = get_baseline_label_for_one_step(state)
+    
+    if state.textdata:
+        per_step_imgs = cls_centers.view(
+                state.num_classes, state.distill_steps, state.distilled_images_per_class_per_step, state.nc,
+                state.input_size, state.ninp).transpose(0, 1).flatten(1, 2).unbind(0)
 
-    per_step_imgs = cls_centers.view(
-        state.num_classes, state.distill_steps, state.distilled_images_per_class_per_step, state.nc,
-        state.input_size, state.input_size).transpose(0, 1).flatten(1, 2).unbind(0)
+    else:
+        per_step_imgs = cls_centers.view(
+                state.num_classes, state.distill_steps, state.distilled_images_per_class_per_step, state.nc,
+                state.input_size, state.input_size).transpose(0, 1).flatten(1, 2).unbind(0)
 
     return [(imgs, label) for _ in range(state.distill_epochs) for imgs in per_step_imgs]
