@@ -13,7 +13,7 @@ import datasets
 
 def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info, arch, dpi,
                     vis_dir=None, vis_name_fmt='visuals_step{step:03d}',
-                    cmap=None, supertitle=True, subtitle=True, fontsize=None,
+                    cmap=None, supertitle=False, subtitle=True, fontsize=None,
                     reuse_axes=True):
     if vis_dir is None:
         logging.warning('Not saving because vis_dir is not given')
