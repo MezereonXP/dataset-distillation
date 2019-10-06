@@ -77,8 +77,6 @@ def cross_entropy_with_probs(
         If an invalid reduction keyword is submitted
     """
     num_points, num_classes = input.shape
-    print(num_points)
-    print(num_classes)
     # Note that t.new_zeros, t.new_full put tensor on same device as t
     cum_losses = input.new_zeros(num_points)
     for y in range(num_classes):
@@ -145,6 +143,7 @@ def train_steps_inplace(state, models, steps, params=None, callback=None):
             callback(i, params)
 
         data = data.detach()
+        print(data.shape)
         label = label.detach()
         lr = lr.detach()
 
