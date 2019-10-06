@@ -136,7 +136,7 @@ def train_steps_inplace(state, models, steps, params=None, callback=None):
     if isinstance(models, torch.nn.Module):
         models = [models]
     if params is None:
-        params = [model.get_param() for m in models]
+        params = [m.get_param() for m in models]
 
     for i, (data, label, lr) in enumerate(steps):
         if callback is not None:
@@ -316,7 +316,7 @@ def infinite_iterator(iterable):
 def evaluate_steps(state, steps, prefix, details='', test_all=False, test_at_steps=None, log_results=True):
     models = state.test_models
     n_steps = len(steps)
-    print([steps[i].shape for i in range(len(steps))])
+    print([len(steps[i].shape) for i in range(len(steps))])
     if test_at_steps is None:
         test_at_steps = [0, n_steps]
     else:
