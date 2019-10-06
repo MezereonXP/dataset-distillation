@@ -84,6 +84,8 @@ def cross_entropy_with_probs(
         y_loss = F.cross_entropy(input, target_temp, reduction="none")
         if weight is not None:
             y_loss = y_loss * weight[y]
+        print(cum_losses.shape)
+        print(target.shape)
         cum_losses += target[:, y].float() * y_loss
 
     if reduction == "none":
