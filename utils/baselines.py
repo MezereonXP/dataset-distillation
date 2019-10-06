@@ -34,22 +34,25 @@ def random_train(state):
     data_list = [[] for _ in range(state.num_classes)]
     needed = state.distill_steps * state.distilled_images_per_class_per_step
     counts = np.zeros((state.num_classes))
-    for it, example in enumerate(state.train_loader):
-        if state.textdata:
-            datas = example.text[0]
-            labels = example.label
-        else:
-            (datas, labels) = example
-        datas=datas.to(state.device, non_blocking=True)
-        if state.textdata:
-            datas=encode(datas, state)
-        for data, label in zip(datas, labels):
-            label_id = label.item()
-            if counts[label_id] < needed:
-                counts[label_id] += 1
-                data_list[label_id].append(data)
-                if np.sum(counts) == needed * state.num_classes:
-                    break
+    repeats=0
+    while 0 in counts and repeats<10:
+        repeats+=1
+        for it, example in enumerate(state.train_loader):
+            if state.textdata:
+                datas = example.text[0]
+                labels = example.label
+            else:
+                (datas, labels) = example
+            datas=datas.to(state.device, non_blocking=True)
+            if state.textdata:
+                datas=encode(datas, state)
+            for data, label in zip(datas, labels):
+                label_id = label.item()
+                if counts[label_id] < needed:
+                    counts[label_id] += 1
+                    data_list[label_id].append(data)
+                    if np.sum(counts) == needed * state.num_classes:
+                        break
     steps = []
     label = get_baseline_label_for_one_step(state)
     print(label.shape)
