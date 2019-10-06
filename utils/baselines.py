@@ -52,6 +52,7 @@ def random_train(state):
                     break
     steps = []
     label = get_baseline_label_for_one_step(state)
+    print(label.shape)
     for i in range(0, needed, state.distilled_images_per_class_per_step):
         data = sum((cd[i:(i + state.distilled_images_per_class_per_step)] for cd in data_list), [])
         data = torch.stack(data, 0)
