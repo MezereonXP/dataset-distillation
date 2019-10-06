@@ -316,7 +316,9 @@ def infinite_iterator(iterable):
 def evaluate_steps(state, steps, prefix, details='', test_all=False, test_at_steps=None, log_results=True):
     models = state.test_models
     n_steps = len(steps)
-    print(steps)
+    print(len(steps[3][0]))
+    print(len(steps[3][1]))
+    print(len(steps[3][2]))
     if test_at_steps is None:
         test_at_steps = [0, n_steps]
     else:
