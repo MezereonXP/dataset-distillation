@@ -17,32 +17,40 @@ iris = datasets.load_iris()
 X = iris.data[:, :2]  # we only take the first two features. We could
                       # avoid this ugly slicing by using a two-dim dataset
 y = iris.target
-granularity=1
-n_neighbors = 3*granularity
-
+granularity=50
+num_points=2
+n_neighbors = num_points*granularity
+plt.ioff()
 ims=[]
 fig=plt.figure()
 ax1 = fig.add_subplot(1,2,1)
 axs = [fig.add_subplot(3,2,2), fig.add_subplot(3,2,4), fig.add_subplot(3,2,6)]
+
 def animate(j):
-    dd=np.zeros((3,2))
+    #dd=np.zeros((3,2))
+    dd=np.zeros((2,2))
     dy=[0,0,0]
-    #dd[0]=[4.1+0.02*j,2.8+0.02*j]
+    
+    dd[0]=[3.8+0.02*j,2.5+0.02*j]
     #dd[0]=[4.1,2.8]
     #dd[1]=[5.7,2.8]
     #dd[2]=[7.6,3.]
-    dd[0]=X[j]
-    dd[1]=X[50+j]
-    dd[2]=X[100+j]
+    dd[1]=[7.6-0.015*j,3.]
     
-    dy[0]=[1,0,0]
-    dy[1]=[0,1,0]
-    #dy[1]=[0+j*0.005,1-j*0.01,0+j*0.005]
-    dy[2]=[0,0,1]
+    #For selection method
+    #dd[0]=X[j]
+    #dd[1]=X[50+j]
+    #dd[2]=X[100+j]
+    
+    #dy[0]=[1,0,0]
+    dy[0]=[0.75-j*0.0025,0.25+j*0.0025,0]
+    #dy[1]=[0,1,0]
+    dy[1]=[0,0.25+j*0.003,0.75-j*0.003,]
+    #dy[2]=[0,0,1]
 
     distX=[]
     distY=[]
-    for i in range(3):
+    for i in range(num_points):
         class0 = int(dy[i][0]*granularity)
         class1 = int(dy[i][1]*granularity)
         class2 = int(granularity-class0-class1)
@@ -85,8 +93,8 @@ def animate(j):
         #plt.title("3-Class classification (k = %i)")
         axs[0].pie(dy[0], colors=colors)
         axs[1].pie(dy[1], colors=colors)
-        axs[2].pie(dy[2], colors=colors)
+        #axs[2].pie(dy[2], colors=colors)
 import matplotlib.animation as animation
-anim = animation.FuncAnimation(fig, animate, frames=6, interval=100, blit=False) 
+anim = animation.FuncAnimation(fig, animate, frames=65, interval=40, blit=False) 
 #plt.show()
-anim.save('selection.gif',writer='imagemagick') 
+anim.save('2point.gif',writer='imagemagick') 
