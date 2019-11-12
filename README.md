@@ -25,18 +25,17 @@ The code in the original repo is written by [Tongzhou Wang](https://ssnl.github.
 
 A good way to understand dataset distillation is to first consider the classic k-Nearest Neighbors classification algorithm. When we train a kNN, we essentially divide our space into classes based on the location of points in the training set. However, the cost of training a kNN model increases very quickly with the number of training points. Is it possible to train a kNN to its original accuracy using just a small number of points instead? 
 
-The simplest way to do this would be to select points from the original training set that are somehow most representative of their classes, and then fit the model on those points. 
+The simplest way to do this would be to select points from the original training set that are somehow most representative of their classes, and then fit the model on those points. This approach has obvious limitations as the resulting classification varies wildly depending on which training points were selected. 
 <p align="center"><img src='utils/selection_rev.gif' width=400></p>
 
-This approach has obvious limitations as the resulting classification varies wildly depending on which training points were selected. 
 
-Another method could be to not limit ourselves to the true training data. Instead, we randomly create some new points, and we move these points around until we find optimal locations for each one (based on training accuracy). 
+Another method could be to not limit ourselves to the true training data. Instead, we randomly create some new points, and we move these points around until we find optimal locations for each one (based on training accuracy). This is the basic idea of the what the original dataset distillation algorithm does.
 <p align="center"><img src='utils/location_rev.gif' width=400></p>
 
-This is the basic idea of the what the original dataset distillation algorithm does.
 
 But if a point is in between two clusters, could it not contain information that describes both classes? It turns out that we can go even further by enabling soft, learnable labels on our synthetic points. 
 <p align="center"><img src='utils/label_rev.gif' width=400></p>
+
 
 By combining learnable labels with learnable locations, we get what is essentially soft-label dataset distillation.
 <p align="center"><img src='utils/location_and_label_rev.gif' width=400></p>
