@@ -1,7 +1,5 @@
 # Improving Dataset Distillation
 
-<!-- <p align="center"><img src='docs/teaser.png' width=800></p> -->
-
 [Paper](https://arxiv.org/abs/1910.02551)
 
 
@@ -12,7 +10,7 @@ On CIFAR10, 100 distilled images can train a deep network with fixed initializat
 
 (b): Using soft-label distillation, we can create distilled datasets that are smaller than the number of classes. On MNIST, just 5 distilled images can train a standard LeNet with a fixed initialization to 92% test accuracy (compared to 99% when fully trained).
 
-(c): We also enable text dataset distillation. On IMDB, 20 distilled sentences can train a convnet to 80% test accuracy (compared to 87% when fully trained).
+(c): We also enable text dataset distillation. On IMDB, 20 distilled sentences can train a neural network to 80% test accuracy (compared to 87% when fully trained).
 
 
 
@@ -21,7 +19,27 @@ Improving Dataset Distillation<br>
 arXiv, 2019.<br>
 University of Waterloo
 
-The code in the original repo is written by [Tongzhou Wang](https://ssnl.github.io/) and [Jun-Yan Zhu](https://github.com/junyanz). All additional changes and new code in this fork are written by [Ilia Sucholutsky](https://ilia10000.github.io/).
+The code in the original repo is written by [Tongzhou Wang](https://ssnl.github.io/) and [Jun-Yan Zhu](https://github.com/junyanz). All changes and new code found in this fork are written by [Ilia Sucholutsky](https://ilia10000.github.io/).
+
+## A k-Nearest Neighbors Analogy for Dataset Distillation
+
+A good way to understand dataset distillation is to first consider the classic k-Nearest Neighbors classification algorithm. When we train a kNN, we essentially divide our space into classes based on the location of points in the training set. However, the cost of training a kNN model increases very quickly with the number of training points. Is it possible to train a kNN to its original accuracy using just a small number of points instead? 
+
+The simplest way to do this would be to select points from the original training set that are somehow most representative of their classes, and then fit the model on those points. 
+<p align="center"><img src='utils/selection_rev.gif' width=400></p>
+
+This approach has obvious limitations as the resulting classification varies wildly depending on which training points were selected. 
+
+Another method could be to not limit ourselves to the true training data. Instead, we randomly create some new points, and we move these points around until we find optimal locations for each one (based on training accuracy). 
+<p align="center"><img src='utils/location_rev.gif' width=400></p>
+
+This is the basic idea of the what the original dataset distillation algorithm does.
+
+But if a point is in between two clusters, could it not contain information that describes both classes? It turns out that we can go even further by enabling soft, learnable labels on our synthetic points. 
+<p align="center"><img src='utils/label_rev.gif' width=400></p>
+
+By combining learnable labels with learnable locations, we get what is essentially soft-label dataset distillation.
+<p align="center"><img src='utils/location_and_label_rev.gif' width=400></p>
 
 ## Prerequisites
 
