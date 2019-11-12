@@ -5,12 +5,12 @@
 
 This repo is a fork of the [PyTorch](https://pytorch.org) implementation of [Dataset Distillation](https://ssnl.github.io/dataset_distillation). The original authors distill the knowledge of tens of thousands of images into a few synthetic training images called *distilled images*. We extend their implementation with new features like soft-label dataset distillation and text dataset distillation as described in [Improving Dataset Distillation](https://arxiv.org/abs/1910.02551)
 
-(a): On MNIST, 10 distilled images can train a standard LeNet with a fixed initialization to 96% test accuracy (compared to 99% when fully trained).
-On CIFAR10, 100 distilled images can train a deep network with fixed initialization to 60% test accuracy (compared to 80% when fully trained).
+(a): On MNIST, 10 soft-label distilled images can train a standard LeNet with a fixed initialization to 96% test accuracy (compared to 99% when fully trained).
+On CIFAR10, 100 soft-label distilled images can train a deep network with fixed initialization to 60% test accuracy (compared to 80% when fully trained).
 
-(b): Using soft-label distillation, we can create distilled datasets that are smaller than the number of classes. On MNIST, just 5 distilled images can train a standard LeNet with a fixed initialization to 92% test accuracy (compared to 99% when fully trained).
+(b): Using soft-label distillation, we can also create distilled datasets that are smaller than the number of classes. On MNIST, just 5 soft-label distilled images can train a standard LeNet with a fixed initialization to 92% test accuracy (compared to 99% when fully trained).
 
-(c): We also enable text dataset distillation. On IMDB, 20 distilled sentences can train a neural network to 80% test accuracy (compared to 87% when fully trained).
+(c): We also increase the space of distillable datasets by enabling text dataset distillation. On IMDB, 20 distilled sentences can train a neural network to 80% test accuracy (compared to 87% when fully trained).
 
 
 
