@@ -40,7 +40,7 @@ But if a point is in between two clusters, could it not contain information that
 By combining learnable labels with learnable locations, we get what is essentially soft-label dataset distillation.
 <p align="center"><img src='utils/location_and_label_rev.gif' width=400></p>
 
-One of the really exciting and unexpected implications soft-label dataset distillation, is that we can actually now separate our classes using <b>fewer points than the number of classes</b>. 
+One of the really exciting and unexpected implications of soft-label dataset distillation, is that we can actually now separate our classes using <b>fewer points than the number of classes</b>. 
 <p align="center"><img src='utils/2points_rev.gif' width=400></p>
 
 ## Prerequisites
