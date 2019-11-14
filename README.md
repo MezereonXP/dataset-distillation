@@ -1,9 +1,9 @@
-# Improving Dataset Distillation
+# Soft-Label Dataset Distillation and Text Dataset Distillation
 
 [Paper](https://arxiv.org/abs/1910.02551)
 
 
-This repo is a fork of the [PyTorch](https://pytorch.org) implementation of [Dataset Distillation](https://ssnl.github.io/dataset_distillation). The original authors distill the knowledge of tens of thousands of images into a few synthetic training images called *distilled images*. We extend their implementation with new features like soft-label dataset distillation and text dataset distillation as described in [Improving Dataset Distillation](https://arxiv.org/abs/1910.02551)
+This repo is a fork of the [PyTorch](https://pytorch.org) implementation of [Dataset Distillation](https://ssnl.github.io/dataset_distillation). The original authors distill the knowledge of tens of thousands of images into a few synthetic training images called *distilled images*. We extend their implementation with new features like soft-label dataset distillation and text dataset distillation as described in [Soft-Label Dataset Distillation and Text Dataset Distillation](https://arxiv.org/abs/1910.02551)
 
 (a): On MNIST, 10 soft-label distilled images can train a standard LeNet with a fixed initialization to 96% test accuracy (compared to 99% when fully trained).
 On CIFAR10, 100 soft-label distilled images can train a deep network with fixed initialization to 60% test accuracy (compared to 80% when fully trained).
@@ -14,7 +14,7 @@ On CIFAR10, 100 soft-label distilled images can train a deep network with fixed 
 
 
 
-Improving Dataset Distillation<br>
+Soft-Label Dataset Distillation and Text Dataset Distillation<br>
 [Ilia Sucholutsky](https://ilia10000.github.io/), [Matthias Schonlau](https://www.schonlau.net).<br>
 arXiv, 2019.<br>
 University of Waterloo
@@ -140,8 +140,8 @@ python main.py --mode distill_basic --dataset sst5 --arch TextConvNet3 --distill
 
 If you find this useful for your research, please cite the following paper.
 ```
-@article{sucholutsky2019improving,
-    title={Improving Dataset Distillation},
+@article{sucholutsky2019softlabel,
+    title={Soft-Label Dataset Distillation and Text Dataset Distillation},
     author={Ilia Sucholutsky and Matthias Schonlau},
     journal={arXiv preprint arXiv:1910.02551},
     year={2019}
