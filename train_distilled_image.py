@@ -22,7 +22,65 @@ from contextlib import contextmanager
 def permute_list(list):
     indices = np.random.permutation(len(list))
     return [list[i] for i in indices]
-
+def rvs(dim):
+     random_state = np.random
+     H = np.eye(dim)
+     D = np.ones((dim,))
+     for n in range(1, dim):
+         x = random_state.normal(size=(dim-n+1,))
+         D[n-1] = np.sign(x[0])
+         x[0] -= D[n-1]*np.sqrt((x*x).sum())
+         # Householder transformation
+         Hx = (np.eye(dim-n+1) - 2.*np.outer(x, x)/(x*x).sum())
+         mat = np.eye(dim)
+         mat[n-1:, n-1:] = Hx
+         H = np.dot(H, mat)
+         # Fix the last sign such that the determinant is 1
+     D[-1] = (-1)**(1-(dim % 2))*D.prod()
+     # Equivalent to np.dot(np.diag(D), H) but faster, apparently
+     H = (D*H.T).T
+     return H
+def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
+    init_type=state.random_init_labels
+    device=state.device
+    num_classes=state.num_classes
+    label_smoothing=0.1
+    if init_type=="stdnormal":
+        if state.num_classes == 2:
+            distill_label = torch.randn(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+        else:
+            distill_label = torch.randn(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+    elif init_type=="uniform":
+        if num_classes == 2:
+            distill_label = torch.rand(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+        else:
+            distill_label = torch.rand(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+    elif init_type=="zeros":
+        if num_classes == 2:
+            distill_label = torch.zeros(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+        else:
+            distill_label = torch.zeros(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+    elif init_type=="ones":
+        if num_classes == 2:
+            distill_label = torch.ones(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+        else:
+            distill_label = torch.ones(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+    elif init_type=="hard":
+        if state.num_classes==2:
+            dl_array = [[i==j for i in range(1)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
+        else:
+            dl_array = [[i==j for i in range(num_classes)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
+        distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
+    elif init_type=="smoothed":
+        if state.num_classes==2:
+            dl_array = [[i==j for i in range(1)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
+        else:
+            dl_array = [[i==j for i in range(num_classes)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
+        dl_array=dl_array*(1-label_smoothing) +label_smoothing/num_classes
+        distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
+    elif init_type=="orthogonal":
+        
+    return distill_label
 
 class Trainer(object):
     def __init__(self, state, models):
@@ -47,11 +105,7 @@ class Trainer(object):
         #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
             if state.random_init_labels:
-                if state.num_classes == 2:
-                    distill_label = torch.randn(self.num_per_step, 1, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
-                else:
-                    distill_label = torch.randn(self.num_per_step, state.num_classes, dtype=torch.float, device=state.device, requires_grad=req_lbl_grad)
-            #                     .repeat(state.distilled_images_per_class_per_step, 1)  # [[0, 1, 2, ...], [0, 1, 2, ...]]
+                distill_label = distillation_label_initialiser(state.random_init_labels, self.num_per_step, state.num_classes, torch.float, state.device, req_lbl_grad)
             else:
                 if state.num_classes==2:
                     dl_array = [[i==j for i in range(1)]for j in state.init_labels]*state.distilled_images_per_class_per_step
