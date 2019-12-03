@@ -46,6 +46,7 @@ def cross_entropy_with_probs(
     target: torch.Tensor,
     weight: Optional[torch.Tensor] = None,
     reduction: str = "mean",
+    softmax: bool = False
 ) -> torch.Tensor:
     """Calculate cross-entropy loss when targets are probabilities (floats), not ints.
     PyTorch's F.cross_entropy() method requires integer labels; it does accept
@@ -79,6 +80,8 @@ def cross_entropy_with_probs(
     num_points, num_classes = input.shape
     # Note that t.new_zeros, t.new_full put tensor on same device as t
     cum_losses = input.new_zeros(num_points)
+    if softmax:
+        target=F.softmax(target, dim=-1)
     for y in range(num_classes):
         target_temp = input.new_full((num_points,), y, dtype=torch.long)
         y_loss = F.cross_entropy(input, target_temp, reduction="none")
@@ -108,10 +111,10 @@ def task_loss(state, output, label, **kwargs):
         #return xentropy_cost(label, output)
         if state.textdata:
             #return F.kl_div(output, label.float(), reduction='batchmean', **kwargs)
-            return cross_entropy_with_probs(output, label, reduction='mean', **kwargs)
+            return cross_entropy_with_probs(output, label, reduction='mean', softmax=state.label_softmax, **kwargs)
         else:
             #return F.cross_entropy(output, label.long().argmax(-1), **kwargs)
-            return cross_entropy_with_probs(output, label, reduction='mean', **kwargs)
+            return cross_entropy_with_probs(output, label, reduction='mean', softmax=state.label_softmax, **kwargs)
 def task_loss_eval(state, output, label, **kwargs):
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
