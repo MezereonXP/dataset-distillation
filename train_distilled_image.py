@@ -47,39 +47,60 @@ def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
     label_smoothing=0.1
     if init_type=="stdnormal":
         if state.num_classes == 2:
-            distill_label = torch.randn(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.random.normal(size=(num_per_step, 1))
+            #dl_array = torch.randn(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
         else:
-            distill_label = torch.randn(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.random.normal(size=(num_per_step, num_classes))
+            #dl_array = torch.randn(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
     elif init_type=="uniform":
         if num_classes == 2:
-            distill_label = torch.rand(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.random.uniform(size=(num_per_step, 1))
+            #dl_array = torch.rand(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
         else:
-            distill_label = torch.rand(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.random.uniform(size=(num_per_step, num_classes))
+            #dl_array = torch.rand(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
     elif init_type=="zeros":
         if num_classes == 2:
-            distill_label = torch.zeros(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.zeros((num_per_step, 1))
         else:
-            distill_label = torch.zeros(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.zeros((num_per_step, num_classes))
     elif init_type=="ones":
         if num_classes == 2:
-            distill_label = torch.ones(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.ones((num_per_step, 1))
+            #distill_label = torch.ones(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
         else:
-            distill_label = torch.ones(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+            dl_array = np.ones((num_per_step, num_classes))
+            #distill_label = torch.ones(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
     elif init_type=="hard":
         if state.num_classes==2:
             dl_array = [[i==j for i in range(1)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
         else:
             dl_array = [[i==j for i in range(num_classes)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
-        distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
+        #distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
     elif init_type=="smoothed":
         if state.num_classes==2:
             dl_array = [[i==j for i in range(1)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
         else:
             dl_array = [[i==j for i in range(num_classes)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
-        dl_array=dl_array*(1-label_smoothing) +label_smoothing/num_classes
-        distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
+        dl_array=np.add(np.multiply(dl_array,(1-label_smoothing)), label_smoothing/num_classes)
+        #distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
     elif init_type=="orthogonal":
-        
+        M = rvs(num_classes)
+        #This means that if you have multiple images per class per step, all labels for same class are same
+        dl_array = M*state.distilled_images_per_class_per_step 
+        #distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
+    elif init_type=="file":
+        with open("labels.txt") as f:
+            dl_array = [[float(l) for l in line.strip().split(", ")] for line in f.readlines()]
+        #distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
+            
+    if state.add_first:
+        dl_array=np.add(dl_array,state.add_label_scaling)
+        dl_array=np.multiply(dl_array,state.mult_label_scaling)
+    else:
+        dl_array=np.multiply(dl_array,state.mult_label_scaling)
+        dl_array=np.add(dl_array,state.add_label_scaling)
+    distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
     return distill_label
 
 class Trainer(object):
@@ -105,7 +126,7 @@ class Trainer(object):
         #distill_label = torch.nn.Softmax(distill_label, dim=1)
         for _ in range(self.num_data_steps):
             if state.random_init_labels:
-                distill_label = distillation_label_initialiser(state.random_init_labels, self.num_per_step, state.num_classes, torch.float, state.device, req_lbl_grad)
+                distill_label = distillation_label_initialiser(state, self.num_per_step, torch.float, req_lbl_grad)
             else:
                 if state.num_classes==2:
                     dl_array = [[i==j for i in range(1)]for j in state.init_labels]*state.distilled_images_per_class_per_step
