@@ -315,7 +315,7 @@ class BaseOptions(object):
                                  'Then it stores the values in state as "distributed_master_addr", '
                                  '"distributed_master_port", etc. Only rank 0 process writes checkpoints. ')
         parser.add_argument('--static_labels', type=int, default=0, help='0 for fixed labels during training, 1 for them to be learned as well.')
-        parser.add_argument('--random_init_labels', type=int, default=0, help='0 for one-hot labels init, 1 for random init.')
+        parser.add_argument('--random_init_labels', type=str, default='', help=' "" for user-set labels init, other strings for special inits.')
         parser.add_argument('--num_distill_classes', type=int, default=None, help='Number of distill samples per step (can be less than number of classes.')
         parser.add_argument('--init_labels', type=int, nargs="*", default=None, help='If not random_init_labels, use this to set initial values of distill labels.')
         parser.add_argument('--textdata', type=bool, default=False, help='Is the dataset text-based?')
@@ -324,8 +324,12 @@ class BaseOptions(object):
         parser.add_argument('--maxlen', type=int, default=400, help='maxlen for text data')
         parser.add_argument('--learnable_embedding', type=bool, default=False, help='Should text embedding be learnable?')
         parser.add_argument('--reproduction_test', type=bool, default=False, help='Use original loss function instead of custom one?')
-        
+        parser.add_argument('--label_softmax', type=bool, default=False, help='Should softmax be applied to distillation labels in loss function?')
         parser.add_argument('--visualize', type=bool, default=True, help='Visualize distilled data')
+        parser.add_argument('--mult_label_scaling', type=float, default = 1, help = "Multiplicative scaling for label initialisations")
+        parser.add_argument('--add_label_scaling', type=float, default = 0, help = "Additive scaling for label initialisations")
+        parser.add_argument('--add_first', type=bool, default=True, help="Perform add scaling before mult scaling for label inits?")
+
         
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
