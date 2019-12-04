@@ -17,6 +17,8 @@ from utils.distributed import broadcast_coalesced, all_reduce_coalesced
 from utils.io import save_results
 from basics import task_loss, final_objective_loss, evaluate_steps
 from contextlib import contextmanager
+from utils.baselines import average_train
+from skimage.measure import compare_ssim, compare_mse, compare_nrmse
 
 
 def permute_list(list):
@@ -40,6 +42,35 @@ def rvs(dim):
      # Equivalent to np.dot(np.diag(D), H) but faster, apparently
      H = (D*H.T).T
      return H
+ 
+def distillation_label_distance_based_initialiser(state, distance_matrix):
+    num_classes=state.num_classes
+    if state.num_classes==2:
+        dl_array = [[i==j for i in range(1)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
+    else:
+        dl_array = [[i==j for i in range(num_classes)]for j in range(num_classes)]*state.distilled_images_per_class_per_step
+    new_array = np.array(dl_array, dtype=float)
+    
+    #move the vectors closer based on distances
+    for i in range(len(distance_matrix)):
+        for j in range(len(distance_matrix[i])):
+            if i!=j:
+                new_array[i]=np.add(new_array[i],np.multiply(dl_array[j],(1-distance_matrix[i][j])))
+    return new_array
+    
+        
+def images_dist(dist_metric, images):
+   imgs = np.moveaxis(np.array(images), 1, -1)
+   dist_mat = np.zeros((len(imgs),len(imgs)))
+   for i in range(len(imgs)):
+       for j in range(len(imgs)):
+           if dist_metric=="MSE":
+               dist_mat[i,j] = compare_mse(imgs[i], imgs[j])
+           elif dist_metric=="NRMSE":
+               dist_mat[i,j] = compare_nrmse(imgs[i], imgs[j])
+           elif dist_metric=="SSIM":
+               dist_mat[i,j] = 1-compare_ssim(imgs[i], imgs[j], win_size=3, multichannel=True)
+   return np.divide(dist_mat, np.max(dist_mat))
 def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
     init_type=state.random_init_labels
     device=state.device
@@ -93,7 +124,14 @@ def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
         with open("labels.txt") as f:
             dl_array = [[float(l) for l in line.strip().split(", ")] for line in f.readlines()]
         #distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
-            
+    elif init_type=="CNDB":
+        distances=...
+        dl_array=distillation_label_distance_based_initialiser(distances)
+    elif init_type=="AIDB":
+        avg_imgs = average_train(state)[0][0]
+        distances= images_dist(state.dist_metric, avg_imgs)
+        dl_array=distillation_label_distance_based_initialiser(state,distances)
+    
     if state.add_first:
         dl_array=np.add(dl_array,state.add_label_scaling)
         dl_array=np.multiply(dl_array,state.mult_label_scaling)

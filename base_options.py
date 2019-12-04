@@ -329,7 +329,7 @@ class BaseOptions(object):
         parser.add_argument('--mult_label_scaling', type=float, default = 1, help = "Multiplicative scaling for label initialisations")
         parser.add_argument('--add_label_scaling', type=float, default = 0, help = "Additive scaling for label initialisations")
         parser.add_argument('--add_first', type=bool, default=True, help="Perform add scaling before mult scaling for label inits?")
-
+        parser.add_argument('--dist_metric', type=str, default='MSE', help="One of MSE | NRMSE | SSIM, used for AIBD label initialization")
         
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
