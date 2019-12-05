@@ -329,8 +329,9 @@ class BaseOptions(object):
         parser.add_argument('--mult_label_scaling', type=float, default = 1, help = "Multiplicative scaling for label initialisations")
         parser.add_argument('--add_label_scaling', type=float, default = 0, help = "Additive scaling for label initialisations")
         parser.add_argument('--add_first', type=bool, default=True, help="Perform add scaling before mult scaling for label inits?")
-        parser.add_argument('--dist_metric', type=str, default='MSE', help="One of MSE | NRMSE | SSIM, used for AIBD label initialization")
-        
+        parser.add_argument('--dist_metric', type=str, default='MSE', help="One of MSE | NRMSE | SSIM, only used with AIBD and CNDB")
+        parser.add_argument('--invert_dist', type=bool, default=False, help="Should distance for label init be reversed? Only used with AIDB and CNDB")
+
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
             # Use default Namespace (not UniqueNamespace) because dummy state may

@@ -43,6 +43,16 @@ def rvs(dim):
      H = (D*H.T).T
      return H
  
+def load_embeddings():
+    embeddings_dict = {}
+    with open("glove.6B.50d.txt", 'r') as f:
+        for line in f:
+            values = line.split()
+            word = values[0]
+            vector = np.asarray(values[1:], "float32")
+            embeddings_dict[word] = vector
+    return embeddings_dict
+    
 def distillation_label_distance_based_initialiser(state, distance_matrix):
     num_classes=state.num_classes
     if state.num_classes==2:
@@ -59,8 +69,10 @@ def distillation_label_distance_based_initialiser(state, distance_matrix):
     return new_array
     
         
-def images_dist(dist_metric, images):
-   imgs = np.moveaxis(np.array(images), 1, -1)
+def images_dist(dist_metric, reverse, images):
+   imgs = np.array(images)
+   if len(imgs.shape)==4:
+       imgs = np.moveaxis(imgs, 1, -1)       
    dist_mat = np.zeros((len(imgs),len(imgs)))
    for i in range(len(imgs)):
        for j in range(len(imgs)):
@@ -70,7 +82,11 @@ def images_dist(dist_metric, images):
                dist_mat[i,j] = compare_nrmse(imgs[i], imgs[j])
            elif dist_metric=="SSIM":
                dist_mat[i,j] = 1-compare_ssim(imgs[i], imgs[j], win_size=3, multichannel=True)
-   return np.divide(dist_mat, np.max(dist_mat))
+           
+   dist_mat = np.divide(dist_mat, np.max(dist_mat))
+   if reverse:
+       dist_mat = np.subtract(1, dist_mat)
+   return dist_mat
 def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
     init_type=state.random_init_labels
     device=state.device
@@ -132,11 +148,13 @@ def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
             dl_array = [[float(l) for l in line.strip().split(", ")] for line in f.readlines()]
         #distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=device)
     elif init_type=="CNDB":
-        distances=...
-        dl_array=distillation_label_distance_based_initialiser(distances)
+        embed_dict = load_embeddings()
+        embdeddings = [embed_dict[str(name)] for name in state.dataset_labels]
+        distances= images_dist("MSE", state.invert_dist, embdeddings)
+        dl_array=distillation_label_distance_based_initialiser(state,distances)
     elif init_type=="AIDB":
         avg_imgs = average_train(state)[0][0]
-        distances= images_dist(state.dist_metric, avg_imgs)
+        distances= images_dist(state.dist_metric, state.invert_dist, avg_imgs)
         dl_array=distillation_label_distance_based_initialiser(state,distances)
     
     if state.add_first:
