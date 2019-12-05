@@ -90,6 +90,13 @@ def distillation_label_initialiser(state, num_per_step, dtype, req_lbl_grad):
         else:
             dl_array = np.random.uniform(size=(num_per_step, num_classes))
             #dl_array = torch.rand(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+    elif init_type=="bin":
+        if num_classes == 2:
+            dl_array = np.random.binomial(1,0.5,size=(num_per_step, 1))
+            #dl_array = torch.rand(num_per_step, 1, dtype=torch.float, device=device, requires_grad=req_lbl_grad)
+        else:
+            dl_array = np.random.binomial(1,0.5,size=(num_per_step, num_classes))
+            #dl_array = torch.rand(num_per_step, num_classes, dtype=torch.float, device=device, requires_grad=req_lbl_grad) 
     elif init_type=="zeros":
         if num_classes == 2:
             dl_array = np.zeros((num_per_step, 1))
