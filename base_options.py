@@ -331,6 +331,7 @@ class BaseOptions(object):
         parser.add_argument('--add_first', type=bool, default=True, help="Perform add scaling before mult scaling for label inits?")
         parser.add_argument('--dist_metric', type=str, default='MSE', help="One of MSE | NRMSE | SSIM, only used with AIBD and CNDB")
         parser.add_argument('--invert_dist', type=bool, default=False, help="Should distance for label init be reversed? Only used with AIDB and CNDB")
+        parser.add_argument('--freeze_data', type=bool, default=False, help="Should only labels and lr be learned (freeze data samples as random)?")
 
     def get_dummy_state(self, *cmdargs, yaml_file=None, **opt_pairs):
         if yaml_file is None:
