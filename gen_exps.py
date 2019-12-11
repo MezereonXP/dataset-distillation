@@ -58,7 +58,7 @@ def write_to_batch_files(batch_size=40, devices=8):
             command=command.format(combo[0],network,random_init, labinit,results_dir, combo[5], combo[6], dist_metric, invert_dist, combo[1], int(np.remainder(i,batch_size)), i%devices, epochs)
             f.write(command+"\nsleep 2\n")
             if i==0:
-                f.write(command+"\nsleep 10\n") #to give time to get datasets
+                f.write("\nsleep 10\n") #to give time to get datasets
             i+=1
             
 write_to_batch_files()            
