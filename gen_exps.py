@@ -38,11 +38,11 @@ def write_to_file():
             command=command.format(combo[0],network,random_init, labinit,results_dir, combo[5], combo[6], dist_metric, invert_dist, combo[1])
             f.write(command+"\n\n")
 
-def write_to_batch_files(batch_size=40):
+def write_to_batch_files(batch_size=40, devices=8):
     i=0
     for combo in combos:
         with open("exp_scripts/label_exps_{0}.sh".format(int(np.floor(i/batch_size))),"a+") as f:
-            command = "python3 main.py --mode distill_basic --dataset {0} --arch {1}Net {2} --distill_steps 1 --static_labels 0 --random_init_labels {3} --distill_lr 0.01  --decay_epochs 35 --epochs 350 --lr 0.01  --results_dir {4} --device_id 0 --add_label_scaling {5} --mult_label_scaling {6} --dist_metric {7} --invert_dist {8} --label_softmax {9} > exp_scripts/batch_output_{10} 2>&1 &"
+            command = "python3 main.py --mode distill_basic --dataset {0} --arch {1}Net {2} --distill_steps 1 --static_labels 0 --random_init_labels {3} --distill_lr 0.01  --decay_epochs 35 --epochs 350 --lr 0.01  --results_dir {4} --device_id {11} --add_label_scaling {5} --mult_label_scaling {6} --dist_metric {7} --invert_dist {8} --label_softmax {9} > exp_scripts/batch_output_{10} 2>&1 &"
             random_init = "--train_nets_type known_init --n_nets 1 --test_nets_type same_as_train" if combo[2] == "Random" else ""
             network = "Le" if combo[0]=="MNIST" else "AlexCifar"
             dist_metric = "SSIM" if "SSIM" in combo[3] else "MSE"
@@ -54,7 +54,7 @@ def write_to_batch_files(batch_size=40):
                     labinit = "CNDB"
                 elif "IDB" in combo[3]:
                     labinit = "AIDB"
-            command=command.format(combo[0],network,random_init, labinit,results_dir, combo[5], combo[6], dist_metric, invert_dist, combo[1], int(np.remainder(i,batch_size)))
+            command=command.format(combo[0],network,random_init, labinit,results_dir, combo[5], combo[6], dist_metric, invert_dist, combo[1], int(np.remainder(i,batch_size)), i%devices)
             f.write(command+"\n\n")
             i+=1
             
