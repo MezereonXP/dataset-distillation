@@ -59,7 +59,7 @@ def distillation_label_distance_based_initialiser(state, distance_matrix):
     
         
 def images_dist(dist_metric, reverse, images):
-   imgs = np.array(images)
+   imgs = np.array(images.cpu())
    if len(imgs.shape)==4:
        imgs = np.moveaxis(imgs, 1, -1)       
    dist_mat = np.zeros((len(imgs),len(imgs)))
