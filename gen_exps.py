@@ -47,7 +47,7 @@ def write_to_batch_files(batch_size=40, devices=8):
             network = "Le" if combo[0]=="MNIST" else "AlexCifar"
             dist_metric = "SSIM" if "SSIM" in combo[3] else "MSE"
             invert_dist = 1 if ("CNIDB" in combo[3] or "AIIDB" in combo[3]) else "''"
-            results_dir = "~/label-init-exps/softmax_{0}-labinit_{1}-add_{2}-mult_{3}-repl_{4}".format(combo[1], combo[3], combo[5], combo[6], combo[4])
+            results_dir = "~/soft-label-inits/softmax_{0}-labinit_{1}-add_{2}-mult_{3}-repl_{4}".format(combo[1], combo[3], combo[5], combo[6], combo[4])
             labinit=combo[3]
             if "DB" in combo[3]:
                 if "CNIDB"==combo[3]:
