@@ -13,10 +13,10 @@ epochs=50
 exps={}
 exps["dataset"]={"MNIST", "Cifar10"}
 exps["softmax"]={1,0}
-exps["network_init"]={"Random"}#,"Fixed"}
+exps["network_init"]={"Fixed"}#,"Fixed"}
 exps["label_init"]={"zeros", "uniform", "stdnormal", "bin", "hard", "smoothed", "orthogonal", "CNDB", "CNIDB", "AIDB-MSE","AIDB-SSIM", "AIIDB-MSE", "AIIDB-SSIM"}
 exps["repl"]={1}#,2,3}
-exps["add"]={0,-1}
+exps["add"]={-0.5}
 exps["mult"]={1,10}
 allNames=exps.keys()
 combos = it.product(*(exps[Name] for Name in allNames))
@@ -61,7 +61,7 @@ def write_to_batch_files(batch_size=40, devices=8):
                 f.write("\nsleep 10\n") #to give time to get datasets
             i+=1
             
-write_to_batch_files()            
+#write_to_batch_files()            
             
             
             
