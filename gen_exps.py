@@ -9,15 +9,15 @@ Created on Sat Dec  7 00:26:49 2019
 import itertools as it
 import numpy as np
 
-epochs=50
+epochs=350
 exps={}
 exps["dataset"]={"MNIST", "Cifar10"}
 exps["softmax"]={1,0}
-exps["network_init"]={"Fixed"}#,"Fixed"}
+exps["network_init"]={"Fixed"}#,"Random"}
 exps["label_init"]={"zeros", "uniform", "stdnormal", "bin", "hard", "smoothed", "orthogonal", "CNDB", "CNIDB", "AIDB-MSE","AIDB-SSIM", "AIIDB-MSE", "AIIDB-SSIM"}
 exps["repl"]={1}#,2,3}
-exps["add"]={-0.5}
-exps["mult"]={1,10}
+exps["add"]={0, -0.5}
+exps["mult"]={10}
 allNames=exps.keys()
 combos = it.product(*(exps[Name] for Name in allNames))
 
@@ -61,10 +61,8 @@ def write_to_batch_files(batch_size=40, devices=8):
                 f.write("\nsleep 10\n") #to give time to get datasets
             i+=1
             
-#write_to_batch_files()            
-            
-            
-            
+write_to_batch_files()            
+                        
             
             
             
