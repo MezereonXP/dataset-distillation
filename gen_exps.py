@@ -61,7 +61,7 @@ def write_to_batch_files(batch_size=40, devices=8):
                 f.write("\nsleep 10\n") #to give time to get datasets
             i+=1
             
-write_to_batch_files()            
+write_to_batch_files(batch_size=35)            
                         
             
             
