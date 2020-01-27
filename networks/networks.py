@@ -32,91 +32,86 @@ class LeNet(utils.ReparamModule):
         out = self.fc3(out)
         return out
 
-class TextConvNet(utils.ReparamModule):
+class RNN1(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
         if state.dropout:
-            raise ValueError("TextConvNet doesn't support dropout")
-        super(TextConvNet, self).__init__()
-        #if state.textdata:
-        ninp=state.ninp #Maybe 32
+            raise ValueError("RNN1 doesn't support dropout")
+        super(RNN1, self).__init__()
+        output_dim=1 if state.num_classes == 2 else state.num_classes
+        embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
-        self.encoder = nn.Embedding(ntoken, ninp)
-        self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
-        self.encoder.weight.requires_grad = False 
-        self.conv1 = nn.Conv2d(state.nc, 6, 5, padding=2 if state.input_size == 28 else 0)
-        self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(13968, 120)
-        self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 1 if state.num_classes <= 2 else state.num_classes)
-        self.distilling_flag=False
+        hidden_dim = 256
+        n_layers = 2
+        bidirectional=True
+        dropout=0.5
+        self.embed = nn.Embedding(ntoken, embedding_dim)
+        self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.embed.weight.requires_grad = state.learnable_embedding 
+        
+        self.rnn = nn.LSTM(embedding_dim, 
+                           hidden_dim, 
+                           num_layers=n_layers, 
+                           bidirectional=bidirectional, 
+                           dropout=dropout, 
+                           bias =True, 
+                           batch_first=True)
+        self.fc = nn.Linear(hidden_dim * 2, output_dim)
+        
+        self.dropout = nn.Dropout(dropout)
+
     def forward(self, x):
-        if self.state.textdata and not self.distilling_flag:
-                ninp=self.state.ninp #Maybe 32
-                out = self.encoder(x) * math.sqrt(ninp)
-                #out=x
-                #print(out.size())
-                out.unsqueeze_(1)
-                #print(out.size())
-                out = F.relu(self.conv1(out), inplace=True)
+        
+        if self.state.textdata:
+            if not self.distilling_flag:
+                out = self.embed(x) #* math.sqrt(ninp)
+            else:
+                out=torch.squeeze(x)
         else:
-                out = F.relu(self.conv1(x), inplace=True)
-        out = F.max_pool2d(out, 2)
-        out = F.relu(self.conv2(out), inplace=True)
-        out = F.max_pool2d(out, 2)
-        out = out.view(out.size(0), -1)
-        out = F.relu(self.fc1(out), inplace=True)
-        out = F.relu(self.fc2(out), inplace=True)
-        out = self.fc3(out)
-        return out
-    
-class TextConvNet2(utils.ReparamModule):
-    supported_dims = set(range(1,20000))
-    def __init__(self, state):
-        self.state=state
-        if state.dropout:
-            raise ValueError("TextConvNet2 doesn't support dropout")
-        super(TextConvNet2, self).__init__()
-        #if state.textdata:
-        ninp=state.ninp #Maybe 32
-        ntoken=state.ntoken
-        self.encoder = nn.Embedding(ntoken, ninp)
-        self.encoder.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
-        self.encoder.weight.requires_grad = state.learnable_embedding 
-        self.drop=nn.Dropout(0.2)
-        self.conv1 = nn.Conv1d(state.maxlen, 250, 3)
-        self.fc1 = nn.Linear(250, 250)
-        self.fc2 = nn.Linear(250, 1 if state.num_classes <= 2 else state.num_classes)
-        self.sigm=nn.Sigmoid()
-        self.distilling_flag=False
-    def forward(self, x):
-        if self.state.textdata and not self.distilling_flag:
-                ninp=self.state.ninp #Maybe 32
-                #print(x.size())
-                out = self.encoder(x) #* math.sqrt(ninp)
-                #out=x
-                #print(out.size())
-                #print(out.size())
-                out = self.drop(out)
-                out = F.relu(self.conv1(out), inplace=True)
-        else:
-                out=torch.squeeze(x, dim=1)
-                out=self.drop(out)
-                out = F.relu(self.conv1(out), inplace=True)
-        out_maxed = torch.max(out, -1).values
-        #out = out.view(out.size(0), -1)
-        out_maxed = F.relu(self.fc1(out_maxed), inplace=True)
-        out_maxed = self.fc2(out_maxed)
-        #out_maxed = self.sigm(out_maxed)
-        return out_maxed    
-    
+            out = x
+        #print(out.size())
+        out = self.dropout(out)
+        out, (hidden, cell) = self.rnn(out)
+        hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
+        return self.fc(hidden)
+class RNN(nn.Module):
+ 
+    def forward(self, text, text_lengths):
+        
+        #text = [sent len, batch size]
+        
+        embedded = self.dropout(self.embedding(text))
+        
+        #embedded = [sent len, batch size, emb dim]
+        
+        #pack sequence
+        packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths)
+        
+        packed_output, (hidden, cell) = self.rnn(packed_embedded)
+        
+        #unpack sequence
+        output, output_lengths = nn.utils.rnn.pad_packed_sequence(packed_output)
+
+        #output = [sent len, batch size, hid dim * num directions]
+        #output over padding tokens are zero tensors
+        
+        #hidden = [num layers * num directions, batch size, hid dim]
+        #cell = [num layers * num directions, batch size, hid dim]
+        
+        #concat the final forward (hidden[-2,:,:]) and backward (hidden[-1,:,:]) hidden layers
+        #and apply dropout
+        
+        hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
+                
+        #hidden = [batch size, hid dim * num directions]
+            
+        return self.fc(hidden)
+       
 class TextConvNet3(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
-        if state.dropout:
-            raise ValueError("TextConvNet3 doesn't support dropout")
         super(TextConvNet3, self).__init__()
         #if state.textdata:
         embedding_dim=state.ninp #Maybe 32

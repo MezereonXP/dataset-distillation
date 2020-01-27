@@ -28,9 +28,15 @@ def init_weights(net, state):
 
     def init_func(m):
         classname = m.__class__.__name__
-        if classname.startswith('Conv') or classname == 'Linear':
+        if classname.startswith('Conv') or classname == 'Linear' or classname.startswith('RNN') or classname == 'LSTM':
             if getattr(m, 'bias', None) is not None:
-                init.constant_(m.bias, 0.0)
+                if classname.startswith('Conv') or classname == 'Linear':
+                    init.constant_(m.bias, 0.0)
+                else:
+                    for names in m._all_weights:
+                        for name in filter(lambda n: "bias" in n,  names):
+                            bias = getattr(m, name)
+                            init.constant_(bias, 0.0)
             if getattr(m, 'weight', None) is not None:
                 if init_type == 'normal':
                     init.normal_(m.weight, 0.0, init_param)
