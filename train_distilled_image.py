@@ -73,6 +73,8 @@ class Trainer(object):
             else:
                 distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
                                        device=state.device, requires_grad=(not state.freeze_data))
+                #distill_data = torch.randint(2,(self.num_per_step, state.nc, state.input_size, state.input_size),
+                #                       device=state.device, requires_grad=(not state.freeze_data), dtype=torch.float)
             self.data.append(distill_data)
             if not state.freeze_data:
                 self.params.append(distill_data)
@@ -144,10 +146,13 @@ class Trainer(object):
         glrs = []
         labels=[]
         glabels=[]
+        
+        model.train()
+        
         dw, = torch.autograd.grad(l, (params[-1],), retain_graph=state.textdata)
 
         # backward
-        model.train()
+        
         # Notation:
         #   math:    \grad is \nabla
         #   symbol:  d* means the gradient of final L w.r.t. *
