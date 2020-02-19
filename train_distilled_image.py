@@ -121,6 +121,8 @@ class Trainer(object):
                 model.distilling_flag=True
                 output = model.forward_with_param(data, w)
                 loss = task_loss(state, output, label)
+                lr = lr.squeeze()
+                #print(lr.size())
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
 
             with torch.no_grad():
@@ -146,13 +148,10 @@ class Trainer(object):
         glrs = []
         labels=[]
         glabels=[]
-        
-        model.train()
-        
         dw, = torch.autograd.grad(l, (params[-1],), retain_graph=state.textdata)
 
         # backward
-        
+        model.train()
         # Notation:
         #   math:    \grad is \nabla
         #   symbol:  d* means the gradient of final L w.r.t. *
@@ -286,9 +285,9 @@ class Trainer(object):
                     steps = self.get_steps()
                 self.save_results(steps=steps, visualize=state.visualize, subfolder='checkpoints/epoch{:04d}'.format(epoch))
                 evaluate_steps(state, steps, 'Begin of epoch {}'.format(epoch))
-
+            
             do_log_this_iter = it == 0 or (state.log_interval >= 0 and it % state.log_interval == 0)
-
+            
             self.optimizer.zero_grad()
             rdata, rlabel = rdata.to(device, non_blocking=True), rlabel.to(device, non_blocking=True)
 
@@ -307,9 +306,13 @@ class Trainer(object):
             for model in tmodels:
                 if state.train_nets_type == 'unknown_init':
                     model.reset(state)
+
                 l, saved = self.forward(model, rdata, rlabel, steps)
                 losses.append(l)
-                grad_infos.append(self.backward(model, rdata, rlabel, steps, saved))
+
+                next_ones = self.backward(model, rdata, rlabel, steps, saved)
+                grad_infos.append(next_ones)
+
             self.accumulate_grad(grad_infos)
 
             # all reduce if needed
@@ -340,7 +343,7 @@ class Trainer(object):
                 ))
                 if loss != loss:  # nan
                     raise RuntimeError('loss became NaN')
-
+                    
             del steps, saved, grad_infos, losses, all_reduce_tensors
 
             data_t0 = time.time()

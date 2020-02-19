@@ -153,7 +153,11 @@ def train_steps_inplace(state, models, steps, params=None, callback=None):
             model.train()  # callback may change model.training so we set here
             model.distilling_flag=True
             output = model.forward_with_param(data, w)
+            #print(output[0].size())
             loss = task_loss(state, output, label)
+            lr=lr.squeeze()
+            #print(lr)
+            #print(lr.size())
             loss.backward(lr)
             with torch.no_grad():
                 w.sub_(w.grad)
