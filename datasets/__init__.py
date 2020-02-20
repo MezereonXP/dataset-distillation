@@ -95,7 +95,15 @@ dataset_stats = dict(
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
        set(dataset_labels.keys()) == set(dataset_stats.keys()))
 
-
+def print_closest_words(vec, glove, n=5):
+    dists = torch.norm(glove.vectors - vec, dim=1)     # compute distances to all words
+    lst = sorted(enumerate(dists.numpy()), key=lambda x: x[1]) # sort by distance
+    for idx, difference in lst[0:n+1]: 					       # take the top n
+        print(glove.itos[idx], difference)
+def closest_words(vec, glove, n=5):
+    dists = torch.norm(glove.vectors - vec, dim=1)     # compute distances to all words
+    lst = sorted(enumerate(dists.numpy()), key=lambda x: x[1]) # sort by distance
+    return [glove.itos[idx] for idx, _ in lst[0:n+1]]				       # take the top n
 def get_info(state):
     dataset_stats['imdb']=DatasetStats(1,state.maxlen,2)
     dataset_stats['sst5']=DatasetStats(1,state.maxlen,5)
@@ -243,6 +251,16 @@ def get_dataset(state, phase):
         TEXT.build_vocab(train, vectors=GloVe(name='6B', dim=state.ninp, max_vectors=state.ntoken), max_size=state.ntoken-2) #max_size=state.ntoken,
         LABEL.build_vocab(train)
         state.pretrained_vec=TEXT.vocab.vectors
+        state.glove = TEXT.vocab
+        #man=TEXT.vocab.vectors[TEXT.vocab["man"]].clone()
+        #woman=TEXT.vocab.vectors[TEXT.vocab["woman"]].clone()
+        #king=TEXT.vocab.vectors[TEXT.vocab["doctor"]].clone()
+        
+        #print(torch.norm(king - man + woman))
+        #vec = king - man + woman
+        #print_closest_words(vec, TEXT.vocab)
+        #print_closest_words(king, TEXT.vocab)
+        #print(TEXT.vocab.vectors)
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)

@@ -101,6 +101,35 @@ def vis_results(state, steps, *args, immediate=False, **kwargs):
     else:
         _vis_results_fn(*vis_args, **kwargs)
 
+def txt_results(state, steps, expr_dir):
+    if not state.get_output_flag():
+        logging.warn('Skip visualize results because output_flag is False')
+        return
+    #if isinstance(steps[0][0], torch.Tensor):
+        #steps = to_np(steps)
+    txt_name_fmt='nearest_words_step{step:03d}'
+    if expr_dir is None:
+        logging.warning('Not saving because expr_dir is not given')
+    else:
+        txt_name_fmt += '.txt'
+        utils.mkdir(expr_dir)
+    
+    for i, (data, labels, lr) in enumerate(steps):
+        data=data.squeeze()
+        sentences = []
+        for n, (dist_sentence) in enumerate(data):
+            sentence=[]
+            for dist_word in dist_sentence:
+                word = datasets.closest_words(dist_word, state.glove, n=0)[0]
+                sentence.append(word)
+            sentences.append(sentence)
+       
+        if expr_dir is not None:
+            f=open(expr_dir+"/"+txt_name_fmt.format(step=i),'a+')
+            paragraph = "\n".join([" ".join(s) for s in sentences])
+            f.write(paragraph)
+            f.close()
+    return
 
 def to_np(steps):
     if isinstance(steps[0][0], np.ndarray):  # noop if already ndarray
@@ -142,6 +171,9 @@ def save_results(state, steps, visualize=True, subfolder=''):
     steps = [(d.detach().cpu(), l.detach().cpu(), lr) for (d, l, lr) in steps]
     if visualize:
         vis_results(state, steps, expr_dir)
+    if state.textdata:
+        txt_results(state, steps, expr_dir)
+        
 
     torch.save(steps, save_data_path)
     logging.info('Results saved to {}'.format(save_data_path))
