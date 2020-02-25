@@ -207,6 +207,7 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
             if state.textdata:
                 data = example.text[0]
                 target = example.label
+
             else:
                 (data, target) = example
             #print(data)
@@ -231,9 +232,13 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
                     #print (output) 
                     #print(target)
                 else:
-                    pred = output.argmax(1)  # get the index of the max log-probability
+                    pred = output.argmax(-1)  # get the index of the max log-probability
+                    #print(output.size())
+                    #print(pred.size())
+
 
                 correct_list = pred == target
+                
                 #print(correct_list)
                 losses[k] += task_loss_eval(state, output, target, reduction='sum').item()  # sum up batch loss
                 if attack_mode:
