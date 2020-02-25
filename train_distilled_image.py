@@ -18,9 +18,10 @@ from utils.io import save_results
 from utils.label_inits import distillation_label_initialiser
 from basics import task_loss, final_objective_loss, evaluate_steps
 from contextlib import contextmanager
+import psutil
 
-
-
+import faulthandler
+faulthandler.enable()
 
 class Trainer(object):
     def __init__(self, state, models):
@@ -148,7 +149,7 @@ class Trainer(object):
         glrs = []
         labels=[]
         glabels=[]
-        dw, = torch.autograd.grad(l, (params[-1],), retain_graph=state.textdata)
+        dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
 
         # backward
         model.train()
@@ -186,7 +187,7 @@ class Trainer(object):
                 outputs=(gw,),
                 inputs=hvp_in,
                 grad_outputs=(dgw,),
-                retain_graph=state.textdata
+                retain_graph=True
             )
             # Update for next iteration, i.e., previous step
             with torch.no_grad():
