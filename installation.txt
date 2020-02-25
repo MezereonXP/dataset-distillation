@@ -5,8 +5,9 @@ bash Anaconda3-2019.07-Linux-x86_64.sh
 exit
 
 #Create env with all requirements
-conda create -n dd python=3.6 pytorch=1.2 torchvision cudatoolkit=10.0 torchtext pyyaml nltk matplotlib scikit-image -c pytorch
-
+conda create -n dd python=3.6 pytorch torchvision cudatoolkit=10.0 torchtext pyyaml nltk matplotlib scikit-image -c pytorch
+conda activate dd
+pip install sentencepiece 
 #Note: As of January 8 2020, torchvision is broken by pillow version 7.0.0 so add pillow=6.2.1 if needed
 
 
