@@ -111,7 +111,7 @@ class Transformer1(utils.ReparamModule):
         tgt_size=[i for i in out.size()]
         tgt_size[-2]=1
         #print(tgt_size)
-        tgt=torch.rand(tgt_size)
+        tgt=torch.rand(tgt_size).to(self.state.device)
         hidden = self.decoder(tgt, out).squeeze(1)
         return self.classifier_head(hidden)
        
