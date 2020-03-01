@@ -291,6 +291,7 @@ def get_dataset(state, phase):
         #print(len(TEXT.vocab))
         #print(len(LABEL.vocab))
         state.pretrained_vec=TEXT.vocab.vectors
+        state.glove = TEXT.vocab
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
@@ -321,6 +322,7 @@ def get_dataset(state, phase):
         #print(len(TEXT.vocab))
         #print(len(LABEL.vocab))
         state.pretrained_vec=TEXT.vocab.vectors
+        state.glove = TEXT.vocab
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
@@ -351,6 +353,7 @@ def get_dataset(state, phase):
         #print(len(TEXT.vocab))
         #print(len(LABEL.vocab))
         state.pretrained_vec=TEXT.vocab.vectors
+        state.glove = TEXT.vocab
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
@@ -381,6 +384,7 @@ def get_dataset(state, phase):
         #print(len(TEXT.vocab))
         #print(len(LABEL.vocab))
         state.pretrained_vec=TEXT.vocab.vectors
+        state.glove = TEXT.vocab
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)
@@ -411,6 +415,7 @@ def get_dataset(state, phase):
         #print(len(TEXT.vocab))
         #print(len(LABEL.vocab))
         state.pretrained_vec=TEXT.vocab.vectors
+        state.glove = TEXT.vocab
         #ninp=32 #Maybe 400
         #ntoken=32
         #encoder = nn.Embedding(ntoken, ninp)

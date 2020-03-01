@@ -49,7 +49,10 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
         for n, (img, label, axis) in enumerate(zip(data, labels, axes)):
             if nc == 1:
                 img = img[..., 0]
-            img = (img * std + mean).clip(0, 1)
+            if std: 
+                img = (img * std + mean).clip(0, 1)
+            else:
+                img = img.clip(0, 1) #(img * np.std(data) + np.mean(data))
             if first_run:
                 plt_images.append(axis.imshow(img, interpolation='nearest', cmap=cmap))
             else:
@@ -57,12 +60,18 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
         
             axis.axis('off')
             if subtitle:
-                sorted_indices = np.argsort(label)[::-1]
-                first = "{0}:{1}".format(label_names[sorted_indices[0]], '%.1f'%label[sorted_indices[0]])
-                second = "{0}:{1}".format(label_names[sorted_indices[1]], '%.1f'%label[sorted_indices[1]])
-                third = "{0}:{1}".format(label_names[sorted_indices[2]], '%.1f'%label[sorted_indices[2]])
-                axis_title = "{0}\n{1}\n{2}".format(first, second, third)
-                axis.set_title(axis_title, fontsize=fontsize)
+                if len(label_names) >2:
+                    sorted_indices = np.argsort(label)[::-1]
+                    first = "{0}:{1}".format(label_names[sorted_indices[0]], '%.1f'%label[sorted_indices[0]])
+                    second = "{0}:{1}".format(label_names[sorted_indices[1]], '%.1f'%label[sorted_indices[1]])
+                    third = "{0}:{1}".format(label_names[sorted_indices[2]], '%.1f'%label[sorted_indices[2]])
+                    axis_title = "{0}\n{1}\n{2}".format(first, second, third)
+                    axis.set_title(axis_title, fontsize=fontsize)
+                else:
+                    first = "Soft label: {0}".format('%.1f'%label)
+                    axis_title = "{0}".format(first)
+                    axis.set_title(axis_title, fontsize=fontsize)
+                    
         if supertitle:
             if lr is not None:
                 lr = lr.sum().item()

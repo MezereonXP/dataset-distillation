@@ -20,8 +20,8 @@ from basics import task_loss, final_objective_loss, evaluate_steps
 from contextlib import contextmanager
 import psutil
 
-import faulthandler
-faulthandler.enable()
+#import faulthandler
+#faulthandler.enable()
 
 class Trainer(object):
     def __init__(self, state, models):
