@@ -28,7 +28,13 @@ def init_weights(net, state):
 
     def init_func(m):
         classname = m.__class__.__name__
+        #print("HERE\n\n\n\n\n")
+        if classname=='TransformerDecoder':
+            for i in range(len(m.layers)):
+                m.layers[i].self_attn._reset_parameters()
+                m.layers[i].multihead_attn._reset_parameters()
         if classname.startswith('Conv') or classname == 'Linear' or classname.startswith('RNN') or classname == 'LSTM':
+            print("RESET\n\n\n\n\n")
             if getattr(m, 'bias', None) is not None:
                 if classname.startswith('Conv') or classname == 'Linear':
                     init.constant_(m.bias, 0.0)
@@ -68,7 +74,7 @@ def init_weights(net, state):
                 m.bias.data.zero_()
         elif classname == 'Embedding':
             m.weight.data.copy_(state.pretrained_vec)
-            m.weight.requires_grad=False
+            m.weight.requires_grad=state.learnable_embedding
 
     net.apply(init_func)
     return net
