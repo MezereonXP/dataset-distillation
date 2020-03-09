@@ -30,7 +30,7 @@ The simplest way to do this would be to select points from the original training
 
 
 Another method could be to not limit ourselves to the true training data. Instead, we randomly create some new points, and we move these points around until we find optimal locations for each one (based on training accuracy). This is the basic idea of the what the original dataset distillation algorithm does.
-<p align="center"><img src='utils/location_rev.gif' width=400></p>
+<p align="center"><img src='utils/location_1_rev.gif' width=400></p>
 
 
 But if a point is in between two clusters, could it not contain information that describes both classes? It turns out that we can go even further by enabling soft, learnable labels on our synthetic points. 
@@ -38,7 +38,7 @@ But if a point is in between two clusters, could it not contain information that
 
 
 By combining learnable labels with learnable locations, we get what is essentially soft-label dataset distillation.
-<p align="center"><img src='utils/location_and_label_rev.gif' width=400></p>
+<p align="center"><img src='utils/location_and_label_1_rev.gif' width=400></p>
 
 One of the really exciting and unexpected implications of soft-label dataset distillation, is that we can actually now separate our classes using <b>fewer points than the number of classes</b>. 
 <p align="center"><img src='utils/2points_rev.gif' width=400></p>
