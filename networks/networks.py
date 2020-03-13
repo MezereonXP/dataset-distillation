@@ -75,6 +75,95 @@ class RNN1(utils.ReparamModule):
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
         return self.fc(hidden)
+class RNN2(utils.ReparamModule):
+    supported_dims = set(range(1,20000))
+    def __init__(self, state):
+        self.state=state
+        super(RNN2, self).__init__()
+        output_dim=1 if state.num_classes == 2 else state.num_classes
+        embedding_dim=state.ninp #Maybe 32
+        ntoken=state.ntoken
+        hidden_dim = 100
+        n_layers = 1
+        dropout=0.5
+        self.embed = nn.Embedding(ntoken, embedding_dim)
+        self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.embed.weight.requires_grad = False
+
+        self.rnn = nn.RNN(embedding_dim,
+                           hidden_dim,
+                           num_layers=n_layers,
+                           bidirectional=False,
+                           dropout=dropout,
+                           bias =True,
+                           batch_first=True)
+        self.fc = nn.Linear(hidden_dim, output_dim)
+        self.sigm=nn.Sigmoid()
+        self.dropout = nn.Dropout(dropout)
+        self.distilling_flag = False
+
+
+    def forward(self, x):
+
+        if self.state.textdata:
+            if not self.distilling_flag:
+                out = self.embed(x) #* math.sqrt(ninp)
+            else:
+                out=torch.squeeze(x)
+        else:
+            out = x
+        #print(out.size())
+        out = self.dropout(out)
+        out, hidden = self.rnn(out)
+        #assert torch.equal(out[:,-1,:], hidden.squeeze(0))
+
+        return self.sigm(self.fc(hidden.squeeze(0)))
+class RNN3(utils.ReparamModule):
+    supported_dims = set(range(1,20000))
+    def __init__(self, state):
+        self.state=state
+        super(RNN3, self).__init__()
+        output_dim=1 if state.num_classes == 2 else state.num_classes
+        embedding_dim=state.ninp #Maybe 32
+        ntoken=state.ntoken
+        hidden_dim = 100
+        n_layers = 1
+        dropout=0.5
+        self.embed = nn.Embedding(ntoken, embedding_dim)
+        self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.embed.weight.requires_grad = False
+
+        self.rnn = nn.LSTM(24,
+                           hidden_dim,
+                           num_layers=n_layers,
+                           bidirectional=False,
+                           dropout=dropout,
+                           bias =True,
+                           batch_first=True)
+        self.fc = nn.Linear(hidden_dim, output_dim)
+        self.sigm=nn.Sigmoid()
+        self.dropout = nn.Dropout(dropout)
+        self.distilling_flag = False
+        self.conv1 = nn.Conv1d(state.maxlen, 64, 5)
+        self.relu=nn.ReLU()
+        self.maxpool = nn.MaxPool1d(4)
+
+    def forward(self, x):
+        if self.state.textdata:
+            if not self.distilling_flag:
+                out = self.embed(x) #* math.sqrt(ninp)
+            else:
+                out=torch.squeeze(x)
+        else:
+            out = x
+        out = self.dropout(out)
+        out = self.relu(self.conv1(out))
+        out = self.maxpool(out)
+        self.rnn.flatten_parameters()
+        out, (hidden, cell) = self.rnn(out)
+        assert torch.equal(out[:,-1,:], hidden.squeeze(0))
+
+        return self.sigm(self.fc(hidden.squeeze(0)))
 
 class Transformer1(utils.ReparamModule):
     supported_dims = set(range(1,20000))
@@ -84,9 +173,9 @@ class Transformer1(utils.ReparamModule):
         self.output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
-        nhead=1
+        nhead=4
         hidden_dim = embedding_dim
-        n_layers = 1
+        n_layers = 4
         dropout=0.1
         self.embed = nn.Embedding(ntoken, embedding_dim)
         self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
@@ -142,7 +231,7 @@ class TextConvNet1(utils.ReparamModule):
         
         self.dropout = nn.Dropout(dropout)
         
-        
+        self.sigm=nn.Sigmoid()
         self.distilling_flag=False
     def forward(self, x):
         if self.state.textdata and not self.distilling_flag:
@@ -153,6 +242,7 @@ class TextConvNet1(utils.ReparamModule):
                 #print(out.size())
         else:
                 out=x
+        #out = self.dropout(out)
         conved = [F.relu(conv(out)).squeeze(3) for conv in self.convs]
         pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
         cat = self.dropout(torch.cat(pooled, dim = 1))
