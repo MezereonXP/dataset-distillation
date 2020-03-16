@@ -18,7 +18,7 @@ X = iris.data[:, :2]  # we only take the first two features. We could
                       # avoid this ugly slicing by using a two-dim dataset
 y = iris.target
 
-mode = "true" #selection, label, location, label_and_location
+mode = "label" #selection, label, location, label_and_location
 num_points = 2 if mode =="2points" else 3
 if mode == "2points":
     granularity=80
@@ -46,21 +46,21 @@ def animate(j):
         dy[2]=[0,0,1]
     elif mode == "label":
         dd[0]=[4.1,2.8]
-        dd[1]=[5.7,2.8]
+        dd[1]=[5, 2.1]
         dd[2]=[7.6,3.]
         dy[0]=[1,0,0]
         dy[1]=[0+j*0.0025,1-j*0.005,0+j*0.0025]
         dy[2]=[0,0,1]
     elif mode == "location":
-        dd[0]=[4.1+0.01*j,2.8+0.01*j]
-        dd[1]=[5.7,2.8]
+        dd[0]=[4.1,2.8]
+        dd[1]=[5+0.01*j,2.1+0.01*j]
         dd[2]=[7.6,3.]
         dy[0]=[1,0,0]
         dy[1]=[0,1,0]
         dy[2]=[0,0,1]
     elif mode == "location_and_label":
-        dd[0]=[4.1+0.01*j,2.8+0.01*j]
-        dd[1]=[5.7,2.8]
+        dd[0]=[4.1,2.8]
+        dd[1]=[5+0.01*j,2.1+0.01*j]
         dd[2]=[7.6,3.]
         dy[0]=[1,0,0]
         dy[1]=[0+j*0.0025,1-j*0.005,0+j*0.0025]
@@ -148,4 +148,4 @@ else:
     interval = 20
 anim = animation.FuncAnimation(fig, animate, frames=frames, interval=interval, blit=False) 
 #plt.show()
-anim.save('{0}.gif'.format(mode),writer='imagemagick') 
+anim.save('{0}_1.gif'.format(mode),writer='imagemagick') 
