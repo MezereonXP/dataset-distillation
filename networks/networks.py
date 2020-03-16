@@ -72,6 +72,7 @@ class RNN1(utils.ReparamModule):
             out = x
         #print(out.size())
         out = self.dropout(out)
+        self.rnn.flatten_parameters()
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
         return self.fc(hidden)
