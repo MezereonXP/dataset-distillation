@@ -118,11 +118,11 @@ class RNN2(utils.ReparamModule):
         #assert torch.equal(out[:,-1,:], hidden.squeeze(0))
 
         return self.sigm(self.fc(hidden.squeeze(0)))
-class RNN3(utils.ReparamModule):
+class LSTM1(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
-        super(RNN3, self).__init__()
+        super(LSTM1, self).__init__()
         output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
