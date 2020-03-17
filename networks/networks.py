@@ -163,8 +163,8 @@ class LSTM1(utils.ReparamModule):
         self.rnn.flatten_parameters()
         out, (hidden, cell) = self.rnn(out)
         assert torch.equal(out[:,-1,:], hidden.squeeze(0))
-
-        return self.sigm(self.fc(hidden.squeeze(0)))
+        return self.fc(hidden.squeeze(0))
+        #return self.sigm(self.fc(hidden.squeeze(0)))
 
 class Transformer1(utils.ReparamModule):
     supported_dims = set(range(1,20000))
