@@ -56,7 +56,7 @@ class RNN1(utils.ReparamModule):
                            bias =True,
                            batch_first=True)
         self.fc = nn.Linear(hidden_dim*2, output_dim)
-        #self.sigm=nn.Sigmoid()
+        self.sigm=nn.Sigmoid()
         self.dropout = nn.Dropout(dropout)
         self.distilling_flag = False
 
@@ -75,7 +75,7 @@ class RNN1(utils.ReparamModule):
         self.rnn.flatten_parameters()
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
-        return self.fc(hidden)
+        return self.sigm(self.fc(hidden))
 class RNN2(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
