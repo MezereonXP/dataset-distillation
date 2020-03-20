@@ -180,8 +180,8 @@ def save_results(state, steps, visualize=True, subfolder=''):
     steps = [(d.detach().cpu(), l.detach().cpu(), lr) for (d, l, lr) in steps]
     if visualize:
         vis_results(state, steps, expr_dir)
-    if state.textdata:
-        txt_results(state, steps, expr_dir)
+        if state.textdata:
+            txt_results(state, steps, expr_dir)
         
 
     torch.save(steps, save_data_path)
