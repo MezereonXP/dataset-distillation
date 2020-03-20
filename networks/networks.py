@@ -54,7 +54,8 @@ class RNN1(utils.ReparamModule):
                            bidirectional=bidirectional,
                            dropout=dropout,
                            bias =True,
-                           batch_first=True)
+                           batch_first=True,
+                           nonlinearity="relu")
         self.fc = nn.Linear(hidden_dim*2, output_dim)
         self.sigm=nn.Sigmoid()
         self.dropout = nn.Dropout(dropout)
