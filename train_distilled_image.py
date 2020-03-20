@@ -148,7 +148,11 @@ class Trainer(object):
         glrs = []
         labels=[]
         glabels=[]
-        dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
+        if state.textdata:
+            with torch.backends.cudnn.flags(enabled=False):
+                dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
+        else:
+            dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
 
         # backward
         model.train()
