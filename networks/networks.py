@@ -128,9 +128,9 @@ class LSTM1(utils.ReparamModule):
         output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
-        hidden_dim = 100
+        hidden_dim = 10
         n_layers = 1
-        dropout=0.5
+        dropout=0.7
         self.embed = nn.Embedding(ntoken, embedding_dim)
         self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.embed.weight.requires_grad = False
@@ -146,7 +146,7 @@ class LSTM1(utils.ReparamModule):
         self.sigm=nn.Sigmoid()
         self.dropout = nn.Dropout(dropout)
         self.distilling_flag = False
-        self.conv1 = nn.Conv1d(state.maxlen, 64, 5)
+        self.conv1 = nn.Conv1d(state.maxlen, 16, 5)
         self.relu=nn.ReLU()
         self.maxpool = nn.MaxPool1d(4)
 
@@ -163,8 +163,10 @@ class LSTM1(utils.ReparamModule):
         out = self.maxpool(out)
         self.rnn.flatten_parameters()
         out, (hidden, cell) = self.rnn(out)
-        assert torch.equal(out[:,-1,:], hidden.squeeze(0))
-        return self.fc(hidden.squeeze(0))
+        #print (out.size())
+        #print (hidden.size())
+        #assert torch.equal(out[:,-1,:], hidden[-1,:,:].squeeze(0))
+        return self.fc(hidden[-1,:,:].squeeze(0))
         #return self.sigm(self.fc(hidden.squeeze(0)))
 
 class Transformer1(utils.ReparamModule):
