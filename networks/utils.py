@@ -33,7 +33,7 @@ def init_weights(net, state):
             for i in range(len(m.layers)):
                 m.layers[i].self_attn._reset_parameters()
                 m.layers[i].multihead_attn._reset_parameters()
-        if classname.startswith('Conv') or classname == 'Linear' or classname.startswith('RNN') or classname == 'LSTM':
+        if classname.startswith('Conv') or classname == 'Linear' or classname.startswith('RNN') or classname.startswith('LSTM'):
             if getattr(m, 'bias', None) is not None:
                 if classname.startswith('Conv') or classname == 'Linear':
                     init.constant_(m.bias, 0.0)

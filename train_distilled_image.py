@@ -18,7 +18,7 @@ from utils.io import save_results
 from utils.label_inits import distillation_label_initialiser
 from basics import task_loss, final_objective_loss, evaluate_steps
 from contextlib import contextmanager
-
+torch.backends.cudnn.enabled=False
 #import faulthandler
 #faulthandler.enable()
 
