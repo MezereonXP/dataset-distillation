@@ -1,0 +1,489 @@
+2020-03-30 04:12:12 [INFO ]  ======================================== 2020-03-30 04:12:12 ========================================
+2020-03-30 04:12:12 [INFO ]  Base directory is text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)
+2020-03-30 04:12:12 [INFO ]  Options: 
+2020-03-30 04:12:12 [INFO ]  	add_first: true
+2020-03-30 04:12:12 [INFO ]  	add_label_scaling: 0
+2020-03-30 04:12:12 [INFO ]  	arch: LSTM1
+2020-03-30 04:12:12 [INFO ]  	attack_class: 0
+2020-03-30 04:12:12 [INFO ]  	base_seed: 1
+2020-03-30 04:12:12 [INFO ]  	batch_size: 1024
+2020-03-30 04:12:12 [INFO ]  	checkpoint_interval: 10
+2020-03-30 04:12:12 [INFO ]  	dataset: trec6
+2020-03-30 04:12:12 [INFO ]  	dataset_labels:
+2020-03-30 04:12:12 [INFO ]  	- 0
+2020-03-30 04:12:12 [INFO ]  	- 1
+2020-03-30 04:12:12 [INFO ]  	- 2
+2020-03-30 04:12:12 [INFO ]  	- 3
+2020-03-30 04:12:12 [INFO ]  	- 4
+2020-03-30 04:12:12 [INFO ]  	- 5
+2020-03-30 04:12:12 [INFO ]  	dataset_normalization: !!python/tuple
+2020-03-30 04:12:12 [INFO ]  	- !!python/tuple
+2020-03-30 04:12:12 [INFO ]  	    - 0
+2020-03-30 04:12:12 [INFO ]  	- !!python/tuple
+2020-03-30 04:12:12 [INFO ]  	    - 0
+2020-03-30 04:12:12 [INFO ]  	dataset_root: ./data/text/trec
+2020-03-30 04:12:12 [INFO ]  	decay_epochs: 20
+2020-03-30 04:12:12 [INFO ]  	decay_factor: 0.5
+2020-03-30 04:12:12 [INFO ]  	device_id: 0
+2020-03-30 04:12:12 [INFO ]  	dist_metric: MSE
+2020-03-30 04:12:12 [INFO ]  	distill_epochs: 1
+2020-03-30 04:12:12 [INFO ]  	distill_lr: 1.5
+2020-03-30 04:12:12 [INFO ]  	distill_steps: 1
+2020-03-30 04:12:12 [INFO ]  	distilled_images_per_class_per_step: 10
+2020-03-30 04:12:12 [INFO ]  	distributed: false
+2020-03-30 04:12:12 [INFO ]  	dropout: false
+2020-03-30 04:12:12 [INFO ]  	epochs: 210
+2020-03-30 04:12:12 [INFO ]  	expr_name_format: null
+2020-03-30 04:12:12 [INFO ]  	freeze_data: false
+2020-03-30 04:12:12 [INFO ]  	image_dpi: 80
+2020-03-30 04:12:12 [INFO ]  	init: xavier
+2020-03-30 04:12:12 [INFO ]  	init_labels:
+2020-03-30 04:12:12 [INFO ]  	- 0
+2020-03-30 04:12:12 [INFO ]  	- 1
+2020-03-30 04:12:12 [INFO ]  	- 2
+2020-03-30 04:12:12 [INFO ]  	- 3
+2020-03-30 04:12:12 [INFO ]  	- 4
+2020-03-30 04:12:12 [INFO ]  	- 5
+2020-03-30 04:12:12 [INFO ]  	init_param: 1.0
+2020-03-30 04:12:12 [INFO ]  	input_size: 50
+2020-03-30 04:12:12 [INFO ]  	invert_dist: false
+2020-03-30 04:12:12 [INFO ]  	label_softmax: false
+2020-03-30 04:12:12 [INFO ]  	learnable_embedding: false
+2020-03-30 04:12:12 [INFO ]  	log_file: text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/output.log
+2020-03-30 04:12:12 [INFO ]  	log_interval: 100
+2020-03-30 04:12:12 [INFO ]  	log_level: INFO
+2020-03-30 04:12:12 [INFO ]  	lr: 0.01
+2020-03-30 04:12:12 [INFO ]  	maxlen: 50
+2020-03-30 04:12:12 [INFO ]  	mode: distill_basic
+2020-03-30 04:12:12 [INFO ]  	model_dir: ./models/
+2020-03-30 04:12:12 [INFO ]  	model_subdir_format: null
+2020-03-30 04:12:12 [INFO ]  	mult_label_scaling: 1
+2020-03-30 04:12:12 [INFO ]  	n_nets: 1
+2020-03-30 04:12:12 [INFO ]  	nc: 1
+2020-03-30 04:12:12 [INFO ]  	ninp: 100
+2020-03-30 04:12:12 [INFO ]  	no_log: false
+2020-03-30 04:12:12 [INFO ]  	ntoken: 8000
+2020-03-30 04:12:12 [INFO ]  	num_classes: 6
+2020-03-30 04:12:12 [INFO ]  	num_distill_classes: 6
+2020-03-30 04:12:12 [INFO ]  	num_workers: 8
+2020-03-30 04:12:12 [INFO ]  	phase: train
+2020-03-30 04:12:12 [INFO ]  	random_init_labels: ''
+2020-03-30 04:12:12 [INFO ]  	reproduction_test: false
+2020-03-30 04:12:12 [INFO ]  	results_dir: text_results/lstm_vis_trec6
+2020-03-30 04:12:12 [INFO ]  	sample_n_nets: 1
+2020-03-30 04:12:12 [INFO ]  	source_dataset: null
+2020-03-30 04:12:12 [INFO ]  	start_time: '2020-03-30 04:12:12'
+2020-03-30 04:12:12 [INFO ]  	static_labels: 0
+2020-03-30 04:12:12 [INFO ]  	target_class: 1
+2020-03-30 04:12:12 [INFO ]  	test_batch_size: 1024
+2020-03-30 04:12:12 [INFO ]  	test_distill_epochs: null
+2020-03-30 04:12:12 [INFO ]  	test_distilled_images: loaded
+2020-03-30 04:12:12 [INFO ]  	test_distilled_lrs:
+2020-03-30 04:12:12 [INFO ]  	- loaded
+2020-03-30 04:12:12 [INFO ]  	test_n_nets: 1
+2020-03-30 04:12:12 [INFO ]  	test_n_runs: 1
+2020-03-30 04:12:12 [INFO ]  	test_name_format: null
+2020-03-30 04:12:12 [INFO ]  	test_nets_type: same_as_train
+2020-03-30 04:12:12 [INFO ]  	test_niter: 1
+2020-03-30 04:12:12 [INFO ]  	test_optimize_n_nets: 20
+2020-03-30 04:12:12 [INFO ]  	test_optimize_n_runs: null
+2020-03-30 04:12:12 [INFO ]  	textdata: true
+2020-03-30 04:12:12 [INFO ]  	train_nets_type: known_init
+2020-03-30 04:12:12 [INFO ]  	visualize: true
+2020-03-30 04:12:12 [INFO ]  	world_rank: 0
+2020-03-30 04:12:12 [INFO ]  	world_size: 1
+2020-03-30 04:12:12 [INFO ]  	
+2020-03-30 04:12:12 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_8000.pt
+2020-03-30 04:12:13 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_8000.pt
+2020-03-30 04:12:13 [INFO ]  train dataset size:	5452
+2020-03-30 04:12:13 [INFO ]  test dataset size: 	500
+2020-03-30 04:12:13 [INFO ]  datasets built!
+2020-03-30 04:12:13 [INFO ]  mode: distill_basic, phase: train
+2020-03-30 04:12:13 [INFO ]  Build 1 LSTM1 network(s) with [xavier(1.0)] init
+2020-03-30 04:12:15 [INFO ]  Train 1 steps iterated for 1 epochs
+2020-03-30 04:12:35 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0000/results.pth
+2020-03-30 04:12:35 [INFO ]  
+2020-03-30 04:12:35 [INFO ]  Begin of epoch 0 :
+2020-03-30 04:12:36 [INFO ]  Begin of epoch 0  (1 same_as_train nets) test results: 
+2020-03-30 04:12:36 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:12:36 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:12:36 [INFO ]  	     step  1 (lr=1.5000)          28.4000 ±  nan%            1.8211 ±  nan
+2020-03-30 04:12:36 [INFO ]  
+2020-03-30 04:12:36 [INFO ]  Epoch:    0 [      0/   5452 ( 0%)]	Loss: 1.7942	Data Time: 0.09s	Train Time: 0.10s
+2020-03-30 04:12:36 [INFO ]  Epoch:    1 [      0/   5452 ( 0%)]	Loss: 1.7280	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:37 [INFO ]  Epoch:    2 [      0/   5452 ( 0%)]	Loss: 1.6646	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:38 [INFO ]  Epoch:    3 [      0/   5452 ( 0%)]	Loss: 1.6405	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:38 [INFO ]  Epoch:    4 [      0/   5452 ( 0%)]	Loss: 1.6429	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:39 [INFO ]  Epoch:    5 [      0/   5452 ( 0%)]	Loss: 1.6182	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:39 [INFO ]  Epoch:    6 [      0/   5452 ( 0%)]	Loss: 1.6128	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:40 [INFO ]  Epoch:    7 [      0/   5452 ( 0%)]	Loss: 1.5971	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:40 [INFO ]  Epoch:    8 [      0/   5452 ( 0%)]	Loss: 1.5698	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:12:41 [INFO ]  Epoch:    9 [      0/   5452 ( 0%)]	Loss: 1.5626	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:02 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0010/results.pth
+2020-03-30 04:13:02 [INFO ]  
+2020-03-30 04:13:02 [INFO ]  Begin of epoch 10 :
+2020-03-30 04:13:02 [INFO ]  Begin of epoch 10  (1 same_as_train nets) test results: 
+2020-03-30 04:13:02 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:13:02 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:13:02 [INFO ]  	     step  1 (lr=1.8265)          37.8000 ±  nan%            1.5271 ±  nan
+2020-03-30 04:13:02 [INFO ]  
+2020-03-30 04:13:02 [INFO ]  Epoch:   10 [      0/   5452 ( 0%)]	Loss: 1.5510	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:13:02 [INFO ]  Epoch:   11 [      0/   5452 ( 0%)]	Loss: 1.4967	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:03 [INFO ]  Epoch:   12 [      0/   5452 ( 0%)]	Loss: 1.5207	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:04 [INFO ]  Epoch:   13 [      0/   5452 ( 0%)]	Loss: 1.4821	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:04 [INFO ]  Epoch:   14 [      0/   5452 ( 0%)]	Loss: 1.4680	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:05 [INFO ]  Epoch:   15 [      0/   5452 ( 0%)]	Loss: 1.4378	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:05 [INFO ]  Epoch:   16 [      0/   5452 ( 0%)]	Loss: 1.4050	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:06 [INFO ]  Epoch:   17 [      0/   5452 ( 0%)]	Loss: 1.3833	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:07 [INFO ]  Epoch:   18 [      0/   5452 ( 0%)]	Loss: 1.3584	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:07 [INFO ]  Epoch:   19 [      0/   5452 ( 0%)]	Loss: 1.3154	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:28 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0020/results.pth
+2020-03-30 04:13:28 [INFO ]  
+2020-03-30 04:13:28 [INFO ]  Begin of epoch 20 :
+2020-03-30 04:13:28 [INFO ]  Begin of epoch 20  (1 same_as_train nets) test results: 
+2020-03-30 04:13:28 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:13:28 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:13:28 [INFO ]  	     step  1 (lr=2.3114)          60.2000 ±  nan%            1.1871 ±  nan
+2020-03-30 04:13:28 [INFO ]  
+2020-03-30 04:13:28 [INFO ]  Epoch:   20 [      0/   5452 ( 0%)]	Loss: 1.2774	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:28 [INFO ]  Epoch:   21 [      0/   5452 ( 0%)]	Loss: 1.2371	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:29 [INFO ]  Epoch:   22 [      0/   5452 ( 0%)]	Loss: 1.2574	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:30 [INFO ]  Epoch:   23 [      0/   5452 ( 0%)]	Loss: 1.2591	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:30 [INFO ]  Epoch:   24 [      0/   5452 ( 0%)]	Loss: 1.2422	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:31 [INFO ]  Epoch:   25 [      0/   5452 ( 0%)]	Loss: 1.2326	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:31 [INFO ]  Epoch:   26 [      0/   5452 ( 0%)]	Loss: 1.2157	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:32 [INFO ]  Epoch:   27 [      0/   5452 ( 0%)]	Loss: 1.1796	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:33 [INFO ]  Epoch:   28 [      0/   5452 ( 0%)]	Loss: 1.1654	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:33 [INFO ]  Epoch:   29 [      0/   5452 ( 0%)]	Loss: 1.1700	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:54 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0030/results.pth
+2020-03-30 04:13:54 [INFO ]  
+2020-03-30 04:13:54 [INFO ]  Begin of epoch 30 :
+2020-03-30 04:13:54 [INFO ]  Begin of epoch 30  (1 same_as_train nets) test results: 
+2020-03-30 04:13:54 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:13:54 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:13:54 [INFO ]  	     step  1 (lr=2.6004)          66.2000 ±  nan%            1.0589 ±  nan
+2020-03-30 04:13:54 [INFO ]  
+2020-03-30 04:13:54 [INFO ]  Epoch:   30 [      0/   5452 ( 0%)]	Loss: 1.1194	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:13:54 [INFO ]  Epoch:   31 [      0/   5452 ( 0%)]	Loss: 1.1995	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:55 [INFO ]  Epoch:   32 [      0/   5452 ( 0%)]	Loss: 1.1797	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:56 [INFO ]  Epoch:   33 [      0/   5452 ( 0%)]	Loss: 1.1269	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:56 [INFO ]  Epoch:   34 [      0/   5452 ( 0%)]	Loss: 1.1305	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:57 [INFO ]  Epoch:   35 [      0/   5452 ( 0%)]	Loss: 1.0861	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:57 [INFO ]  Epoch:   36 [      0/   5452 ( 0%)]	Loss: 1.1632	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:58 [INFO ]  Epoch:   37 [      0/   5452 ( 0%)]	Loss: 1.1252	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:58 [INFO ]  Epoch:   38 [      0/   5452 ( 0%)]	Loss: 1.0996	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:13:59 [INFO ]  Epoch:   39 [      0/   5452 ( 0%)]	Loss: 1.0833	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:19 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0040/results.pth
+2020-03-30 04:14:19 [INFO ]  
+2020-03-30 04:14:19 [INFO ]  Begin of epoch 40 :
+2020-03-30 04:14:19 [INFO ]  Begin of epoch 40  (1 same_as_train nets) test results: 
+2020-03-30 04:14:19 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:14:19 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:14:19 [INFO ]  	     step  1 (lr=2.8191)          71.8000 ±  nan%            0.9786 ±  nan
+2020-03-30 04:14:19 [INFO ]  
+2020-03-30 04:14:19 [INFO ]  Epoch:   40 [      0/   5452 ( 0%)]	Loss: 1.0926	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:20 [INFO ]  Epoch:   41 [      0/   5452 ( 0%)]	Loss: 1.0837	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:21 [INFO ]  Epoch:   42 [      0/   5452 ( 0%)]	Loss: 1.0990	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:21 [INFO ]  Epoch:   43 [      0/   5452 ( 0%)]	Loss: 1.0862	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:22 [INFO ]  Epoch:   44 [      0/   5452 ( 0%)]	Loss: 1.0916	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:22 [INFO ]  Epoch:   45 [      0/   5452 ( 0%)]	Loss: 1.0536	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:23 [INFO ]  Epoch:   46 [      0/   5452 ( 0%)]	Loss: 1.0717	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:24 [INFO ]  Epoch:   47 [      0/   5452 ( 0%)]	Loss: 1.0719	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:24 [INFO ]  Epoch:   48 [      0/   5452 ( 0%)]	Loss: 1.0430	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:25 [INFO ]  Epoch:   49 [      0/   5452 ( 0%)]	Loss: 1.0237	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:45 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0050/results.pth
+2020-03-30 04:14:45 [INFO ]  
+2020-03-30 04:14:45 [INFO ]  Begin of epoch 50 :
+2020-03-30 04:14:45 [INFO ]  Begin of epoch 50  (1 same_as_train nets) test results: 
+2020-03-30 04:14:45 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:14:45 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:14:45 [INFO ]  	     step  1 (lr=2.9387)          67.2000 ±  nan%            0.9805 ±  nan
+2020-03-30 04:14:45 [INFO ]  
+2020-03-30 04:14:45 [INFO ]  Epoch:   50 [      0/   5452 ( 0%)]	Loss: 1.0334	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:14:46 [INFO ]  Epoch:   51 [      0/   5452 ( 0%)]	Loss: 1.0537	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:46 [INFO ]  Epoch:   52 [      0/   5452 ( 0%)]	Loss: 1.0291	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:47 [INFO ]  Epoch:   53 [      0/   5452 ( 0%)]	Loss: 1.0043	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:48 [INFO ]  Epoch:   54 [      0/   5452 ( 0%)]	Loss: 1.0383	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:48 [INFO ]  Epoch:   55 [      0/   5452 ( 0%)]	Loss: 1.0899	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:49 [INFO ]  Epoch:   56 [      0/   5452 ( 0%)]	Loss: 1.0737	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:49 [INFO ]  Epoch:   57 [      0/   5452 ( 0%)]	Loss: 1.0363	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:50 [INFO ]  Epoch:   58 [      0/   5452 ( 0%)]	Loss: 0.9921	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:14:51 [INFO ]  Epoch:   59 [      0/   5452 ( 0%)]	Loss: 1.0266	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:11 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0060/results.pth
+2020-03-30 04:15:11 [INFO ]  
+2020-03-30 04:15:11 [INFO ]  Begin of epoch 60 :
+2020-03-30 04:15:11 [INFO ]  Begin of epoch 60  (1 same_as_train nets) test results: 
+2020-03-30 04:15:11 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:15:11 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:15:11 [INFO ]  	     step  1 (lr=3.0446)          71.2000 ±  nan%            0.9419 ±  nan
+2020-03-30 04:15:11 [INFO ]  
+2020-03-30 04:15:11 [INFO ]  Epoch:   60 [      0/   5452 ( 0%)]	Loss: 1.0432	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:12 [INFO ]  Epoch:   61 [      0/   5452 ( 0%)]	Loss: 1.0168	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:12 [INFO ]  Epoch:   62 [      0/   5452 ( 0%)]	Loss: 1.0182	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:13 [INFO ]  Epoch:   63 [      0/   5452 ( 0%)]	Loss: 0.9960	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:13 [INFO ]  Epoch:   64 [      0/   5452 ( 0%)]	Loss: 1.0321	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:14 [INFO ]  Epoch:   65 [      0/   5452 ( 0%)]	Loss: 0.9928	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:15 [INFO ]  Epoch:   66 [      0/   5452 ( 0%)]	Loss: 0.9633	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:15 [INFO ]  Epoch:   67 [      0/   5452 ( 0%)]	Loss: 1.0087	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:16 [INFO ]  Epoch:   68 [      0/   5452 ( 0%)]	Loss: 0.9787	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:16 [INFO ]  Epoch:   69 [      0/   5452 ( 0%)]	Loss: 1.0155	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:37 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0070/results.pth
+2020-03-30 04:15:37 [INFO ]  
+2020-03-30 04:15:37 [INFO ]  Begin of epoch 70 :
+2020-03-30 04:15:37 [INFO ]  Begin of epoch 70  (1 same_as_train nets) test results: 
+2020-03-30 04:15:37 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:15:37 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:15:37 [INFO ]  	     step  1 (lr=3.1027)          72.4000 ±  nan%            0.8997 ±  nan
+2020-03-30 04:15:37 [INFO ]  
+2020-03-30 04:15:37 [INFO ]  Epoch:   70 [      0/   5452 ( 0%)]	Loss: 0.9413	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:15:37 [INFO ]  Epoch:   71 [      0/   5452 ( 0%)]	Loss: 1.0242	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:38 [INFO ]  Epoch:   72 [      0/   5452 ( 0%)]	Loss: 1.0071	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:38 [INFO ]  Epoch:   73 [      0/   5452 ( 0%)]	Loss: 0.9688	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:39 [INFO ]  Epoch:   74 [      0/   5452 ( 0%)]	Loss: 0.9887	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:40 [INFO ]  Epoch:   75 [      0/   5452 ( 0%)]	Loss: 1.0084	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:40 [INFO ]  Epoch:   76 [      0/   5452 ( 0%)]	Loss: 1.0202	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:41 [INFO ]  Epoch:   77 [      0/   5452 ( 0%)]	Loss: 1.0074	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:41 [INFO ]  Epoch:   78 [      0/   5452 ( 0%)]	Loss: 0.9860	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:15:42 [INFO ]  Epoch:   79 [      0/   5452 ( 0%)]	Loss: 0.9204	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:02 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0080/results.pth
+2020-03-30 04:16:02 [INFO ]  
+2020-03-30 04:16:02 [INFO ]  Begin of epoch 80 :
+2020-03-30 04:16:02 [INFO ]  Begin of epoch 80  (1 same_as_train nets) test results: 
+2020-03-30 04:16:02 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:16:02 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:16:02 [INFO ]  	     step  1 (lr=3.1559)          72.6000 ±  nan%            0.8893 ±  nan
+2020-03-30 04:16:02 [INFO ]  
+2020-03-30 04:16:02 [INFO ]  Epoch:   80 [      0/   5452 ( 0%)]	Loss: 0.9786	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:03 [INFO ]  Epoch:   81 [      0/   5452 ( 0%)]	Loss: 1.0089	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:04 [INFO ]  Epoch:   82 [      0/   5452 ( 0%)]	Loss: 1.0039	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:04 [INFO ]  Epoch:   83 [      0/   5452 ( 0%)]	Loss: 0.9794	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:05 [INFO ]  Epoch:   84 [      0/   5452 ( 0%)]	Loss: 0.9713	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:05 [INFO ]  Epoch:   85 [      0/   5452 ( 0%)]	Loss: 0.9789	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:06 [INFO ]  Epoch:   86 [      0/   5452 ( 0%)]	Loss: 0.9783	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:06 [INFO ]  Epoch:   87 [      0/   5452 ( 0%)]	Loss: 0.9541	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:07 [INFO ]  Epoch:   88 [      0/   5452 ( 0%)]	Loss: 0.9490	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:08 [INFO ]  Epoch:   89 [      0/   5452 ( 0%)]	Loss: 0.9885	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:28 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0090/results.pth
+2020-03-30 04:16:28 [INFO ]  
+2020-03-30 04:16:28 [INFO ]  Begin of epoch 90 :
+2020-03-30 04:16:28 [INFO ]  Begin of epoch 90  (1 same_as_train nets) test results: 
+2020-03-30 04:16:28 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:16:28 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:16:28 [INFO ]  	     step  1 (lr=3.1833)          74.0000 ±  nan%            0.8958 ±  nan
+2020-03-30 04:16:28 [INFO ]  
+2020-03-30 04:16:28 [INFO ]  Epoch:   90 [      0/   5452 ( 0%)]	Loss: 0.9517	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:16:29 [INFO ]  Epoch:   91 [      0/   5452 ( 0%)]	Loss: 0.9511	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:29 [INFO ]  Epoch:   92 [      0/   5452 ( 0%)]	Loss: 0.9615	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:30 [INFO ]  Epoch:   93 [      0/   5452 ( 0%)]	Loss: 0.9452	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:30 [INFO ]  Epoch:   94 [      0/   5452 ( 0%)]	Loss: 0.9627	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:31 [INFO ]  Epoch:   95 [      0/   5452 ( 0%)]	Loss: 0.9531	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:32 [INFO ]  Epoch:   96 [      0/   5452 ( 0%)]	Loss: 0.9913	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:32 [INFO ]  Epoch:   97 [      0/   5452 ( 0%)]	Loss: 0.9441	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:33 [INFO ]  Epoch:   98 [      0/   5452 ( 0%)]	Loss: 0.9611	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:33 [INFO ]  Epoch:   99 [      0/   5452 ( 0%)]	Loss: 0.9960	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:54 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0100/results.pth
+2020-03-30 04:16:54 [INFO ]  
+2020-03-30 04:16:54 [INFO ]  Begin of epoch 100 :
+2020-03-30 04:16:54 [INFO ]  Begin of epoch 100  (1 same_as_train nets) test results: 
+2020-03-30 04:16:54 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:16:54 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:16:54 [INFO ]  	     step  1 (lr=3.2102)          73.6000 ±  nan%            0.8809 ±  nan
+2020-03-30 04:16:54 [INFO ]  
+2020-03-30 04:16:54 [INFO ]  Epoch:  100 [      0/   5452 ( 0%)]	Loss: 0.9652	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:54 [INFO ]  Epoch:  101 [      0/   5452 ( 0%)]	Loss: 0.9722	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:55 [INFO ]  Epoch:  102 [      0/   5452 ( 0%)]	Loss: 0.9763	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:56 [INFO ]  Epoch:  103 [      0/   5452 ( 0%)]	Loss: 0.9786	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:56 [INFO ]  Epoch:  104 [      0/   5452 ( 0%)]	Loss: 0.9693	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:57 [INFO ]  Epoch:  105 [      0/   5452 ( 0%)]	Loss: 0.9614	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:57 [INFO ]  Epoch:  106 [      0/   5452 ( 0%)]	Loss: 0.9364	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:58 [INFO ]  Epoch:  107 [      0/   5452 ( 0%)]	Loss: 0.9303	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:59 [INFO ]  Epoch:  108 [      0/   5452 ( 0%)]	Loss: 0.9317	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:16:59 [INFO ]  Epoch:  109 [      0/   5452 ( 0%)]	Loss: 0.9291	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:20 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0110/results.pth
+2020-03-30 04:17:20 [INFO ]  
+2020-03-30 04:17:20 [INFO ]  Begin of epoch 110 :
+2020-03-30 04:17:20 [INFO ]  Begin of epoch 110  (1 same_as_train nets) test results: 
+2020-03-30 04:17:20 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:17:20 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:17:20 [INFO ]  	     step  1 (lr=3.2247)          74.0000 ±  nan%            0.8902 ±  nan
+2020-03-30 04:17:20 [INFO ]  
+2020-03-30 04:17:20 [INFO ]  Epoch:  110 [      0/   5452 ( 0%)]	Loss: 0.9820	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:17:20 [INFO ]  Epoch:  111 [      0/   5452 ( 0%)]	Loss: 0.9585	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:21 [INFO ]  Epoch:  112 [      0/   5452 ( 0%)]	Loss: 0.9447	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:21 [INFO ]  Epoch:  113 [      0/   5452 ( 0%)]	Loss: 0.9440	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:22 [INFO ]  Epoch:  114 [      0/   5452 ( 0%)]	Loss: 0.9414	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:23 [INFO ]  Epoch:  115 [      0/   5452 ( 0%)]	Loss: 0.9372	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:23 [INFO ]  Epoch:  116 [      0/   5452 ( 0%)]	Loss: 0.9301	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:24 [INFO ]  Epoch:  117 [      0/   5452 ( 0%)]	Loss: 0.9394	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:24 [INFO ]  Epoch:  118 [      0/   5452 ( 0%)]	Loss: 0.9691	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:25 [INFO ]  Epoch:  119 [      0/   5452 ( 0%)]	Loss: 0.9678	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:45 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0120/results.pth
+2020-03-30 04:17:45 [INFO ]  
+2020-03-30 04:17:45 [INFO ]  Begin of epoch 120 :
+2020-03-30 04:17:45 [INFO ]  Begin of epoch 120  (1 same_as_train nets) test results: 
+2020-03-30 04:17:45 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:17:45 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:17:45 [INFO ]  	     step  1 (lr=3.2381)          74.0000 ±  nan%            0.8756 ±  nan
+2020-03-30 04:17:45 [INFO ]  
+2020-03-30 04:17:45 [INFO ]  Epoch:  120 [      0/   5452 ( 0%)]	Loss: 0.9377	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:46 [INFO ]  Epoch:  121 [      0/   5452 ( 0%)]	Loss: 0.9213	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:47 [INFO ]  Epoch:  122 [      0/   5452 ( 0%)]	Loss: 0.9618	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:47 [INFO ]  Epoch:  123 [      0/   5452 ( 0%)]	Loss: 0.9254	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:48 [INFO ]  Epoch:  124 [      0/   5452 ( 0%)]	Loss: 0.9648	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:48 [INFO ]  Epoch:  125 [      0/   5452 ( 0%)]	Loss: 0.9776	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:49 [INFO ]  Epoch:  126 [      0/   5452 ( 0%)]	Loss: 0.9278	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:50 [INFO ]  Epoch:  127 [      0/   5452 ( 0%)]	Loss: 0.9400	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:50 [INFO ]  Epoch:  128 [      0/   5452 ( 0%)]	Loss: 0.9042	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:17:51 [INFO ]  Epoch:  129 [      0/   5452 ( 0%)]	Loss: 0.9803	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:11 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0130/results.pth
+2020-03-30 04:18:11 [INFO ]  
+2020-03-30 04:18:11 [INFO ]  Begin of epoch 130 :
+2020-03-30 04:18:11 [INFO ]  Begin of epoch 130  (1 same_as_train nets) test results: 
+2020-03-30 04:18:11 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:18:11 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:18:11 [INFO ]  	     step  1 (lr=3.2452)          73.4000 ±  nan%            0.8717 ±  nan
+2020-03-30 04:18:11 [INFO ]  
+2020-03-30 04:18:11 [INFO ]  Epoch:  130 [      0/   5452 ( 0%)]	Loss: 0.9552	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:18:12 [INFO ]  Epoch:  131 [      0/   5452 ( 0%)]	Loss: 0.9129	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:12 [INFO ]  Epoch:  132 [      0/   5452 ( 0%)]	Loss: 0.9499	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:13 [INFO ]  Epoch:  133 [      0/   5452 ( 0%)]	Loss: 0.9614	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:14 [INFO ]  Epoch:  134 [      0/   5452 ( 0%)]	Loss: 0.9445	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:14 [INFO ]  Epoch:  135 [      0/   5452 ( 0%)]	Loss: 0.8982	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:15 [INFO ]  Epoch:  136 [      0/   5452 ( 0%)]	Loss: 0.9235	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:15 [INFO ]  Epoch:  137 [      0/   5452 ( 0%)]	Loss: 0.9218	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:16 [INFO ]  Epoch:  138 [      0/   5452 ( 0%)]	Loss: 0.9478	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:17 [INFO ]  Epoch:  139 [      0/   5452 ( 0%)]	Loss: 0.9588	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:37 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0140/results.pth
+2020-03-30 04:18:37 [INFO ]  
+2020-03-30 04:18:37 [INFO ]  Begin of epoch 140 :
+2020-03-30 04:18:37 [INFO ]  Begin of epoch 140  (1 same_as_train nets) test results: 
+2020-03-30 04:18:37 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:18:37 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:18:37 [INFO ]  	     step  1 (lr=3.2520)          74.0000 ±  nan%            0.8732 ±  nan
+2020-03-30 04:18:37 [INFO ]  
+2020-03-30 04:18:37 [INFO ]  Epoch:  140 [      0/   5452 ( 0%)]	Loss: 0.9508	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:38 [INFO ]  Epoch:  141 [      0/   5452 ( 0%)]	Loss: 0.9429	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:38 [INFO ]  Epoch:  142 [      0/   5452 ( 0%)]	Loss: 0.9591	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:39 [INFO ]  Epoch:  143 [      0/   5452 ( 0%)]	Loss: 0.9145	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:40 [INFO ]  Epoch:  144 [      0/   5452 ( 0%)]	Loss: 0.9390	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:40 [INFO ]  Epoch:  145 [      0/   5452 ( 0%)]	Loss: 0.9724	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:41 [INFO ]  Epoch:  146 [      0/   5452 ( 0%)]	Loss: 0.9781	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:41 [INFO ]  Epoch:  147 [      0/   5452 ( 0%)]	Loss: 0.9571	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:42 [INFO ]  Epoch:  148 [      0/   5452 ( 0%)]	Loss: 0.9479	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:18:43 [INFO ]  Epoch:  149 [      0/   5452 ( 0%)]	Loss: 0.9315	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:03 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0150/results.pth
+2020-03-30 04:19:03 [INFO ]  
+2020-03-30 04:19:03 [INFO ]  Begin of epoch 150 :
+2020-03-30 04:19:03 [INFO ]  Begin of epoch 150  (1 same_as_train nets) test results: 
+2020-03-30 04:19:03 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:19:03 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:19:03 [INFO ]  	     step  1 (lr=3.2558)          73.6000 ±  nan%            0.8732 ±  nan
+2020-03-30 04:19:03 [INFO ]  
+2020-03-30 04:19:03 [INFO ]  Epoch:  150 [      0/   5452 ( 0%)]	Loss: 0.9448	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:19:04 [INFO ]  Epoch:  151 [      0/   5452 ( 0%)]	Loss: 0.9395	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:04 [INFO ]  Epoch:  152 [      0/   5452 ( 0%)]	Loss: 0.9212	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:05 [INFO ]  Epoch:  153 [      0/   5452 ( 0%)]	Loss: 0.9222	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:05 [INFO ]  Epoch:  154 [      0/   5452 ( 0%)]	Loss: 0.9296	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:06 [INFO ]  Epoch:  155 [      0/   5452 ( 0%)]	Loss: 0.8957	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:07 [INFO ]  Epoch:  156 [      0/   5452 ( 0%)]	Loss: 0.9567	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:07 [INFO ]  Epoch:  157 [      0/   5452 ( 0%)]	Loss: 0.9270	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:08 [INFO ]  Epoch:  158 [      0/   5452 ( 0%)]	Loss: 0.9809	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:08 [INFO ]  Epoch:  159 [      0/   5452 ( 0%)]	Loss: 0.9208	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:29 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0160/results.pth
+2020-03-30 04:19:29 [INFO ]  
+2020-03-30 04:19:29 [INFO ]  Begin of epoch 160 :
+2020-03-30 04:19:29 [INFO ]  Begin of epoch 160  (1 same_as_train nets) test results: 
+2020-03-30 04:19:29 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:19:29 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:19:29 [INFO ]  	     step  1 (lr=3.2593)          74.2000 ±  nan%            0.8666 ±  nan
+2020-03-30 04:19:29 [INFO ]  
+2020-03-30 04:19:29 [INFO ]  Epoch:  160 [      0/   5452 ( 0%)]	Loss: 0.9391	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:29 [INFO ]  Epoch:  161 [      0/   5452 ( 0%)]	Loss: 0.9234	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:30 [INFO ]  Epoch:  162 [      0/   5452 ( 0%)]	Loss: 0.9613	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:31 [INFO ]  Epoch:  163 [      0/   5452 ( 0%)]	Loss: 0.9136	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:31 [INFO ]  Epoch:  164 [      0/   5452 ( 0%)]	Loss: 0.9396	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:32 [INFO ]  Epoch:  165 [      0/   5452 ( 0%)]	Loss: 0.9549	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:32 [INFO ]  Epoch:  166 [      0/   5452 ( 0%)]	Loss: 0.9688	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:33 [INFO ]  Epoch:  167 [      0/   5452 ( 0%)]	Loss: 0.9617	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:34 [INFO ]  Epoch:  168 [      0/   5452 ( 0%)]	Loss: 0.9602	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:34 [INFO ]  Epoch:  169 [      0/   5452 ( 0%)]	Loss: 0.9097	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:55 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0170/results.pth
+2020-03-30 04:19:55 [INFO ]  
+2020-03-30 04:19:55 [INFO ]  Begin of epoch 170 :
+2020-03-30 04:19:55 [INFO ]  Begin of epoch 170  (1 same_as_train nets) test results: 
+2020-03-30 04:19:55 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:19:55 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:19:55 [INFO ]  	     step  1 (lr=3.2613)          73.8000 ±  nan%            0.8683 ±  nan
+2020-03-30 04:19:55 [INFO ]  
+2020-03-30 04:19:55 [INFO ]  Epoch:  170 [      0/   5452 ( 0%)]	Loss: 0.9283	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:19:55 [INFO ]  Epoch:  171 [      0/   5452 ( 0%)]	Loss: 0.9036	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:56 [INFO ]  Epoch:  172 [      0/   5452 ( 0%)]	Loss: 0.9545	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:57 [INFO ]  Epoch:  173 [      0/   5452 ( 0%)]	Loss: 0.9592	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:57 [INFO ]  Epoch:  174 [      0/   5452 ( 0%)]	Loss: 0.9392	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:58 [INFO ]  Epoch:  175 [      0/   5452 ( 0%)]	Loss: 0.9338	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:58 [INFO ]  Epoch:  176 [      0/   5452 ( 0%)]	Loss: 0.9336	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:19:59 [INFO ]  Epoch:  177 [      0/   5452 ( 0%)]	Loss: 0.9183	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:00 [INFO ]  Epoch:  178 [      0/   5452 ( 0%)]	Loss: 0.9539	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:00 [INFO ]  Epoch:  179 [      0/   5452 ( 0%)]	Loss: 0.9094	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:21 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0180/results.pth
+2020-03-30 04:20:21 [INFO ]  
+2020-03-30 04:20:21 [INFO ]  Begin of epoch 180 :
+2020-03-30 04:20:21 [INFO ]  Begin of epoch 180  (1 same_as_train nets) test results: 
+2020-03-30 04:20:21 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:20:21 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:20:21 [INFO ]  	     step  1 (lr=3.2631)          74.0000 ±  nan%            0.8718 ±  nan
+2020-03-30 04:20:21 [INFO ]  
+2020-03-30 04:20:21 [INFO ]  Epoch:  180 [      0/   5452 ( 0%)]	Loss: 0.9784	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:21 [INFO ]  Epoch:  181 [      0/   5452 ( 0%)]	Loss: 0.9259	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:22 [INFO ]  Epoch:  182 [      0/   5452 ( 0%)]	Loss: 0.9394	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:23 [INFO ]  Epoch:  183 [      0/   5452 ( 0%)]	Loss: 0.9210	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:23 [INFO ]  Epoch:  184 [      0/   5452 ( 0%)]	Loss: 0.9355	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:24 [INFO ]  Epoch:  185 [      0/   5452 ( 0%)]	Loss: 0.9336	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:24 [INFO ]  Epoch:  186 [      0/   5452 ( 0%)]	Loss: 0.9113	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:25 [INFO ]  Epoch:  187 [      0/   5452 ( 0%)]	Loss: 0.9769	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:26 [INFO ]  Epoch:  188 [      0/   5452 ( 0%)]	Loss: 0.9242	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:26 [INFO ]  Epoch:  189 [      0/   5452 ( 0%)]	Loss: 0.9603	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:46 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0190/results.pth
+2020-03-30 04:20:46 [INFO ]  
+2020-03-30 04:20:46 [INFO ]  Begin of epoch 190 :
+2020-03-30 04:20:47 [INFO ]  Begin of epoch 190  (1 same_as_train nets) test results: 
+2020-03-30 04:20:47 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:20:47 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:20:47 [INFO ]  	     step  1 (lr=3.2640)          73.6000 ±  nan%            0.8688 ±  nan
+2020-03-30 04:20:47 [INFO ]  
+2020-03-30 04:20:47 [INFO ]  Epoch:  190 [      0/   5452 ( 0%)]	Loss: 0.9269	Data Time: 0.02s	Train Time: 0.10s
+2020-03-30 04:20:47 [INFO ]  Epoch:  191 [      0/   5452 ( 0%)]	Loss: 0.9468	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:48 [INFO ]  Epoch:  192 [      0/   5452 ( 0%)]	Loss: 0.9899	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:48 [INFO ]  Epoch:  193 [      0/   5452 ( 0%)]	Loss: 0.8860	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:49 [INFO ]  Epoch:  194 [      0/   5452 ( 0%)]	Loss: 0.9311	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:50 [INFO ]  Epoch:  195 [      0/   5452 ( 0%)]	Loss: 0.9163	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:50 [INFO ]  Epoch:  196 [      0/   5452 ( 0%)]	Loss: 0.9422	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:51 [INFO ]  Epoch:  197 [      0/   5452 ( 0%)]	Loss: 0.9300	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:51 [INFO ]  Epoch:  198 [      0/   5452 ( 0%)]	Loss: 0.9111	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:20:52 [INFO ]  Epoch:  199 [      0/   5452 ( 0%)]	Loss: 0.9676	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:12 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/checkpoints/epoch0200/results.pth
+2020-03-30 04:21:12 [INFO ]  
+2020-03-30 04:21:12 [INFO ]  Begin of epoch 200 :
+2020-03-30 04:21:12 [INFO ]  Begin of epoch 200  (1 same_as_train nets) test results: 
+2020-03-30 04:21:12 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:21:12 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:21:12 [INFO ]  	     step  1 (lr=3.2649)          74.0000 ±  nan%            0.8669 ±  nan
+2020-03-30 04:21:12 [INFO ]  
+2020-03-30 04:21:12 [INFO ]  Epoch:  200 [      0/   5452 ( 0%)]	Loss: 0.9610	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:13 [INFO ]  Epoch:  201 [      0/   5452 ( 0%)]	Loss: 0.9573	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:13 [INFO ]  Epoch:  202 [      0/   5452 ( 0%)]	Loss: 0.8552	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:14 [INFO ]  Epoch:  203 [      0/   5452 ( 0%)]	Loss: 0.9132	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:15 [INFO ]  Epoch:  204 [      0/   5452 ( 0%)]	Loss: 0.9449	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:15 [INFO ]  Epoch:  205 [      0/   5452 ( 0%)]	Loss: 0.9305	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:16 [INFO ]  Epoch:  206 [      0/   5452 ( 0%)]	Loss: 0.9457	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:16 [INFO ]  Epoch:  207 [      0/   5452 ( 0%)]	Loss: 0.9460	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:17 [INFO ]  Epoch:  208 [      0/   5452 ( 0%)]	Loss: 0.9248	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:18 [INFO ]  Epoch:  209 [      0/   5452 ( 0%)]	Loss: 0.9032	Data Time: 0.02s	Train Time: 0.09s
+2020-03-30 04:21:38 [INFO ]  Results saved to text_results/lstm_vis_trec6/distill_basic/trec6/arch(LSTM1,xavier,1.0)_distillLR1.5_E(210,20,0.5)_lr0.01_B10x1x1_train(known_init)/results.pth
+2020-03-30 04:21:38 [INFO ]  
+2020-03-30 04:21:38 [INFO ]  distilled with 1 steps and 1 epochs  (test ALL):
+2020-03-30 04:21:38 [INFO ]  distilled with 1 steps and 1 epochs  (1 same_as_train nets) test results: 
+2020-03-30 04:21:38 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-03-30 04:21:38 [INFO ]  	            before steps          22.6000 ±  nan%            1.7497 ±  nan
+2020-03-30 04:21:38 [INFO ]  	     step  1 (lr=3.2654)          74.2000 ±  nan%            0.8710 ±  nan
+2020-03-30 04:21:38 [INFO ]  
