@@ -43,7 +43,7 @@ class RNN1(utils.ReparamModule):
         hidden_dim = 100
         n_layers = 2
         bidirectional=True
-        dropout=0.5
+        dropout=0.5 if self.state.mode=="train" else 0
         self.embed = nn.Embedding(ntoken, embedding_dim)
         self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.embed.weight.requires_grad = state.learnable_embedding
@@ -88,7 +88,7 @@ class RNN2(utils.ReparamModule):
         ntoken=state.ntoken
         hidden_dim = 100
         n_layers = 1
-        dropout=0.5
+        dropout=0
         self.embed = nn.Embedding(ntoken, embedding_dim)
         self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.embed.weight.requires_grad = False
@@ -116,7 +116,7 @@ class RNN2(utils.ReparamModule):
         else:
             out = x
         #print(out.size())
-        out = self.dropout(out)
+        #out = self.dropout(out)
         out, hidden = self.rnn(out)
         #assert torch.equal(out[:,-1,:], hidden.squeeze(0))
 
@@ -131,7 +131,7 @@ class LSTM1(utils.ReparamModule):
         ntoken=state.ntoken
         hidden_dim = 10
         n_layers = 1
-        dropout=0.7
+        dropout=0.7 if self.state.mode=="train" else 0
         self.embed = nn.Embedding(ntoken, embedding_dim)
         self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
         self.embed.weight.requires_grad = False
