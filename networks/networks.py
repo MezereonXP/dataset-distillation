@@ -41,7 +41,7 @@ class RNN1(utils.ReparamModule):
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
         hidden_dim = 100
-        n_layers = 1
+        n_layers = 2
         bidirectional=True
         dropout=0.5
         self.embed = nn.Embedding(ntoken, embedding_dim)
@@ -72,7 +72,8 @@ class RNN1(utils.ReparamModule):
         else:
             out = x
         #print(out.size())
-        out = self.dropout(out)
+        if self.state.mode=="train":
+            out = self.dropout(out)
         self.rnn.flatten_parameters()
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
@@ -158,7 +159,8 @@ class LSTM1(utils.ReparamModule):
                 out=torch.squeeze(x)
         else:
             out = x
-        out = self.dropout(out)
+        if self.state.mode=="train":
+            out = self.dropout(out)
         out = self.relu(self.conv1(out))
         out = self.maxpool(out)
         self.rnn.flatten_parameters()
