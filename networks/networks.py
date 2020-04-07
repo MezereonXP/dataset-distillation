@@ -78,6 +78,53 @@ class RNN1(utils.ReparamModule):
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
         return self.sigm(self.fc(hidden))
+class LSTM2(utils.ReparamModule):
+    supported_dims = set(range(1,20000))
+    def __init__(self, state):
+        self.state=state
+        super(LSTM2, self).__init__()
+        output_dim=1 if state.num_classes == 2 else state.num_classes
+        embedding_dim=state.ninp #Maybe 32
+        ntoken=state.ntoken
+        hidden_dim = 100
+        n_layers = 2
+        bidirectional=True
+        dropout=0.5 if self.state.mode=="train" else 0
+        self.embed = nn.Embedding(ntoken, embedding_dim)
+        self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
+        self.embed.weight.requires_grad = state.learnable_embedding
+
+        self.rnn = nn.LSTM(embedding_dim,
+                           hidden_dim,
+                           num_layers=n_layers,
+                           bidirectional=bidirectional,
+                           dropout=dropout,
+                           bias =True,
+                           batch_first=True,
+                           )
+        self.fc = nn.Linear(hidden_dim*2, output_dim)
+        self.sigm=nn.Sigmoid()
+        self.dropout = nn.Dropout(dropout)
+        self.distilling_flag = False
+
+
+    def forward(self, x):
+
+        if self.state.textdata:
+            if not self.distilling_flag:
+                out = self.embed(x) #* math.sqrt(ninp)
+            else:
+                out=torch.squeeze(x)
+        else:
+            out = x
+        #print(out.size())
+        if self.state.mode=="train":
+            out = self.dropout(out)
+        self.rnn.flatten_parameters()
+        out, (hidden,cell) = self.rnn(out)
+        hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
+        return self.sigm(self.fc(hidden))
+
 class RNN2(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
@@ -134,9 +181,9 @@ class LSTM1(utils.ReparamModule):
         dropout=0.7 if self.state.mode=="train" else 0
         self.embed = nn.Embedding(ntoken, embedding_dim)
         self.embed.weight.data.copy_(state.pretrained_vec) # load pretrained vectors
-        self.embed.weight.requires_grad = False
+        self.embed.weight.requires_grad = True
 
-        self.rnn = nn.LSTM(24,
+        self.rnn = nn.LSTM(int(state.ninp/4)-1,
                            hidden_dim,
                            num_layers=n_layers,
                            bidirectional=False,
