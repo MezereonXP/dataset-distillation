@@ -28,20 +28,48 @@ def init_weights(net, state):
 
     def init_func(m):
         classname = m.__class__.__name__
-        #print("HERE\n\n\n\n\n")
         if classname=='TransformerDecoder':
             for i in range(len(m.layers)):
                 m.layers[i].self_attn._reset_parameters()
                 m.layers[i].multihead_attn._reset_parameters()
-        if classname.startswith('Conv') or classname == 'Linear' or classname.startswith('RNN') or classname.startswith('LSTM'):
+        if classname.startswith('RNN') or classname.startswith('LSTM'):
+            for names in m._all_weights:
+                for name in filter(lambda n: "bias" in n,  names):
+                    bias = getattr(m, name)
+                    init.constant_(bias, 0.0)
+                for name in filter(lambda n: "weight" in n,  names):
+                    weight = getattr(m, name)
+                    if init_type == 'normal':
+                        init.normal_(weight, 0.0, init_param)
+                    elif init_type == 'xavier':
+                        init.xavier_normal_(weight, gain=init_param)
+                    elif init_type == 'xavier_unif':
+                        init.xavier_uniform_(weight, gain=init_param)
+                    elif init_type == 'kaiming':
+                        init.kaiming_normal_(weight, a=init_param, mode='fan_in')
+                    elif init_type == 'kaiming_out':
+                        init.kaiming_normal_(weight, a=init_param, mode='fan_out')
+                    elif init_type == 'orthogonal':
+                        init.orthogonal_(weight, gain=init_param)
+                    elif init_type == 'zero':
+                        init.zeros_(weight)
+                    elif init_type == 'one':
+                        init.ones(weight)
+                    elif init_type == 'constant':
+                        init.constant_(weight, init_param)
+                    elif init_type == 'default':
+                        if hasattr(weight, 'reset_parameters'):
+                            weight.reset_parameters()
+                    else:
+                        raise NotImplementedError('initialization method [%s] is not implemented' % init_type)
+            if init_type == 'default':
+                if hasattr(m.weight, 'reset_parameters'):
+                    weight.reset_parameters()
+                
+            
+        if classname.startswith('Conv') or classname == 'Linear':
             if getattr(m, 'bias', None) is not None:
-                if classname.startswith('Conv') or classname == 'Linear':
                     init.constant_(m.bias, 0.0)
-                else:
-                    for names in m._all_weights:
-                        for name in filter(lambda n: "bias" in n,  names):
-                            bias = getattr(m, name)
-                            init.constant_(bias, 0.0)
             if getattr(m, 'weight', None) is not None:
                 if init_type == 'normal':
                     init.normal_(m.weight, 0.0, init_param)
