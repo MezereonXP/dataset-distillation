@@ -32,11 +32,11 @@ class LeNet(utils.ReparamModule):
         out = self.fc3(out)
         return out
 
-class RNN1(utils.ReparamModule):
+class TextRNN1(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
-        super(RNN1, self).__init__()
+        super(TextRNN1, self).__init__()
         output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
@@ -78,11 +78,11 @@ class RNN1(utils.ReparamModule):
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
         return self.sigm(self.fc(hidden))
-class LSTM2(utils.ReparamModule):
+class TextLSTM2(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
-        super(LSTM2, self).__init__()
+        super(TextLSTM2, self).__init__()
         output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
@@ -125,11 +125,11 @@ class LSTM2(utils.ReparamModule):
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
         return self.sigm(self.fc(hidden))
 
-class RNN2(utils.ReparamModule):
+class TextRNN2(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
-        super(RNN2, self).__init__()
+        super(TextRNN2, self).__init__()
         output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
@@ -168,11 +168,11 @@ class RNN2(utils.ReparamModule):
         #assert torch.equal(out[:,-1,:], hidden.squeeze(0))
 
         return self.sigm(self.fc(hidden.squeeze(0)))
-class LSTM1(utils.ReparamModule):
+class TextLSTM1(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
         self.state=state
-        super(LSTM1, self).__init__()
+        super(TextLSTM1, self).__init__()
         output_dim=1 if state.num_classes == 2 else state.num_classes
         embedding_dim=state.ninp #Maybe 32
         ntoken=state.ntoken
