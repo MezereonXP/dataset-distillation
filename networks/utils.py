@@ -62,10 +62,6 @@ def init_weights(net, state):
                             weight.reset_parameters()
                     else:
                         raise NotImplementedError('initialization method [%s] is not implemented' % init_type)
-            if init_type == 'default':
-                if hasattr(m.weight, 'reset_parameters'):
-                    weight.reset_parameters()
-                
             
         if classname.startswith('Conv') or classname == 'Linear':
             if getattr(m, 'bias', None) is not None:
