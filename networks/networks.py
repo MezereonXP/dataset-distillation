@@ -123,7 +123,7 @@ class TextLSTM2(utils.ReparamModule):
         self.rnn.flatten_parameters()
         out, (hidden,cell) = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
-        return self.sigm(self.fc(hidden))
+        return self.fc(hidden)
 
 class TextRNN2(utils.ReparamModule):
     supported_dims = set(range(1,20000))
