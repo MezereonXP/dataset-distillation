@@ -55,7 +55,7 @@ class TextRNN1(utils.ReparamModule):
                            dropout=dropout,
                            bias =True,
                            batch_first=True,
-                           nonlinearity="relu")
+                           nonlinearity="tanh")
         self.fc = nn.Linear(hidden_dim*2, output_dim)
         self.sigm=nn.Sigmoid()
         self.dropout = nn.Dropout(dropout)
@@ -77,7 +77,7 @@ class TextRNN1(utils.ReparamModule):
         self.rnn.flatten_parameters()
         out, hidden = self.rnn(out)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
-        return self.sigm(self.fc(hidden))
+        return self.fc(hidden)
 class TextLSTM2(utils.ReparamModule):
     supported_dims = set(range(1,20000))
     def __init__(self, state):
