@@ -25,7 +25,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
     dataset, nc, input_size, mean, std, label_names = dataset_info
 
     N = len(np_steps[0][0])
-    nrows = max(2, distilled_images_per_class_per_step)
+    nrows = max(1, distilled_images_per_class_per_step)
     grid = (nrows, np.ceil(N / float(nrows)).astype(int))
     plt.rcParams["figure.figsize"] = (grid[1] * 1.5 + 1, nrows * 1.5 + 1)
 
