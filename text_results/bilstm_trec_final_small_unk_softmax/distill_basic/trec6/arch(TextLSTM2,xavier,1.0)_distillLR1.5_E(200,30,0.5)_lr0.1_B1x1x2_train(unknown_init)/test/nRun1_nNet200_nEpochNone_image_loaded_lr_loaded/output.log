@@ -1,0 +1,125 @@
+2020-04-19 05:47:11 [INFO ]  ======================================== 2020-04-19 05:47:11 ========================================
+2020-04-19 05:47:11 [INFO ]  Base directory is text_results/bilstm_trec_final_small_unk_softmax/distill_basic/trec6/arch(TextLSTM2,xavier,1.0)_distillLR1.5_E(200,30,0.5)_lr0.1_B1x1x2_train(unknown_init)
+2020-04-19 05:47:11 [INFO ]  Options: 
+2020-04-19 05:47:11 [INFO ]  	add_first: true
+2020-04-19 05:47:11 [INFO ]  	add_label_scaling: 0
+2020-04-19 05:47:11 [INFO ]  	arch: TextLSTM2
+2020-04-19 05:47:11 [INFO ]  	attack_class: 0
+2020-04-19 05:47:11 [INFO ]  	base_seed: 1
+2020-04-19 05:47:11 [INFO ]  	batch_size: 1024
+2020-04-19 05:47:11 [INFO ]  	checkpoint_interval: 10
+2020-04-19 05:47:11 [INFO ]  	dataset: trec6
+2020-04-19 05:47:11 [INFO ]  	dataset_labels:
+2020-04-19 05:47:11 [INFO ]  	- 0
+2020-04-19 05:47:11 [INFO ]  	- 1
+2020-04-19 05:47:11 [INFO ]  	- 2
+2020-04-19 05:47:11 [INFO ]  	- 3
+2020-04-19 05:47:11 [INFO ]  	- 4
+2020-04-19 05:47:11 [INFO ]  	- 5
+2020-04-19 05:47:11 [INFO ]  	dataset_normalization: !!python/tuple
+2020-04-19 05:47:11 [INFO ]  	- !!python/tuple
+2020-04-19 05:47:11 [INFO ]  	    - 0
+2020-04-19 05:47:11 [INFO ]  	- !!python/tuple
+2020-04-19 05:47:11 [INFO ]  	    - 0
+2020-04-19 05:47:11 [INFO ]  	dataset_root: ./data/text/trec
+2020-04-19 05:47:11 [INFO ]  	decay_epochs: 30
+2020-04-19 05:47:11 [INFO ]  	decay_factor: 0.5
+2020-04-19 05:47:11 [INFO ]  	device_id: 0
+2020-04-19 05:47:11 [INFO ]  	dist_metric: MSE
+2020-04-19 05:47:11 [INFO ]  	distill_epochs: 2
+2020-04-19 05:47:11 [INFO ]  	distill_lr: 1.5
+2020-04-19 05:47:11 [INFO ]  	distill_steps: 1
+2020-04-19 05:47:11 [INFO ]  	distilled_images_per_class_per_step: 1
+2020-04-19 05:47:11 [INFO ]  	distributed: false
+2020-04-19 05:47:11 [INFO ]  	dropout: false
+2020-04-19 05:47:11 [INFO ]  	epochs: 200
+2020-04-19 05:47:11 [INFO ]  	expr_name_format: null
+2020-04-19 05:47:11 [INFO ]  	freeze_data: false
+2020-04-19 05:47:11 [INFO ]  	image_dpi: 80
+2020-04-19 05:47:11 [INFO ]  	init: xavier
+2020-04-19 05:47:11 [INFO ]  	init_labels:
+2020-04-19 05:47:11 [INFO ]  	- 0
+2020-04-19 05:47:11 [INFO ]  	- 1
+2020-04-19 05:47:11 [INFO ]  	- 2
+2020-04-19 05:47:11 [INFO ]  	- 3
+2020-04-19 05:47:11 [INFO ]  	- 4
+2020-04-19 05:47:11 [INFO ]  	- 5
+2020-04-19 05:47:11 [INFO ]  	init_param: 1.0
+2020-04-19 05:47:11 [INFO ]  	input_size: 30
+2020-04-19 05:47:11 [INFO ]  	invert_dist: false
+2020-04-19 05:47:11 [INFO ]  	label_softmax: true
+2020-04-19 05:47:11 [INFO ]  	learnable_embedding: false
+2020-04-19 05:47:11 [INFO ]  	log_file: text_results/bilstm_trec_final_small_unk_softmax/distill_basic/trec6/arch(TextLSTM2,xavier,1.0)_distillLR1.5_E(200,30,0.5)_lr0.1_B1x1x2_train(unknown_init)/test/nRun1_nNet200_nEpochNone_image_loaded_lr_loaded/output.log
+2020-04-19 05:47:11 [INFO ]  	log_interval: 100
+2020-04-19 05:47:11 [INFO ]  	log_level: INFO
+2020-04-19 05:47:11 [INFO ]  	lr: 0.1
+2020-04-19 05:47:11 [INFO ]  	maxlen: 30
+2020-04-19 05:47:11 [INFO ]  	mode: distill_basic
+2020-04-19 05:47:11 [INFO ]  	model_dir: ./models/
+2020-04-19 05:47:11 [INFO ]  	model_subdir_format: null
+2020-04-19 05:47:11 [INFO ]  	mult_label_scaling: 1
+2020-04-19 05:47:11 [INFO ]  	n_nets: 1
+2020-04-19 05:47:11 [INFO ]  	nc: 1
+2020-04-19 05:47:11 [INFO ]  	ninp: 100
+2020-04-19 05:47:11 [INFO ]  	no_log: false
+2020-04-19 05:47:11 [INFO ]  	ntoken: 8679
+2020-04-19 05:47:11 [INFO ]  	num_classes: 6
+2020-04-19 05:47:11 [INFO ]  	num_distill_classes: 6
+2020-04-19 05:47:11 [INFO ]  	num_workers: 8
+2020-04-19 05:47:11 [INFO ]  	phase: test
+2020-04-19 05:47:11 [INFO ]  	random_init_labels: ''
+2020-04-19 05:47:11 [INFO ]  	reproduction_test: false
+2020-04-19 05:47:11 [INFO ]  	results_dir: text_results/bilstm_trec_final_small_unk_softmax
+2020-04-19 05:47:11 [INFO ]  	sample_n_nets: 1
+2020-04-19 05:47:11 [INFO ]  	source_dataset: null
+2020-04-19 05:47:11 [INFO ]  	start_time: '2020-04-19 05:47:11'
+2020-04-19 05:47:11 [INFO ]  	static_labels: 0
+2020-04-19 05:47:11 [INFO ]  	target_class: 1
+2020-04-19 05:47:11 [INFO ]  	test_batch_size: 1024
+2020-04-19 05:47:11 [INFO ]  	test_distill_epochs: null
+2020-04-19 05:47:11 [INFO ]  	test_distilled_images: loaded
+2020-04-19 05:47:11 [INFO ]  	test_distilled_lrs:
+2020-04-19 05:47:11 [INFO ]  	- loaded
+2020-04-19 05:47:11 [INFO ]  	test_n_nets: 200
+2020-04-19 05:47:11 [INFO ]  	test_n_runs: 1
+2020-04-19 05:47:11 [INFO ]  	test_name_format: null
+2020-04-19 05:47:11 [INFO ]  	test_nets_type: unknown_init
+2020-04-19 05:47:11 [INFO ]  	test_niter: 1
+2020-04-19 05:47:11 [INFO ]  	test_optimize_n_nets: 20
+2020-04-19 05:47:11 [INFO ]  	test_optimize_n_runs: null
+2020-04-19 05:47:11 [INFO ]  	textdata: true
+2020-04-19 05:47:11 [INFO ]  	train_nets_type: unknown_init
+2020-04-19 05:47:11 [INFO ]  	visualize: true
+2020-04-19 05:47:11 [INFO ]  	world_rank: 0
+2020-04-19 05:47:11 [INFO ]  	world_size: 1
+2020-04-19 05:47:11 [INFO ]  	
+2020-04-19 05:47:11 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_8679.pt
+2020-04-19 05:47:12 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_8679.pt
+2020-04-19 05:47:12 [INFO ]  train dataset size:	5452
+2020-04-19 05:47:12 [INFO ]  test dataset size: 	500
+2020-04-19 05:47:12 [INFO ]  datasets built!
+2020-04-19 05:47:12 [INFO ]  mode: distill_basic, phase: test
+2020-04-19 05:47:12 [INFO ]  Build 1 TextLSTM2 network(s) with [xavier(1.0)] init
+2020-04-19 05:47:14 [INFO ]  
+2020-04-19 05:47:14 [INFO ]  Test: 
+2020-04-19 05:47:14 [INFO ]  	test_distilled_images:	loaded
+2020-04-19 05:47:14 [INFO ]  	test_distilled_lrs:	loaded
+2020-04-19 05:47:14 [INFO ]  	test_distill_epochs:	None
+2020-04-19 05:47:14 [INFO ]  	test_optmize_n_runs:	None
+2020-04-19 05:47:14 [INFO ]  	test_optmize_n_nets:	20
+2020-04-19 05:47:14 [INFO ]  	1 time(s)
+2020-04-19 05:47:14 [INFO ]  
+2020-04-19 05:47:14 [INFO ]  
+2020-04-19 05:47:14 [INFO ]  Test #0 (loaded) images & (loaded) lrs (test ALL):
+2020-04-19 05:47:32 [INFO ]  Test #0 (loaded) images & (loaded) lrs (200 unknown_init nets) test results: 
+2020-04-19 05:47:32 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-19 05:47:32 [INFO ]  	            before steps          16.6030 ± 8.34%            1.7920 ± 0.01
+2020-04-19 05:47:32 [INFO ]  	     step  2 (lr=12.228)          61.5030 ± 7.68%            1.0659 ± 0.11
+2020-04-19 05:47:32 [INFO ]  
+2020-04-19 05:47:32 [INFO ]  
+2020-04-19 05:47:32 [INFO ]  Summary with (loaded) images & (loaded) lrs test results: 
+2020-04-19 05:47:32 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-19 05:47:32 [INFO ]  	            before steps          16.6030 ± 8.34%            1.7920 ± 0.01
+2020-04-19 05:47:32 [INFO ]  	     step  2 (lr=   nan)          61.5030 ± 7.68%            1.0659 ± 0.11
+2020-04-19 05:47:32 [INFO ]  Test results saved as text_results/bilstm_trec_final_small_unk_softmax/distill_basic/trec6/arch(TextLSTM2,xavier,1.0)_distillLR1.5_E(200,30,0.5)_lr0.1_B1x1x2_train(unknown_init)/test/nRun1_nNet200_nEpochNone_image_loaded_lr_loaded/results.pth
+2020-04-19 05:47:32 [INFO ]  
