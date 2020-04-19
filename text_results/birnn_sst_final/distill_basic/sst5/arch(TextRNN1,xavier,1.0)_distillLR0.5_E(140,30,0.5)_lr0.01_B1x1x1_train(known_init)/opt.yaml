@@ -67,7 +67,7 @@ reproduction_test: false
 results_dir: text_results/birnn_sst_final
 sample_n_nets: 1
 source_dataset: null
-start_time: '2020-04-19 03:31:23'
+start_time: '2020-04-19 04:04:23'
 static_labels: 0
 target_class: 1
 test_batch_size: 1024
@@ -84,6 +84,6 @@ test_optimize_n_nets: 20
 test_optimize_n_runs: null
 textdata: true
 train_nets_type: known_init
-visualize: false
+visualize: true
 world_rank: 0
 world_size: 1
