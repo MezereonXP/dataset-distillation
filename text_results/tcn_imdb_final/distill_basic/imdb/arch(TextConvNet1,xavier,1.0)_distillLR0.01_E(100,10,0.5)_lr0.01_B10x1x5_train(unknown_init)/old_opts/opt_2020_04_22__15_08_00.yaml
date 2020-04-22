@@ -1,0 +1,83 @@
+add_first: true
+add_label_scaling: 0
+arch: TextConvNet1
+attack_class: 0
+base_seed: 1
+batch_size: 1024
+checkpoint_interval: 10
+dataset: imdb
+dataset_labels: !!set
+    0: null
+    1: null
+dataset_normalization: !!python/tuple
+- !!python/tuple
+    - 0
+- !!python/tuple
+    - 0
+dataset_root: ./data/text/imdb
+decay_epochs: 10
+decay_factor: 0.5
+device_id: 0
+dist_metric: MSE
+distill_epochs: 5
+distill_lr: 0.01
+distill_steps: 1
+distilled_images_per_class_per_step: 10
+distributed: false
+dropout: false
+epochs: 100
+expr_name_format: null
+freeze_data: false
+image_dpi: 80
+init: xavier
+init_labels:
+- 0
+- 1
+init_param: 1.0
+input_size: 400
+invert_dist: false
+label_softmax: false
+learnable_embedding: false
+log_file: text_results/tcn_imdb_final/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.01_B10x1x5_train(unknown_init)/output.log
+log_interval: 100
+log_level: INFO
+lr: 0.01
+maxlen: 400
+mode: distill_basic
+model_dir: ./models/
+model_subdir_format: null
+mult_label_scaling: 1
+n_nets: 1
+nc: 1
+ninp: 100
+no_log: false
+ntoken: 251639
+num_classes: 2
+num_distill_classes: 2
+num_workers: 8
+phase: train
+random_init_labels: ''
+reproduction_test: false
+results_dir: text_results/tcn_imdb_final
+sample_n_nets: 1
+source_dataset: null
+start_time: '2020-04-22 15:08:00'
+static_labels: 0
+target_class: 1
+test_batch_size: 1024
+test_distill_epochs: null
+test_distilled_images: loaded
+test_distilled_lrs:
+- loaded
+test_n_nets: 20
+test_n_runs: 1
+test_name_format: null
+test_nets_type: unknown_init
+test_niter: 1
+test_optimize_n_nets: 20
+test_optimize_n_runs: null
+textdata: true
+train_nets_type: unknown_init
+visualize: true
+world_rank: 0
+world_size: 1
