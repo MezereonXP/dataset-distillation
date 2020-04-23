@@ -1,0 +1,117 @@
+2020-04-23 04:43:27 [INFO ]  ======================================== 2020-04-23 04:43:27 ========================================
+2020-04-23 04:43:27 [INFO ]  Base directory is text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)
+2020-04-23 04:43:27 [INFO ]  Options: 
+2020-04-23 04:43:27 [INFO ]  	add_first: true
+2020-04-23 04:43:27 [INFO ]  	add_label_scaling: 0
+2020-04-23 04:43:27 [INFO ]  	arch: TextConvNet1
+2020-04-23 04:43:27 [INFO ]  	attack_class: 0
+2020-04-23 04:43:27 [INFO ]  	base_seed: 1
+2020-04-23 04:43:27 [INFO ]  	batch_size: 1024
+2020-04-23 04:43:27 [INFO ]  	checkpoint_interval: 10
+2020-04-23 04:43:27 [INFO ]  	dataset: imdb
+2020-04-23 04:43:27 [INFO ]  	dataset_labels: !!set
+2020-04-23 04:43:27 [INFO ]  	    0: null
+2020-04-23 04:43:27 [INFO ]  	    1: null
+2020-04-23 04:43:27 [INFO ]  	dataset_normalization: !!python/tuple
+2020-04-23 04:43:27 [INFO ]  	- !!python/tuple
+2020-04-23 04:43:27 [INFO ]  	    - 0
+2020-04-23 04:43:27 [INFO ]  	- !!python/tuple
+2020-04-23 04:43:27 [INFO ]  	    - 0
+2020-04-23 04:43:27 [INFO ]  	dataset_root: ./data/text/imdb
+2020-04-23 04:43:27 [INFO ]  	decay_epochs: 10
+2020-04-23 04:43:27 [INFO ]  	decay_factor: 0.5
+2020-04-23 04:43:27 [INFO ]  	device_id: 0
+2020-04-23 04:43:27 [INFO ]  	dist_metric: MSE
+2020-04-23 04:43:27 [INFO ]  	distill_epochs: 1
+2020-04-23 04:43:27 [INFO ]  	distill_lr: 0.01
+2020-04-23 04:43:27 [INFO ]  	distill_steps: 1
+2020-04-23 04:43:27 [INFO ]  	distilled_images_per_class_per_step: 1
+2020-04-23 04:43:27 [INFO ]  	distributed: false
+2020-04-23 04:43:27 [INFO ]  	dropout: false
+2020-04-23 04:43:27 [INFO ]  	epochs: 100
+2020-04-23 04:43:27 [INFO ]  	expr_name_format: null
+2020-04-23 04:43:27 [INFO ]  	freeze_data: false
+2020-04-23 04:43:27 [INFO ]  	image_dpi: 80
+2020-04-23 04:43:27 [INFO ]  	init: xavier
+2020-04-23 04:43:27 [INFO ]  	init_labels:
+2020-04-23 04:43:27 [INFO ]  	- 0
+2020-04-23 04:43:27 [INFO ]  	- 1
+2020-04-23 04:43:27 [INFO ]  	init_param: 1.0
+2020-04-23 04:43:27 [INFO ]  	input_size: 400
+2020-04-23 04:43:27 [INFO ]  	invert_dist: false
+2020-04-23 04:43:27 [INFO ]  	label_softmax: false
+2020-04-23 04:43:27 [INFO ]  	learnable_embedding: false
+2020-04-23 04:43:27 [INFO ]  	log_file: text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/test/nRun1_nNet200_nEpochNone_image_loaded_lr_loaded/output.log
+2020-04-23 04:43:27 [INFO ]  	log_interval: 100
+2020-04-23 04:43:27 [INFO ]  	log_level: INFO
+2020-04-23 04:43:27 [INFO ]  	lr: 0.1
+2020-04-23 04:43:27 [INFO ]  	maxlen: 400
+2020-04-23 04:43:27 [INFO ]  	mode: distill_basic
+2020-04-23 04:43:27 [INFO ]  	model_dir: ./models/
+2020-04-23 04:43:27 [INFO ]  	model_subdir_format: null
+2020-04-23 04:43:27 [INFO ]  	mult_label_scaling: 1
+2020-04-23 04:43:27 [INFO ]  	n_nets: 1
+2020-04-23 04:43:27 [INFO ]  	nc: 1
+2020-04-23 04:43:27 [INFO ]  	ninp: 100
+2020-04-23 04:43:27 [INFO ]  	no_log: false
+2020-04-23 04:43:27 [INFO ]  	ntoken: 30000
+2020-04-23 04:43:27 [INFO ]  	num_classes: 2
+2020-04-23 04:43:27 [INFO ]  	num_distill_classes: 2
+2020-04-23 04:43:27 [INFO ]  	num_workers: 8
+2020-04-23 04:43:27 [INFO ]  	phase: test
+2020-04-23 04:43:27 [INFO ]  	random_init_labels: ''
+2020-04-23 04:43:27 [INFO ]  	reproduction_test: false
+2020-04-23 04:43:27 [INFO ]  	results_dir: text_results/tcn_imdb_unknown_small
+2020-04-23 04:43:27 [INFO ]  	sample_n_nets: 1
+2020-04-23 04:43:27 [INFO ]  	source_dataset: null
+2020-04-23 04:43:27 [INFO ]  	start_time: '2020-04-23 04:43:27'
+2020-04-23 04:43:27 [INFO ]  	static_labels: 0
+2020-04-23 04:43:27 [INFO ]  	target_class: 1
+2020-04-23 04:43:27 [INFO ]  	test_batch_size: 1024
+2020-04-23 04:43:27 [INFO ]  	test_distill_epochs: null
+2020-04-23 04:43:27 [INFO ]  	test_distilled_images: loaded
+2020-04-23 04:43:27 [INFO ]  	test_distilled_lrs:
+2020-04-23 04:43:27 [INFO ]  	- loaded
+2020-04-23 04:43:27 [INFO ]  	test_n_nets: 200
+2020-04-23 04:43:27 [INFO ]  	test_n_runs: 1
+2020-04-23 04:43:27 [INFO ]  	test_name_format: null
+2020-04-23 04:43:27 [INFO ]  	test_nets_type: unknown_init
+2020-04-23 04:43:27 [INFO ]  	test_niter: 1
+2020-04-23 04:43:27 [INFO ]  	test_optimize_n_nets: 20
+2020-04-23 04:43:27 [INFO ]  	test_optimize_n_runs: null
+2020-04-23 04:43:27 [INFO ]  	textdata: true
+2020-04-23 04:43:27 [INFO ]  	train_nets_type: unknown_init
+2020-04-23 04:43:27 [INFO ]  	visualize: true
+2020-04-23 04:43:27 [INFO ]  	world_rank: 0
+2020-04-23 04:43:27 [INFO ]  	world_size: 1
+2020-04-23 04:43:27 [INFO ]  	
+2020-04-23 04:43:34 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_30000.pt
+2020-04-23 04:43:44 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_30000.pt
+2020-04-23 04:43:46 [INFO ]  train dataset size:	25000
+2020-04-23 04:43:46 [INFO ]  test dataset size: 	25000
+2020-04-23 04:43:46 [INFO ]  datasets built!
+2020-04-23 04:43:46 [INFO ]  mode: distill_basic, phase: test
+2020-04-23 04:43:46 [INFO ]  Build 1 TextConvNet1 network(s) with [xavier(1.0)] init
+2020-04-23 04:43:48 [INFO ]  
+2020-04-23 04:43:48 [INFO ]  Test: 
+2020-04-23 04:43:48 [INFO ]  	test_distilled_images:	loaded
+2020-04-23 04:43:48 [INFO ]  	test_distilled_lrs:	loaded
+2020-04-23 04:43:48 [INFO ]  	test_distill_epochs:	None
+2020-04-23 04:43:48 [INFO ]  	test_optmize_n_runs:	None
+2020-04-23 04:43:48 [INFO ]  	test_optmize_n_nets:	20
+2020-04-23 04:43:48 [INFO ]  	1 time(s)
+2020-04-23 04:43:48 [INFO ]  
+2020-04-23 04:43:48 [INFO ]  
+2020-04-23 04:43:48 [INFO ]  Test #0 (loaded) images & (loaded) lrs (test ALL):
+2020-04-23 04:50:18 [INFO ]  Test #0 (loaded) images & (loaded) lrs (200 unknown_init nets) test results: 
+2020-04-23 04:50:18 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:50:18 [INFO ]  	            before steps          50.0049 ± 0.13%            0.6988 ± 0.01
+2020-04-23 04:50:18 [INFO ]  	     step  1 (lr=0.0208)          69.6426 ± 5.53%            0.5471 ± 0.04
+2020-04-23 04:50:18 [INFO ]  
+2020-04-23 04:50:18 [INFO ]  
+2020-04-23 04:50:18 [INFO ]  Summary with (loaded) images & (loaded) lrs test results: 
+2020-04-23 04:50:18 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:50:18 [INFO ]  	            before steps          50.0049 ± 0.13%            0.6988 ± 0.01
+2020-04-23 04:50:18 [INFO ]  	     step  1 (lr=   nan)          69.6426 ± 5.53%            0.5471 ± 0.04
+2020-04-23 04:50:18 [INFO ]  Test results saved as text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/test/nRun1_nNet200_nEpochNone_image_loaded_lr_loaded/results.pth
+2020-04-23 04:50:18 [INFO ]  

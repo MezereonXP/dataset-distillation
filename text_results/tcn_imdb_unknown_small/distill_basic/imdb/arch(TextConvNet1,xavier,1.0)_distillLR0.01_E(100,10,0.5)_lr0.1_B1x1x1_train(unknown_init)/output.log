@@ -1,0 +1,284 @@
+2020-04-23 04:29:20 [INFO ]  ======================================== 2020-04-23 04:29:20 ========================================
+2020-04-23 04:29:20 [INFO ]  Base directory is text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)
+2020-04-23 04:29:20 [INFO ]  Options: 
+2020-04-23 04:29:20 [INFO ]  	add_first: true
+2020-04-23 04:29:20 [INFO ]  	add_label_scaling: 0
+2020-04-23 04:29:20 [INFO ]  	arch: TextConvNet1
+2020-04-23 04:29:20 [INFO ]  	attack_class: 0
+2020-04-23 04:29:20 [INFO ]  	base_seed: 1
+2020-04-23 04:29:20 [INFO ]  	batch_size: 1024
+2020-04-23 04:29:20 [INFO ]  	checkpoint_interval: 10
+2020-04-23 04:29:20 [INFO ]  	dataset: imdb
+2020-04-23 04:29:20 [INFO ]  	dataset_labels: !!set
+2020-04-23 04:29:20 [INFO ]  	    0: null
+2020-04-23 04:29:20 [INFO ]  	    1: null
+2020-04-23 04:29:20 [INFO ]  	dataset_normalization: !!python/tuple
+2020-04-23 04:29:20 [INFO ]  	- !!python/tuple
+2020-04-23 04:29:20 [INFO ]  	    - 0
+2020-04-23 04:29:20 [INFO ]  	- !!python/tuple
+2020-04-23 04:29:20 [INFO ]  	    - 0
+2020-04-23 04:29:20 [INFO ]  	dataset_root: ./data/text/imdb
+2020-04-23 04:29:20 [INFO ]  	decay_epochs: 10
+2020-04-23 04:29:20 [INFO ]  	decay_factor: 0.5
+2020-04-23 04:29:20 [INFO ]  	device_id: 0
+2020-04-23 04:29:20 [INFO ]  	dist_metric: MSE
+2020-04-23 04:29:20 [INFO ]  	distill_epochs: 1
+2020-04-23 04:29:20 [INFO ]  	distill_lr: 0.01
+2020-04-23 04:29:20 [INFO ]  	distill_steps: 1
+2020-04-23 04:29:20 [INFO ]  	distilled_images_per_class_per_step: 1
+2020-04-23 04:29:20 [INFO ]  	distributed: false
+2020-04-23 04:29:20 [INFO ]  	dropout: false
+2020-04-23 04:29:20 [INFO ]  	epochs: 100
+2020-04-23 04:29:20 [INFO ]  	expr_name_format: null
+2020-04-23 04:29:20 [INFO ]  	freeze_data: false
+2020-04-23 04:29:20 [INFO ]  	image_dpi: 80
+2020-04-23 04:29:20 [INFO ]  	init: xavier
+2020-04-23 04:29:20 [INFO ]  	init_labels:
+2020-04-23 04:29:20 [INFO ]  	- 0
+2020-04-23 04:29:20 [INFO ]  	- 1
+2020-04-23 04:29:20 [INFO ]  	init_param: 1.0
+2020-04-23 04:29:20 [INFO ]  	input_size: 400
+2020-04-23 04:29:20 [INFO ]  	invert_dist: false
+2020-04-23 04:29:20 [INFO ]  	label_softmax: false
+2020-04-23 04:29:20 [INFO ]  	learnable_embedding: false
+2020-04-23 04:29:20 [INFO ]  	log_file: text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/output.log
+2020-04-23 04:29:20 [INFO ]  	log_interval: 100
+2020-04-23 04:29:20 [INFO ]  	log_level: INFO
+2020-04-23 04:29:20 [INFO ]  	lr: 0.1
+2020-04-23 04:29:20 [INFO ]  	maxlen: 400
+2020-04-23 04:29:20 [INFO ]  	mode: distill_basic
+2020-04-23 04:29:20 [INFO ]  	model_dir: ./models/
+2020-04-23 04:29:20 [INFO ]  	model_subdir_format: null
+2020-04-23 04:29:20 [INFO ]  	mult_label_scaling: 1
+2020-04-23 04:29:20 [INFO ]  	n_nets: 1
+2020-04-23 04:29:20 [INFO ]  	nc: 1
+2020-04-23 04:29:20 [INFO ]  	ninp: 100
+2020-04-23 04:29:20 [INFO ]  	no_log: false
+2020-04-23 04:29:20 [INFO ]  	ntoken: 30000
+2020-04-23 04:29:20 [INFO ]  	num_classes: 2
+2020-04-23 04:29:20 [INFO ]  	num_distill_classes: 2
+2020-04-23 04:29:20 [INFO ]  	num_workers: 8
+2020-04-23 04:29:20 [INFO ]  	phase: train
+2020-04-23 04:29:20 [INFO ]  	random_init_labels: ''
+2020-04-23 04:29:20 [INFO ]  	reproduction_test: false
+2020-04-23 04:29:20 [INFO ]  	results_dir: text_results/tcn_imdb_unknown_small
+2020-04-23 04:29:20 [INFO ]  	sample_n_nets: 1
+2020-04-23 04:29:20 [INFO ]  	source_dataset: null
+2020-04-23 04:29:20 [INFO ]  	start_time: '2020-04-23 04:29:20'
+2020-04-23 04:29:20 [INFO ]  	static_labels: 0
+2020-04-23 04:29:20 [INFO ]  	target_class: 1
+2020-04-23 04:29:20 [INFO ]  	test_batch_size: 1024
+2020-04-23 04:29:20 [INFO ]  	test_distill_epochs: null
+2020-04-23 04:29:20 [INFO ]  	test_distilled_images: loaded
+2020-04-23 04:29:20 [INFO ]  	test_distilled_lrs:
+2020-04-23 04:29:20 [INFO ]  	- loaded
+2020-04-23 04:29:20 [INFO ]  	test_n_nets: 1
+2020-04-23 04:29:20 [INFO ]  	test_n_runs: 1
+2020-04-23 04:29:20 [INFO ]  	test_name_format: null
+2020-04-23 04:29:20 [INFO ]  	test_nets_type: unknown_init
+2020-04-23 04:29:20 [INFO ]  	test_niter: 1
+2020-04-23 04:29:20 [INFO ]  	test_optimize_n_nets: 20
+2020-04-23 04:29:20 [INFO ]  	test_optimize_n_runs: null
+2020-04-23 04:29:20 [INFO ]  	textdata: true
+2020-04-23 04:29:20 [INFO ]  	train_nets_type: unknown_init
+2020-04-23 04:29:20 [INFO ]  	visualize: true
+2020-04-23 04:29:20 [INFO ]  	world_rank: 0
+2020-04-23 04:29:20 [INFO ]  	world_size: 1
+2020-04-23 04:29:20 [INFO ]  	
+2020-04-23 04:29:28 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_30000.pt
+2020-04-23 04:29:37 [INFO ]  Loading vectors from .vector_cache/glove.6B.100d.txt_30000.pt
+2020-04-23 04:29:39 [INFO ]  train dataset size:	25000
+2020-04-23 04:29:39 [INFO ]  test dataset size: 	25000
+2020-04-23 04:29:39 [INFO ]  datasets built!
+2020-04-23 04:29:39 [INFO ]  mode: distill_basic, phase: train
+2020-04-23 04:29:39 [INFO ]  Build 1 TextConvNet1 network(s) with [xavier(1.0)] init
+2020-04-23 04:29:42 [INFO ]  Build 1 TextConvNet1 network(s) with [xavier(1.0)] init
+2020-04-23 04:29:42 [INFO ]  Train 1 steps iterated for 1 epochs
+2020-04-23 04:30:05 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0000/results.pth
+2020-04-23 04:30:05 [INFO ]  
+2020-04-23 04:30:05 [INFO ]  Begin of epoch 0 :
+2020-04-23 04:30:06 [INFO ]  Begin of epoch 0  (1 unknown_init nets) test results: 
+2020-04-23 04:30:06 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:30:06 [INFO ]  	            before steps          50.3906 ±  nan%            0.6937 ±  nan
+2020-04-23 04:30:06 [INFO ]  	     step  1 (lr=0.0100)          51.7578 ±  nan%            0.6962 ±  nan
+2020-04-23 04:30:06 [INFO ]  
+2020-04-23 04:30:06 [INFO ]  Epoch:    0 [      0/  25000 ( 0%)]	Loss: 0.6925	Data Time: 2.30s	Train Time: 0.29s
+2020-04-23 04:30:11 [INFO ]  Epoch:    1 [      0/  25000 ( 0%)]	Loss: 0.6946	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:30:15 [INFO ]  Epoch:    2 [      0/  25000 ( 0%)]	Loss: 0.6885	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:30:19 [INFO ]  Epoch:    3 [      0/  25000 ( 0%)]	Loss: 0.8119	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:30:24 [INFO ]  Epoch:    4 [      0/  25000 ( 0%)]	Loss: 0.6731	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:30:28 [INFO ]  Epoch:    5 [      0/  25000 ( 0%)]	Loss: 0.6910	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:30:32 [INFO ]  Epoch:    6 [      0/  25000 ( 0%)]	Loss: 0.6690	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:30:36 [INFO ]  Epoch:    7 [      0/  25000 ( 0%)]	Loss: 0.6777	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:30:40 [INFO ]  Epoch:    8 [      0/  25000 ( 0%)]	Loss: 0.7041	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:30:45 [INFO ]  Epoch:    9 [      0/  25000 ( 0%)]	Loss: 0.6347	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:09 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0010/results.pth
+2020-04-23 04:31:09 [INFO ]  
+2020-04-23 04:31:09 [INFO ]  Begin of epoch 10 :
+2020-04-23 04:31:10 [INFO ]  Begin of epoch 10  (1 unknown_init nets) test results: 
+2020-04-23 04:31:10 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:31:10 [INFO ]  	            before steps          50.2930 ±  nan%            0.6957 ±  nan
+2020-04-23 04:31:10 [INFO ]  	     step  1 (lr=0.0192)          72.5586 ±  nan%            0.5762 ±  nan
+2020-04-23 04:31:10 [INFO ]  
+2020-04-23 04:31:10 [INFO ]  Epoch:   10 [      0/  25000 ( 0%)]	Loss: 0.5686	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:31:14 [INFO ]  Epoch:   11 [      0/  25000 ( 0%)]	Loss: 0.5631	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:18 [INFO ]  Epoch:   12 [      0/  25000 ( 0%)]	Loss: 0.5846	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:22 [INFO ]  Epoch:   13 [      0/  25000 ( 0%)]	Loss: 0.5639	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:26 [INFO ]  Epoch:   14 [      0/  25000 ( 0%)]	Loss: 0.6162	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:31 [INFO ]  Epoch:   15 [      0/  25000 ( 0%)]	Loss: 0.5821	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:35 [INFO ]  Epoch:   16 [      0/  25000 ( 0%)]	Loss: 0.5790	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:39 [INFO ]  Epoch:   17 [      0/  25000 ( 0%)]	Loss: 0.5416	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:43 [INFO ]  Epoch:   18 [      0/  25000 ( 0%)]	Loss: 0.5734	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:31:48 [INFO ]  Epoch:   19 [      0/  25000 ( 0%)]	Loss: 0.6816	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:32:12 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0020/results.pth
+2020-04-23 04:32:12 [INFO ]  
+2020-04-23 04:32:12 [INFO ]  Begin of epoch 20 :
+2020-04-23 04:32:13 [INFO ]  Begin of epoch 20  (1 unknown_init nets) test results: 
+2020-04-23 04:32:13 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:32:13 [INFO ]  	            before steps          49.2188 ±  nan%            0.6945 ±  nan
+2020-04-23 04:32:13 [INFO ]  	     step  1 (lr=0.0197)          68.9453 ±  nan%            0.5442 ±  nan
+2020-04-23 04:32:13 [INFO ]  
+2020-04-23 04:32:13 [INFO ]  Epoch:   20 [      0/  25000 ( 0%)]	Loss: 0.5710	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:32:17 [INFO ]  Epoch:   21 [      0/  25000 ( 0%)]	Loss: 0.6122	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:32:21 [INFO ]  Epoch:   22 [      0/  25000 ( 0%)]	Loss: 0.5416	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:32:25 [INFO ]  Epoch:   23 [      0/  25000 ( 0%)]	Loss: 0.5657	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:32:30 [INFO ]  Epoch:   24 [      0/  25000 ( 0%)]	Loss: 0.5724	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:32:34 [INFO ]  Epoch:   25 [      0/  25000 ( 0%)]	Loss: 0.5791	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:32:38 [INFO ]  Epoch:   26 [      0/  25000 ( 0%)]	Loss: 0.5423	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:32:42 [INFO ]  Epoch:   27 [      0/  25000 ( 0%)]	Loss: 0.6085	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:32:46 [INFO ]  Epoch:   28 [      0/  25000 ( 0%)]	Loss: 0.6154	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:32:51 [INFO ]  Epoch:   29 [      0/  25000 ( 0%)]	Loss: 0.6126	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:16 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0030/results.pth
+2020-04-23 04:33:16 [INFO ]  
+2020-04-23 04:33:16 [INFO ]  Begin of epoch 30 :
+2020-04-23 04:33:17 [INFO ]  Begin of epoch 30  (1 unknown_init nets) test results: 
+2020-04-23 04:33:17 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:33:17 [INFO ]  	            before steps          51.5625 ±  nan%            0.6931 ±  nan
+2020-04-23 04:33:17 [INFO ]  	     step  1 (lr=0.0189)          63.0859 ±  nan%            0.5569 ±  nan
+2020-04-23 04:33:17 [INFO ]  
+2020-04-23 04:33:17 [INFO ]  Epoch:   30 [      0/  25000 ( 0%)]	Loss: 0.5804	Data Time: 0.15s	Train Time: 0.09s
+2020-04-23 04:33:21 [INFO ]  Epoch:   31 [      0/  25000 ( 0%)]	Loss: 0.5415	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:25 [INFO ]  Epoch:   32 [      0/  25000 ( 0%)]	Loss: 0.5123	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:29 [INFO ]  Epoch:   33 [      0/  25000 ( 0%)]	Loss: 0.6085	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:33:33 [INFO ]  Epoch:   34 [      0/  25000 ( 0%)]	Loss: 0.4991	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:37 [INFO ]  Epoch:   35 [      0/  25000 ( 0%)]	Loss: 0.5306	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:42 [INFO ]  Epoch:   36 [      0/  25000 ( 0%)]	Loss: 0.5215	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:46 [INFO ]  Epoch:   37 [      0/  25000 ( 0%)]	Loss: 0.5157	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:50 [INFO ]  Epoch:   38 [      0/  25000 ( 0%)]	Loss: 0.5710	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:33:54 [INFO ]  Epoch:   39 [      0/  25000 ( 0%)]	Loss: 0.5778	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:19 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0040/results.pth
+2020-04-23 04:34:19 [INFO ]  
+2020-04-23 04:34:19 [INFO ]  Begin of epoch 40 :
+2020-04-23 04:34:20 [INFO ]  Begin of epoch 40  (1 unknown_init nets) test results: 
+2020-04-23 04:34:20 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:34:20 [INFO ]  	            before steps          48.8281 ±  nan%            0.7006 ±  nan
+2020-04-23 04:34:20 [INFO ]  	     step  1 (lr=0.0205)          66.8945 ±  nan%            0.5210 ±  nan
+2020-04-23 04:34:20 [INFO ]  
+2020-04-23 04:34:20 [INFO ]  Epoch:   40 [      0/  25000 ( 0%)]	Loss: 0.5353	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:34:24 [INFO ]  Epoch:   41 [      0/  25000 ( 0%)]	Loss: 0.5230	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:28 [INFO ]  Epoch:   42 [      0/  25000 ( 0%)]	Loss: 0.5480	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:32 [INFO ]  Epoch:   43 [      0/  25000 ( 0%)]	Loss: 0.5394	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:36 [INFO ]  Epoch:   44 [      0/  25000 ( 0%)]	Loss: 0.6223	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:40 [INFO ]  Epoch:   45 [      0/  25000 ( 0%)]	Loss: 0.5207	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:45 [INFO ]  Epoch:   46 [      0/  25000 ( 0%)]	Loss: 0.6656	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:49 [INFO ]  Epoch:   47 [      0/  25000 ( 0%)]	Loss: 0.5309	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:53 [INFO ]  Epoch:   48 [      0/  25000 ( 0%)]	Loss: 0.5066	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:34:57 [INFO ]  Epoch:   49 [      0/  25000 ( 0%)]	Loss: 0.5421	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:22 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0050/results.pth
+2020-04-23 04:35:22 [INFO ]  
+2020-04-23 04:35:22 [INFO ]  Begin of epoch 50 :
+2020-04-23 04:35:23 [INFO ]  Begin of epoch 50  (1 unknown_init nets) test results: 
+2020-04-23 04:35:23 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:35:23 [INFO ]  	            before steps          48.0469 ±  nan%            0.7257 ±  nan
+2020-04-23 04:35:23 [INFO ]  	     step  1 (lr=0.0203)          58.0078 ±  nan%            0.5767 ±  nan
+2020-04-23 04:35:23 [INFO ]  
+2020-04-23 04:35:23 [INFO ]  Epoch:   50 [      0/  25000 ( 0%)]	Loss: 0.5252	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:35:27 [INFO ]  Epoch:   51 [      0/  25000 ( 0%)]	Loss: 0.5157	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:31 [INFO ]  Epoch:   52 [      0/  25000 ( 0%)]	Loss: 0.5245	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:36 [INFO ]  Epoch:   53 [      0/  25000 ( 0%)]	Loss: 0.5958	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:40 [INFO ]  Epoch:   54 [      0/  25000 ( 0%)]	Loss: 0.5290	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:44 [INFO ]  Epoch:   55 [      0/  25000 ( 0%)]	Loss: 0.5388	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:48 [INFO ]  Epoch:   56 [      0/  25000 ( 0%)]	Loss: 0.5377	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:52 [INFO ]  Epoch:   57 [      0/  25000 ( 0%)]	Loss: 0.5584	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:35:57 [INFO ]  Epoch:   58 [      0/  25000 ( 0%)]	Loss: 0.5413	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:01 [INFO ]  Epoch:   59 [      0/  25000 ( 0%)]	Loss: 0.5775	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:26 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0060/results.pth
+2020-04-23 04:36:26 [INFO ]  
+2020-04-23 04:36:26 [INFO ]  Begin of epoch 60 :
+2020-04-23 04:36:26 [INFO ]  Begin of epoch 60  (1 unknown_init nets) test results: 
+2020-04-23 04:36:26 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:36:26 [INFO ]  	            before steps          51.7578 ±  nan%            0.7029 ±  nan
+2020-04-23 04:36:26 [INFO ]  	     step  1 (lr=0.0208)          61.4258 ±  nan%            0.5673 ±  nan
+2020-04-23 04:36:26 [INFO ]  
+2020-04-23 04:36:26 [INFO ]  Epoch:   60 [      0/  25000 ( 0%)]	Loss: 0.5328	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:36:30 [INFO ]  Epoch:   61 [      0/  25000 ( 0%)]	Loss: 0.5344	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:34 [INFO ]  Epoch:   62 [      0/  25000 ( 0%)]	Loss: 0.5451	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:39 [INFO ]  Epoch:   63 [      0/  25000 ( 0%)]	Loss: 0.5411	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:43 [INFO ]  Epoch:   64 [      0/  25000 ( 0%)]	Loss: 0.5339	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:47 [INFO ]  Epoch:   65 [      0/  25000 ( 0%)]	Loss: 0.4965	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:51 [INFO ]  Epoch:   66 [      0/  25000 ( 0%)]	Loss: 0.5494	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:36:56 [INFO ]  Epoch:   67 [      0/  25000 ( 0%)]	Loss: 0.5924	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:00 [INFO ]  Epoch:   68 [      0/  25000 ( 0%)]	Loss: 0.5312	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:04 [INFO ]  Epoch:   69 [      0/  25000 ( 0%)]	Loss: 0.5104	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:29 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0070/results.pth
+2020-04-23 04:37:29 [INFO ]  
+2020-04-23 04:37:29 [INFO ]  Begin of epoch 70 :
+2020-04-23 04:37:29 [INFO ]  Begin of epoch 70  (1 unknown_init nets) test results: 
+2020-04-23 04:37:29 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:37:29 [INFO ]  	            before steps          51.6602 ±  nan%            0.6932 ±  nan
+2020-04-23 04:37:29 [INFO ]  	     step  1 (lr=0.0207)          71.2891 ±  nan%            0.5296 ±  nan
+2020-04-23 04:37:29 [INFO ]  
+2020-04-23 04:37:30 [INFO ]  Epoch:   70 [      0/  25000 ( 0%)]	Loss: 0.5575	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:37:34 [INFO ]  Epoch:   71 [      0/  25000 ( 0%)]	Loss: 0.5412	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:38 [INFO ]  Epoch:   72 [      0/  25000 ( 0%)]	Loss: 0.5185	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:42 [INFO ]  Epoch:   73 [      0/  25000 ( 0%)]	Loss: 0.5355	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:37:46 [INFO ]  Epoch:   74 [      0/  25000 ( 0%)]	Loss: 0.5499	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:50 [INFO ]  Epoch:   75 [      0/  25000 ( 0%)]	Loss: 0.5405	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:55 [INFO ]  Epoch:   76 [      0/  25000 ( 0%)]	Loss: 0.5204	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:37:59 [INFO ]  Epoch:   77 [      0/  25000 ( 0%)]	Loss: 0.5206	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:38:03 [INFO ]  Epoch:   78 [      0/  25000 ( 0%)]	Loss: 0.6288	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:38:07 [INFO ]  Epoch:   79 [      0/  25000 ( 0%)]	Loss: 0.5920	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:38:32 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0080/results.pth
+2020-04-23 04:38:32 [INFO ]  
+2020-04-23 04:38:32 [INFO ]  Begin of epoch 80 :
+2020-04-23 04:38:33 [INFO ]  Begin of epoch 80  (1 unknown_init nets) test results: 
+2020-04-23 04:38:33 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:38:33 [INFO ]  	            before steps          50.0000 ±  nan%            0.6977 ±  nan
+2020-04-23 04:38:33 [INFO ]  	     step  1 (lr=0.0209)          70.2148 ±  nan%            0.5336 ±  nan
+2020-04-23 04:38:33 [INFO ]  
+2020-04-23 04:38:33 [INFO ]  Epoch:   80 [      0/  25000 ( 0%)]	Loss: 0.7717	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:38:37 [INFO ]  Epoch:   81 [      0/  25000 ( 0%)]	Loss: 0.5034	Data Time: 0.11s	Train Time: 0.08s
+2020-04-23 04:38:41 [INFO ]  Epoch:   82 [      0/  25000 ( 0%)]	Loss: 0.5104	Data Time: 0.11s	Train Time: 0.08s
+2020-04-23 04:38:45 [INFO ]  Epoch:   83 [      0/  25000 ( 0%)]	Loss: 0.5311	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:38:49 [INFO ]  Epoch:   84 [      0/  25000 ( 0%)]	Loss: 0.5233	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:38:53 [INFO ]  Epoch:   85 [      0/  25000 ( 0%)]	Loss: 0.5545	Data Time: 0.11s	Train Time: 0.08s
+2020-04-23 04:38:57 [INFO ]  Epoch:   86 [      0/  25000 ( 0%)]	Loss: 0.5319	Data Time: 0.11s	Train Time: 0.08s
+2020-04-23 04:39:01 [INFO ]  Epoch:   87 [      0/  25000 ( 0%)]	Loss: 0.5221	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:39:06 [INFO ]  Epoch:   88 [      0/  25000 ( 0%)]	Loss: 0.5412	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:39:10 [INFO ]  Epoch:   89 [      0/  25000 ( 0%)]	Loss: 0.5648	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:39:35 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/checkpoints/epoch0090/results.pth
+2020-04-23 04:39:35 [INFO ]  
+2020-04-23 04:39:35 [INFO ]  Begin of epoch 90 :
+2020-04-23 04:39:35 [INFO ]  Begin of epoch 90  (1 unknown_init nets) test results: 
+2020-04-23 04:39:35 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:39:35 [INFO ]  	            before steps          48.8281 ±  nan%            0.6989 ±  nan
+2020-04-23 04:39:35 [INFO ]  	     step  1 (lr=0.0207)          65.9180 ±  nan%            0.5241 ±  nan
+2020-04-23 04:39:35 [INFO ]  
+2020-04-23 04:39:35 [INFO ]  Epoch:   90 [      0/  25000 ( 0%)]	Loss: 0.5121	Data Time: 0.12s	Train Time: 0.09s
+2020-04-23 04:39:39 [INFO ]  Epoch:   91 [      0/  25000 ( 0%)]	Loss: 0.5463	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:39:43 [INFO ]  Epoch:   92 [      0/  25000 ( 0%)]	Loss: 0.5130	Data Time: 0.11s	Train Time: 0.08s
+2020-04-23 04:39:48 [INFO ]  Epoch:   93 [      0/  25000 ( 0%)]	Loss: 0.5600	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:39:52 [INFO ]  Epoch:   94 [      0/  25000 ( 0%)]	Loss: 0.5294	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:39:56 [INFO ]  Epoch:   95 [      0/  25000 ( 0%)]	Loss: 0.6318	Data Time: 0.11s	Train Time: 0.08s
+2020-04-23 04:40:00 [INFO ]  Epoch:   96 [      0/  25000 ( 0%)]	Loss: 0.5098	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:40:04 [INFO ]  Epoch:   97 [      0/  25000 ( 0%)]	Loss: 0.5123	Data Time: 0.13s	Train Time: 0.08s
+2020-04-23 04:40:08 [INFO ]  Epoch:   98 [      0/  25000 ( 0%)]	Loss: 0.5132	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:40:12 [INFO ]  Epoch:   99 [      0/  25000 ( 0%)]	Loss: 0.5459	Data Time: 0.12s	Train Time: 0.08s
+2020-04-23 04:40:37 [INFO ]  Results saved to text_results/tcn_imdb_unknown_small/distill_basic/imdb/arch(TextConvNet1,xavier,1.0)_distillLR0.01_E(100,10,0.5)_lr0.1_B1x1x1_train(unknown_init)/results.pth
+2020-04-23 04:40:37 [INFO ]  
+2020-04-23 04:40:37 [INFO ]  distilled with 1 steps and 1 epochs  (test ALL):
+2020-04-23 04:40:44 [INFO ]  distilled with 1 steps and 1 epochs  (1 unknown_init nets) test results: 
+2020-04-23 04:40:44 [INFO ]  	          STEP                   ACCURACY                   LOSS          
+2020-04-23 04:40:44 [INFO ]  	            before steps          50.0000 ±  nan%            0.6930 ±  nan
+2020-04-23 04:40:44 [INFO ]  	     step  1 (lr=0.0208)          73.3000 ±  nan%            0.5974 ±  nan
+2020-04-23 04:40:44 [INFO ]  
