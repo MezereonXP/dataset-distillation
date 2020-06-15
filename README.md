@@ -116,9 +116,9 @@ To enable learnable labels, use the following argument (0 for learnable, 1 for s
 ```
 --static_labels 0 
 ```
-Soft labels can be randomly initialized or initialized as one-hot vectors. This is set with the following argument (0 for one-hot, 1 for random).
+Soft labels can be randomly initialized or initialized as one-hot vectors. This is set with the following argument ('' for one-hot (default)).
 ```
---random_init_labels 0
+--random_init_labels ''
 ```
 To have fewer distilled images than the number of classes use the following arguments. The second argument is a list specifying the initial labels to use for each class, if random label initialization is disabled. 
 ```
