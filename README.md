@@ -43,6 +43,8 @@ By combining learnable labels with learnable locations, we get what is essential
 One of the really exciting and unexpected implications of soft-label dataset distillation, is that we can actually now separate our classes using <b>fewer points than the number of classes</b>. 
 <p align="center"><img src='utils/2points_rev.gif' width=400></p>
 
+Check out https://github.com/ilia10000/LO-Shot for further exploration of this type of less-than-one-shot learning. 
+
 ## Prerequisites
 
 ### System requirements
