@@ -49,7 +49,7 @@ def _vis_results_fn(np_steps, distilled_images_per_class_per_step, dataset_info,
         for n, (img, label, axis) in enumerate(zip(data, labels, axes)):
             if nc == 1:
                 img = img[..., 0]
-            if std: 
+            if std.any(): #For older versions remove .any()
                 img = (img * std + mean).clip(0, 1)
             else:
                 img = img.clip(0, 1) #(img * np.std(data) + np.mean(data))
