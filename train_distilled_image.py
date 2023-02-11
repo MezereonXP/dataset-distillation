@@ -144,8 +144,8 @@ class Trainer(object):
         # 使用真实数据作为输入，得到输出，并且计算交叉熵误差
         output = model.forward_with_param(rdata, params[-1])
         ll = final_objective_loss(state, output, rlabel)  # cross-entropy loss for multi-classes
-        print(f"params's length is {len(params)}")
-        print(f"gws's length is {len(gws)}")
+        # print(f"params's length is {len(params)}")
+        # print(f"gws's length is {len(gws)}")
         return ll, (ll, params, gws)
 
     def backward(self, model, rdata, rlabel, steps, saved_for_backward):
