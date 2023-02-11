@@ -30,51 +30,51 @@ class Trainer(object):
         self.T = state.distill_steps * state.distill_epochs  # how many sc steps we run
         self.num_per_step = state.num_distill_classes * state.distilled_images_per_class_per_step
         assert state.distill_lr >= 0, 'distill_lr must >= 0'
-        assert len(state.init_labels)==state.num_distill_classes, 'len(init_labels) must == num_distill_classes'
+        assert len(state.init_labels) == state.num_distill_classes, 'len(init_labels) must == num_distill_classes'
         self.init_data_optim()
 
     def init_data_optim(self):
         self.params = []
         state = self.state
-        optim_lr = state.lr
         req_lbl_grad = not state.static_labels
         # labels
         self.labels = []
-        
-        #distill_label = distill_label.t().reshape(-1)  # [0, 0, ..., 1, 1, ...]
-        #distill_label = torch.nn.Softmax(distill_label, dim=1)
-        for _ in range(self.num_data_steps):
+
+        # num_data_steps = distill_steps (default: 10)
+        for _ in range(self.num_data_steps):  # Generate the label vector and Append these label to the variables [params and label]
             if state.random_init_labels:
                 distill_label = distillation_label_initialiser(state, self.num_per_step, torch.float, req_lbl_grad)
             else:
-                if state.num_classes==2:
-                    dl_array = [[i==j for i in range(1)]for j in state.init_labels]*state.distilled_images_per_class_per_step
+                # distilled_images_per_class_per_step = 1 [default]
+                # Generate one-hot label
+                if state.num_classes == 2:
+                    dl_array = [[i == j for i in range(1)]for j in state.init_labels] * state.distilled_images_per_class_per_step
                 else:
-                    dl_array = [[i==j for i in range(state.num_classes)]for j in state.init_labels]*state.distilled_images_per_class_per_step
-                
-                
-                distill_label=torch.tensor(dl_array,dtype=torch.float, requires_grad=req_lbl_grad, device=state.device)
-                    
-                #distill_label = self.one_hot_embedding(distill_label, state.num_classes)
-                             
-            if not state.static_labels:
-                self.labels.append(distill_label)
-                self.params.append(distill_label)
-            else:
-                self.labels.append(distill_label)
-        self.all_labels = torch.cat(self.labels)
+                    dl_array = [[i == j for i in range(state.num_classes)]for j in state.init_labels] * state.distilled_images_per_class_per_step
 
-        # data
+                distill_label = torch.tensor(dl_array,
+                                             dtype=torch.float,
+                                             requires_grad=req_lbl_grad,
+                                             device=state.device)
+
+            self.labels.append(distill_label)
+            if not state.static_labels:
+                self.params.append(distill_label)
+
+        self.all_labels = torch.cat(self.labels)
         self.data = []
-        for _ in range(self.num_data_steps):
+        for _ in range(self.num_data_steps):  # Init the synthetic data
+            # num_per_step is the number of total generated images in a step
+            # num_per_step = num_classes * distilled_images_per_class_per_step
             if state.textdata:
                 distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.ninp,
-                                       device=state.device, requires_grad=(not state.freeze_data))
+                                           device=state.device, requires_grad=(not state.freeze_data))
             else:
+                # nc is channels number
+                # cifar10 data likes [30, 3, 32, 32]
                 distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
-                                       device=state.device, requires_grad=(not state.freeze_data))
-                #distill_data = torch.randint(2,(self.num_per_step, state.nc, state.input_size, state.input_size),
-                #                       device=state.device, requires_grad=(not state.freeze_data), dtype=torch.float)
+                                           device=state.device, requires_grad=(not state.freeze_data))
+
             self.data.append(distill_data)
             if not state.freeze_data:
                 self.params.append(distill_data)
@@ -82,6 +82,7 @@ class Trainer(object):
         # lr
 
         # undo the softplus + threshold
+        # default is 0.02
         raw_init_distill_lr = torch.tensor(state.distill_lr, device=state.device)
         raw_init_distill_lr = raw_init_distill_lr.repeat(self.T, 1)
         self.raw_distill_lrs = raw_init_distill_lr.expm1_().log_().requires_grad_()
@@ -101,11 +102,13 @@ class Trainer(object):
             p.grad = torch.zeros_like(p)
 
     def get_steps(self):
+        # 相当于把每一个step的数据复制epoch次，然后平铺
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
         steps = []
         for (data, label), lr in zip(data_label_iterable, lrs):
-            steps.append((data,label, lr))
+            steps.append((data, label, lr))
+        # 包含 self.T 个数据，也就是 每个step包含的生成图片的数量 * epoch数
         return steps
 
     def forward(self, model, rdata, rlabel, steps):
@@ -116,26 +119,33 @@ class Trainer(object):
         w = model.get_param()
         params = [w]
         gws = []
+        # 先使用生成数据进行训练，这里没有使用优化器，手动进行梯度下降
         for step_i, (data, label, lr) in enumerate(steps):
             with torch.enable_grad():
-                model.distilling_flag=True
+                model.distilling_flag = True
                 output = model.forward_with_param(data, w)
                 loss = task_loss(state, output, label)
                 lr = lr.squeeze()
-                #print(lr.size())
+
+            # 计算网络梯度，并且将历史梯度保存起来
             gw, = torch.autograd.grad(loss, w, lr, create_graph=True)
 
             with torch.no_grad():
+                # SGD Update the model
                 new_w = w.sub(gw).requires_grad_()
+                # 把历史的模型权重保存起来
                 params.append(new_w)
                 gws.append(gw)
                 w = new_w
 
         # final L
         model.eval()
-        model.distilling_flag=False
+        model.distilling_flag = False
+        # 使用真实数据作为输入，得到输出，并且计算交叉熵误差
         output = model.forward_with_param(rdata, params[-1])
-        ll = final_objective_loss(state, output, rlabel)
+        ll = final_objective_loss(state, output, rlabel)  # cross-entropy loss for multi-classes
+        print(f"params's length is {len(params)}")
+        print(f"gws's length is {len(gws)}")
         return ll, (ll, params, gws)
 
     def backward(self, model, rdata, rlabel, steps, saved_for_backward):
@@ -146,12 +156,13 @@ class Trainer(object):
         gdatas = []
         lrs = []
         glrs = []
-        labels=[]
-        glabels=[]
+        labels = []
+        glabels = []
         if state.textdata:
             with torch.backends.cudnn.flags(enabled=False):
                 dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
         else:
+            # 计算真实数据下的交叉熵误差得到的网络梯度
             dw, = torch.autograd.grad(l, (params[-1],), retain_graph=True)
 
         # backward
@@ -170,6 +181,7 @@ class Trainer(object):
         #   ws are BEFORE applying gradient descent in this step
         #   Gradients dw is w.r.t. the updated ws AFTER this step
         #      dw = \d L / d w_{t+1}
+        # !这里有一个坑：由于params和gws的长度不一致，所以zip会把params的最后一个丢弃
         for (data, label, lr), w, gw in reversed(list(zip(steps, params, gws))):
             # hvp_in are the tensors we need gradients w.r.t. final L:
             #   lr (if learning)
@@ -179,13 +191,16 @@ class Trainer(object):
             # source of gradients can be from:
             #   gw, the gradient in this step, whose gradients come from:
             #     the POST-GD updated ws
+            # 实际上 hvp_in 就是我们想要更新一些个可学习的变量：网络参数，学习率，生成数据，标签
             hvp_in = [w]
             if not state.freeze_data:
                 hvp_in.append(data)
             hvp_in.append(lr)
             if not state.static_labels:
                 hvp_in.append(label)
+
             dgw = dw.neg()  # gw is already weighted by lr, so simple negation
+            # hvp_grad 类似于二阶导数，乘上一个负的一阶导数dgw ???
             hvp_grad = torch.autograd.grad(
                 outputs=(gw,),
                 inputs=hvp_in,
@@ -196,11 +211,11 @@ class Trainer(object):
             with torch.no_grad():
                 # Save the computed gdata and glrs
                 if not state.freeze_data:
-                    datas.append(data)
-                    gdatas.append(hvp_grad[1])
-                    lrs.append(lr)
-                    glrs.append(hvp_grad[2])
-                    if not state.static_labels:
+                    datas.append(data)  # 保存生成数据
+                    gdatas.append(hvp_grad[1])  # 保存生成数据的梯度
+                    lrs.append(lr)  # 保存学习率
+                    glrs.append(hvp_grad[2])  # 保存学习率的梯度
+                    if not state.static_labels:  # 如果标签可以学习，那么保存标签和标签的梯度
                         labels.append(label)
                         glabels.append(hvp_grad[3])
                 else:
@@ -230,7 +245,8 @@ class Trainer(object):
                 for l, g in zip(labels, glabels):
                     l.grad.add_(g)
         if len(bwd_out) > 0:
-            torch.autograd.backward(bwd_out, bwd_grad)#MULTISTEP PROBLEM?
+            # 反向传播，方便优化器进行优化
+            torch.autograd.backward(bwd_out, bwd_grad)  # MULTISTEP PROBLEM?
 
     def save_results(self, steps=None, visualize=True, subfolder=''):
         with torch.no_grad():
@@ -242,12 +258,12 @@ class Trainer(object):
 
     def prefetch_train_loader_iter(self):
         state = self.state
-        device = state.device
+        # device = state.device
         train_iter = iter(state.train_loader)
         if state.textdata:
-                niter = len(tuple(train_iter))
+            niter = len(tuple(train_iter))
         else:
-                niter = len(train_iter)
+            niter = len(train_iter)
         for epoch in range(state.epochs):
             if state.textdata:
                 train_iter = iter(state.train_loader)
@@ -255,12 +271,11 @@ class Trainer(object):
             prefetch_it = max(0, niter - 2)
             for it, example in enumerate(train_iter):
                 if state.textdata:
-                    #print(example.fields)
                     data = example.text[0]
                     target = example.label
-                    val=(data,target)
+                    val = (data, target)
                 else:
-                    val=example
+                    val = example
                 
                 # Prefetch (start workers) at the end of epoch BEFORE yielding
                 if it == prefetch_it and epoch < state.epochs - 1:
@@ -307,8 +322,9 @@ class Trainer(object):
 
             # activate everything needed to run on this process
             grad_infos = []
-            for model in tmodels:
+            for model in tmodels:  # 多个随机模型进行梯度累计
                 if state.train_nets_type == 'unknown_init':
+                    # 如果是unknown_init则每一次都会reset
                     model.reset(state)
 
                 l, saved = self.forward(model, rdata, rlabel, steps)
