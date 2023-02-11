@@ -150,7 +150,6 @@ class Trainer(object):
 
     def backward(self, model, rdata, rlabel, steps, saved_for_backward):
         l, params, gws = saved_for_backward
-        params = params[:-1]
         state = self.state
 
         datas = []
@@ -183,7 +182,7 @@ class Trainer(object):
         #   Gradients dw is w.r.t. the updated ws AFTER this step
         #      dw = \d L / d w_{t+1}
         # !这里有一个坑：由于params和gws的长度不一致，所以zip会把params的最后一个丢弃
-        for (data, label, lr), w, gw in reversed(list(zip(steps, params, gws))):
+        for (data, label, lr), w, gw in reversed(list(zip(steps, params[:-1], gws))):
             # hvp_in are the tensors we need gradients w.r.t. final L:
             #   lr (if learning)
             #   data
