@@ -150,6 +150,7 @@ class Trainer(object):
 
     def backward(self, model, rdata, rlabel, steps, saved_for_backward):
         l, params, gws = saved_for_backward
+        params = params[:-1]
         state = self.state
 
         datas = []
