@@ -204,8 +204,7 @@ class Trainer(object):
             hvp_grad = torch.autograd.grad(
                 outputs=(gw,),
                 inputs=hvp_in,
-                # grad_outputs=(dgw,),
-                grad_outputs=(torch.ones(dgw.shape).to(dgw.device),),
+                grad_outputs=(dgw,),
                 retain_graph=True
             )
             # Update for next iteration, i.e., previous step
