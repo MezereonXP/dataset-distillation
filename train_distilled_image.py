@@ -182,7 +182,7 @@ class Trainer(object):
         #   Gradients dw is w.r.t. the updated ws AFTER this step
         #      dw = \d L / d w_{t+1}
         # !这里有一个坑：由于params和gws的长度不一致，所以zip会把params的最后一个丢弃
-        for (data, label, lr), w, gw in reversed(list(zip(steps, params[1:], gws))):
+        for (data, label, lr), w, gw in reversed(list(zip(steps, params, gws))):
             # hvp_in are the tensors we need gradients w.r.t. final L:
             #   lr (if learning)
             #   data
@@ -204,7 +204,8 @@ class Trainer(object):
             hvp_grad = torch.autograd.grad(
                 outputs=(gw,),
                 inputs=hvp_in,
-                grad_outputs=(dgw,),
+                # grad_outputs=(dgw,),
+                grad_outputs=(torch.ones(dgw.shape).to(dgw.device),),
                 retain_graph=True
             )
             # Update for next iteration, i.e., previous step
